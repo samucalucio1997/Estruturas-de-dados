@@ -4,27 +4,27 @@ public class No<t> {
     private t value;
     private No<t> nextNo;
     
-    public No(T value) {
+    public No(t value) {
         this.value = value;
         this.nextNo =null; 
     }
     
-    public T getValue() {
+    public t getValue() {
         return value;
     }
 
 
-    public void setValue(T value) {
+    public void setValue(t value) {
         this.value = value;
     }
 
 
-    public No<T> getNextNo() {
+    public No<t> getNextNo() {
         return nextNo;
     }
 
 
-    public void setNextNo(No<T> nextNo) {
+    public void setNextNo(No<t> nextNo) {
         this.nextNo = nextNo;
     }
 

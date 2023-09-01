@@ -34,22 +34,22 @@ public class LinkedList<t> {
 
 
 
-    public No<T> getFirstNo() {
+    public No<t> getFirstNo() {
         return firstNo;
     }
 
 
-    public void setFirstNo(No<T> firstNo) {
+    public void setFirstNo(No<t> firstNo) {
         this.firstNo = firstNo;
     }
 
 
-    public No<T> getTailNo() {
+    public No<t> getTailNo() {
         return tailNo;
     }
 
 
-    public void setTailNo(No<T> tailNo) {
+    public void setTailNo(No<t> tailNo) {
         this.tailNo = tailNo;
     }
 
