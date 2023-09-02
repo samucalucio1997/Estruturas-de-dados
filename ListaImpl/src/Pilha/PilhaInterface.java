@@ -6,5 +6,5 @@ public interface PilhaInterface {
     public int topVermelho() throws PilhaVaziaExcecao;
     public int topPreto() throws PilhaVaziaExcecao;
     public void push(Cor o);
-    public Object pop() throws PilhaVaziaExcecao;
+    public int popVermelha() throws PilhaVaziaExcecao;
 }

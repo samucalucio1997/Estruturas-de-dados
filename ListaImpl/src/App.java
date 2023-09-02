@@ -9,12 +9,15 @@ public class App {
 
         pilha.push(new  Vermelho(4));
         pilha.push(new  Preto(45));
-        //  pilha.push(new  Vermelho(7));
-           pilha.push(new  Preto(2));
-           
-         System.out.println(pilha.size());
-           System.out.println(pilha.topPreto());
-           System.out.println(pilha.topVermelho());
+        pilha.push(new  Preto(2));
+         pilha.push(new  Vermelho(7));
+         pilha.push(new  Vermelho(77));
+         pilha.push(new Preto(125));
+         pilha.push(new Vermelho(751));
+         
+        // pilha.popVermelha();   
+       System.out.println(pilha.topPreto());
+       System.out.println(pilha.topVermelho()); 
 
     }
 }
