@@ -10,9 +10,9 @@ public class PilhaArray implements PilhaInterface {
     private int FO;
 
     public PilhaArray(int tam, int fO) {
-        p=capacidade = tam;
+        p = capacidade = tam;
         S = new Cor[capacidade];
-        
+
         if (fO <= 0) {
             FO = 0;
         } else {
@@ -44,7 +44,7 @@ public class PilhaArray implements PilhaInterface {
 
     @Override
     public void push(Cor o) {
-        if (v == p + 1 || v==p-1) {
+        if (v == p|| v == p - 1) {
             // aumenta a capacidade da Pilha
             if (FO == 0) {
                 capacidade *= 2;
@@ -62,13 +62,13 @@ public class PilhaArray implements PilhaInterface {
                 }
             }
             S = a;
-        } 
-            if (o.getNome().equals("Vermelho")) {
-                S[++v] = o;
-            } else {
-                S[--p] = o;
-            }
-        
+        }
+        if (o.getNome().equals("Vermelho")) {                        
+            S[++v] = o;
+        } else {                        
+            S[--p] = o;
+        }
+
         totalEl++;
         // TODO Auto-generated method stub
     }
@@ -76,42 +76,38 @@ public class PilhaArray implements PilhaInterface {
     @Override
     public int popVermelha() throws PilhaVaziaExcecao {
         // TODO Auto-generated method stub
-        if(isEmpty()){
-              throw new PilhaVaziaExcecao("Pilha vazia");
+        if (isEmpty()) {
+            throw new PilhaVaziaExcecao("Pilha vazia");
         }
-        S[v]=null;
+        S[v] = null;
         --v;
         return S[v].getValue();
+    }
+
+    public int popPreto() {
+        if (isEmpty()) {
+            throw new PilhaVaziaExcecao("pilha vazia");
+        }
+        S[p] = null;
+        ++p;
+        return S[p].getValue();
     }
 
     @Override
     public int topPreto() throws PilhaVaziaExcecao {
         // TODO Auto-generated method stub]
-        if (isEmpty()&&p>-1) {
+        if (isEmpty() && p > -1) {
             throw new PilhaVaziaExcecao("É pilha vazia man");
         }
         return S[p].getValue();// pelo indice, é preto
     }
 
-
-    public void aumentarTam(){
-         // aumenta a capacidade da Pilha
-            if (FO == 0) {
-                capacidade *= 2;
-            } else {
-                capacidade += FO;
-            }
-            this.v = -1;
-            this.p = capacidade;
-            Cor[] a = new Cor[capacidade];
-            for (int i = 0; i < S.length; i++) {
-                if (S[i].getNome().equals("Vermelho")) {
-                    a[++v] = S[i];
-                } else {
-                    a[--p] = S[i];
-                }
-            }
-            S = a;
+    public void ShowElements(){
+        System.out.print("[");
+        for (int i = 0; i < S.length; i++) {
+            System.out.print(S[i]+", ");
+        }
+        System.out.println("]");
     }
 
 }
