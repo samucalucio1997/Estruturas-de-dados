@@ -76,21 +76,25 @@ public class PilhaArray implements PilhaInterface {
     @Override
     public int popVermelha() throws PilhaVaziaExcecao {
         // TODO Auto-generated method stub
-        if (isEmpty()) {
+        if (v<=-1) {
             throw new PilhaVaziaExcecao("Pilha vazia");
         }
-        S[v] = null;
-        --v;
-        return S[v].getValue();
+        // S[v] = null;
+        Vermelho retorno = (Vermelho) S[v];
+        S[v]=null;
+        v--;
+        return retorno.getValue();
     }
 
     public int popPreto() {
-        if (isEmpty()) {
+        if (p>=capacidade) {
             throw new PilhaVaziaExcecao("pilha vazia");
         }
-        S[p] = null;
-        ++p;
-        return S[p].getValue();
+        // S[p] = null;
+        Preto retorno = (Preto) S[p];
+        S[p]=null; 
+        p++;
+        return retorno.getValue();
     }
 
     @Override
@@ -104,9 +108,14 @@ public class PilhaArray implements PilhaInterface {
 
     public void ShowElements(){
         System.out.print("[");
-        for (int i = 0; i < S.length; i++) {
-            System.out.print(S[i]+", ");
+        int k = (S[0]!=null)?S[0].getValue():-1;
+        System.out.print(k+", ");
+        for (int i = 1; i < S.length-1; i++) {
+            k=S[i]!=null?S[i].getValue():-1;
+            System.out.print(k+", ");
         }
+        k=S[S.length-1]!=null?S[S.length-1].getValue():-1;
+        System.out.print(k);
         System.out.println("]");
     }
 
