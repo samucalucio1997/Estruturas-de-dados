@@ -5,6 +5,5 @@ public interface PilhaInterface {
     public boolean isEmpty();
     public int topVermelho() throws PilhaVaziaExcecao;
     public int topPreto() throws PilhaVaziaExcecao;
-    public void push(Cor o);
     public int popVermelha() throws PilhaVaziaExcecao;
 }

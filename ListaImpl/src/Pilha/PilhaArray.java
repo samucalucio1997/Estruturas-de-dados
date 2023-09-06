@@ -42,8 +42,8 @@ public class PilhaArray implements PilhaInterface {
         // TODO Auto-generated method stub
     }
 
-    @Override
-    public void push(Cor o) {
+    
+    private void push(Cor o) {
         if (v == p|| v == p - 1) {// aumenta a capacidade da Pilha
             if (FO == 0) {
                 capacidade *= 2;
