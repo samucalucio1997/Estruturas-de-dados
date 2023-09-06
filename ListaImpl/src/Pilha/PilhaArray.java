@@ -35,7 +35,7 @@ public class PilhaArray implements PilhaInterface {
 
     @Override
     public int topVermelho() throws PilhaVaziaExcecao {
-        if (this.isEmpty()) {
+        if (this.isEmpty()||v<=-1) {
             throw new PilhaVaziaExcecao("É Pilha vazia man");
         }
         return S[v].getValue();
