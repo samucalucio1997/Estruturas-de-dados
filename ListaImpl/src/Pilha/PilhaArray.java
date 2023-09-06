@@ -44,8 +44,7 @@ public class PilhaArray implements PilhaInterface {
 
     @Override
     public void push(Cor o) {
-        if (v == p|| v == p - 1) {
-            // aumenta a capacidade da Pilha
+        if (v == p|| v == p - 1) {// aumenta a capacidade da Pilha
             if (FO == 0) {
                 capacidade *= 2;
             } else {
@@ -53,7 +52,7 @@ public class PilhaArray implements PilhaInterface {
             }
             this.v = -1;
             this.p = capacidade;
-            Cor[] a = new Cor[capacidade];
+            Cor[] a = new Cor[capacidade]; //a copia da pilha vai para esse array
             for (int i = 0; i < S.length; i++) {
                 if (S[i].getNome().equals("Vermelho")) {
                     a[++v] = S[i];
@@ -61,16 +60,26 @@ public class PilhaArray implements PilhaInterface {
                     a[--p] = S[i];
                 }
             }
-            S = a;
+            S = a;//A referência da pilha antiga desaparece(coletor de lixo)
         }
         if (o.getNome().equals("Vermelho")) {                        
             S[++v] = o;
         } else {                        
             S[--p] = o;
         }
-
         totalEl++;
         // TODO Auto-generated method stub
+    }
+
+    public void pushRed(Object cor){
+          Cor cores = (Cor) cor;
+          push(cores); 
+    }
+
+
+        public void pushBlack(Object cor){
+          Cor cor2 = (Cor) cor;
+          push(cor2); 
     }
 
     @Override
@@ -100,7 +109,7 @@ public class PilhaArray implements PilhaInterface {
     @Override
     public int topPreto() throws PilhaVaziaExcecao {
         // TODO Auto-generated method stub]
-        if (isEmpty() && p > -1) {
+        if (isEmpty() || p >=capacidade) {
             throw new PilhaVaziaExcecao("É pilha vazia man");
         }
         return S[p].getValue();// pelo indice, é preto
