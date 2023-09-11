@@ -1,11 +1,11 @@
 package Pilha;
 
-public class Vermelho extends Cor{
+public class Vermelho extends Cor {
 
     public Vermelho(int value) {
         super(value);
         this.nome = "Vermelho";
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -19,6 +19,5 @@ public class Vermelho extends Cor{
         // TODO Auto-generated method stub
         return super.getValue();
     }
-    
-    
+
 }
