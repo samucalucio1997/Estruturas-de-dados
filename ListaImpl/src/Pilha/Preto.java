@@ -1,11 +1,11 @@
 package Pilha;
 
-public class Preto extends Cor{
+public class Preto extends Cor {
 
     public Preto(int value) {
         super(value);
         this.nome = "Preto";
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -19,7 +19,5 @@ public class Preto extends Cor{
         // TODO Auto-generated method stub
         return super.getValue();
     }
-    
 
-    
 }
