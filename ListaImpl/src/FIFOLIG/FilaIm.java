@@ -1,7 +1,7 @@
-package FIFO;
+package FIFOLIG;
 
-public interface FilaIS<T extends Object> {
-    public void enQueue(T no);
+public interface FilaIm<T> {
+    public T enQueue(T no);
     public T deQueue();
     public T first();
     public int size();

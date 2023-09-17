@@ -9,61 +9,42 @@ public class Fila<T extends Object> implements FilaIS {
     private int fi;
 
     public Fila(int tam, int FI) {
-        this.capacity = (int) (tam > 0 ? tam : 1);
-        f = capacity;
+        this.capacity = (tam > 0 ? tam : 1);
         fila = (T[]) new Object[capacity];
         fi = FI > 0 ? FI : 0;
     }
 
-    public int getI() {
-        return i;
-    }
-
-    public int getF() {
-        return f;
-    }
-
     @Override
-    public Object enQueue(Object no) {
-        if (i == f || f + i == capacity) {
+    public void enQueue(Object no) {
+        if (size() == capacity - 1) {
+            int novotam;
             if (fi == 0) {
-                capacity *= 2;
+                novotam = capacity * 2;
             } else {
-                capacity += fi;
+                novotam = capacity + fi;
             }
-            T[] novo = (T[]) new Object[capacity];
-            int inicio = i;
-            i = fila.length;
-            f = i;
-            // System.out.println("duplicou");
-            for (int in = 0; in < fila.length; in++) {
-                // System.out.println("f = " + f);
-                if (f == capacity-1) {
-                    f -= capacity;
-                }
-                
-                if (inicio == fila.length-1) {
-                    inicio -= fila.length;
-                }
-                f++;
-                inicio++;
-                novo[f] = fila[inicio];
+            T[] novo = (T[]) new Object[novotam];
+            int ite = i;
+            for (int itef = 0; itef < fila.length; itef++) {
+                novo[itef] = fila[ite];
+                ite = (ite + 1) % capacity;
             }
+            f = size();
+            i = 0;
+            capacity = novotam;
             fila = novo;
         }
-        if (f == capacity) {
-            f -= capacity;
-            // System.out.println("Passou aqui");
-        }
-        fila[f++] = (T) no;
-
-        return no;
+        fila[f] = (T) no;
+        f = (f + 1) % capacity;
     }
 
     @Override
     public Object deQueue() {
-        if(i==capacity-1){
-            
+        if(isEmpty()){
+            throw new FilaExecption("pilha vazia meu chapa");
+        }
+        if (i == capacity) {
+            i = 0;
         }
         T resp = fila[i];
         fila[i] = null;
@@ -72,20 +53,22 @@ public class Fila<T extends Object> implements FilaIS {
     }
 
     @Override
-    public String first() {
-        return fila[i].toString();
+    public T first() {
+        if (i == f) {
+            throw new FilaExecption("Fila vazia");
+        }
+        return fila[i];
     }
 
     @Override
     public int size() {
-        int res = f > i ? f - i : i + f;
-        return res;
+        return (capacity - i + f) % capacity;
     }
 
     @Override
     public Boolean isEmpty() {
 
-        return i == -1;
+        return i == f;
     }
 
     public void ShowElements() {

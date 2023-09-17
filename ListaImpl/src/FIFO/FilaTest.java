@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 public class FilaTest {
     
     
-    private Fila fila = new Fila<Integer>(3, -1);
+    private Fila fila;
 
     @Test
     public void testShowElements() {
@@ -20,21 +20,10 @@ public class FilaTest {
 
     @Test
     public void testEnQueue() {
-       Assertions.assertNotNull(fila.enQueue(new Object()));
+        
     }
-
-    @Test
-    public void testFirst() {
-
-    }
-
-    @Test
-    public void testIsEmpty() {
-
-    }
-
-    @Test
-    public void testSize() {
-
+     
+    void StartFila(){
+        fila = new Fila<Integer>(1, -1);
     }
 }
