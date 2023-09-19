@@ -9,10 +9,18 @@ public class No<T> {
         this.value = value;
         this.next = null; 
     }
+    
 
 
 
     
+    public No() {
+    }
+
+
+
+
+
     public No<T> getNext() {
         return next;
     }

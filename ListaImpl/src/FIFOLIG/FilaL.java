@@ -1,12 +1,13 @@
 package FIFOLIG;
 
+
 public class FilaL<T> implements FilaIm<T> {
     private int i=0; 
     private No<T> head;
     
     
     public FilaL() {
-      head = null;
+      head=null;
     }
     
 
@@ -15,24 +16,31 @@ public class FilaL<T> implements FilaIm<T> {
         return head;
     }
 
-    public void setHead(No<T> head) {
-        this.head = head;
-    }
-
 
     @Override
     public T deQueue() {
-      
-        
-        return null;
+        if(i==0){
+            throw new RuntimeException("Pilha vazia");
+        }
+        No<T> old_No = head;
+        head=head.getNext();
+        --i;
+        return old_No.getValue();
     }
     
     @Override
     public T enQueue(T no) {
-        No<T> new_node=new No<T>(no);
-        head = new_node;
+        if(head==null){
+            head = new No<T>(no);
+        }else{
+            No<T> refAnt = head;
+        while (refAnt.getNext() != null) {
+            refAnt = refAnt.getNext();
+        }
+        refAnt.setNext(new No<T>(no));
+        }
         this.i++;
-        return head.getValue();
+        return no;
     }
     
     @Override
@@ -59,4 +67,12 @@ public class FilaL<T> implements FilaIm<T> {
         this.i = i;
     }
    
+    public void ShowElements(){
+        while(head!=null){
+            System.out.print(head.getValue());
+            head = head.getNext();
+            System.out.print(" ");
+        }
+        System.out.println();
+    }
 }
