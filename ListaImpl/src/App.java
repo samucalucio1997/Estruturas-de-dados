@@ -19,14 +19,8 @@ public class App {
         queue.enQueue(new Integer(28));
         System.out.println(queue.deQueue()); 
         System.out.println(queue.deQueue()); 
-        System.out.println(queue.deQueue()); 
-        System.out.println(queue.deQueue()); 
-        System.out.println(queue.deQueue()); 
-        System.out.println(queue.deQueue()); 
-        System.out.println(queue.deQueue()); 
-        System.out.println(queue.deQueue()); 
-        System.out.println(queue.deQueue()); 
-        // queue.ShowElements();
+        
+        queue.ShowElements();
         
     }
 }

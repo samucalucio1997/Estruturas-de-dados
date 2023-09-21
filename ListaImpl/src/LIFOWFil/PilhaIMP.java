@@ -16,7 +16,8 @@ public class PilhaIMP implements PilhaI{
     @Override
     public boolean isEmpty() {
         // TODO Auto-generated method stub
-        return false;
+        return fila1.isEmpty();
+        
     }
 
     @Override

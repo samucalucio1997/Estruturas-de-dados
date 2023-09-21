@@ -80,4 +80,11 @@ public class Fila<T extends Object> implements FilaIS {
         System.out.print(", " + fila[fila.length - 1] + "]");
     }
 
+
+    public Fila<T> Copy(){
+        Fila copyFila = new Fila<T>(capacity, fi);
+        
+        return null;
+    }
+
 }
