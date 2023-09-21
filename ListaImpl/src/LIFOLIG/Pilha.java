@@ -4,34 +4,35 @@ import FIFOLIG.No;
 
 public class Pilha<T> implements PilhaIM<T> {
     private int f;//f é o inicio
-    private No<T> tail;/*
-                        * para inserir na frente mas coloquei tail n sei pq
-                        */
+    private No<T> head;
 
     public Pilha() {
         f = -1;
-        this.tail = null;
+        this.head = null;
+    }
+
+    public T first(){
+        return head.getValue();
     }
 
     @Override
     public T push(T o) {
         No<T> mod = new No<>(o);
-        tail = mod;
+        
+            mod.setNext(head);
+        head = mod;
         this.f++;
-        tail.setNext(null);
         return mod.getValue();
     }
 
     @Override
-    public T pop() {
+    public void pop() {
         if (isEmpty()) {
             throw new RuntimeException("Pilha vazia");
-        }
-        No<T> old_no;
-        old_no = tail;
-        tail=tail.getNext();
+        } 
+        // System.out.println(head.getValue());
+        head=head.getNext();
         f--;
-        return old_no.getValue();
     }
 
     @Override
@@ -41,15 +42,18 @@ public class Pilha<T> implements PilhaIM<T> {
 
     @Override
     public boolean isEmpty() {
-        return f == 0;
+        return f == -1;
     }
     
     public void showElements(){
-        for (int i = 0; i < size(); i++) {
-            System.out.print(tail.getValue());
-            tail=tail.getNext();
+        System.out.print("[");
+        while(head.getNext()!=null){
+            System.out.print(head.getValue());
+            head = head.getNext();
             System.out.print(", ");
         }
+        System.out.print(head.getValue());
+        System.out.print("]");
     }
 
 }

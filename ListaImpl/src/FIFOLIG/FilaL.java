@@ -4,10 +4,12 @@ package FIFOLIG;
 public class FilaL<T> implements FilaIm<T> {
     private int i=0; 
     private No<T> head;
+    private No<T> tail;
     
     
     public FilaL() {
       head=null;
+      tail = null;  
     }
     
 
@@ -19,7 +21,7 @@ public class FilaL<T> implements FilaIm<T> {
 
     @Override
     public T deQueue() {
-        if(i==0){
+        if(isEmpty()){
             throw new RuntimeException("Pilha vazia");
         }
         No<T> old_No = head;
@@ -30,14 +32,13 @@ public class FilaL<T> implements FilaIm<T> {
     
     @Override
     public T enQueue(T no) {
+        No<T> new_node = new No<T>(no);
         if(head==null){
-            head = new No<T>(no);
+            head = new_node;
+            tail = head;
         }else{
-            No<T> refAnt = head;
-        while (refAnt.getNext() != null) {
-            refAnt = refAnt.getNext();
-        }
-        refAnt.setNext(new No<T>(no));
+          tail.setNext(new_node);  
+          tail = new_node;
         }
         this.i++;
         return no;

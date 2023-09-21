@@ -9,9 +9,8 @@ public class Deque implements PilhaIS{
 
    
 
-    public Deque(int t, int fI) {
-        this.t = t;
-        this.FI = fI<=0?2:fI;
+    public Deque(int fI) {
+        this.FI = fI<=0?0:fI;
         S = new Object[capacity]; 
     }
 
@@ -25,7 +24,8 @@ public class Deque implements PilhaIS{
             }
          S=nova;
         }
-        S[++t]=o;
+        t++;
+        S[t]=o;
     }
 
     @Override
@@ -36,16 +36,27 @@ public class Deque implements PilhaIS{
 
     @Override
     public boolean isEmpty() {
-        return t!=-1;
+        return t==-1;
         // TODO Auto-generated method stub
+    }
+
+    public Deque Copy(){
+        Deque copy = new Deque(0);
+        for (int i = size()-1; i >-1; i--) {
+            
+            copy.push(S[i]);
+        }
+        return copy;
     }
 
     @Override
     public Object pop() {
         // TODO Auto-generated method stub
+        if(isEmpty()){
+            throw new RuntimeException("vazio");
+        }
         Object res = S[t];
-        S[t]=null;
-        --t;
+        t--;
         return res;
     }
 
@@ -53,6 +64,15 @@ public class Deque implements PilhaIS{
     public Object top() {
         // TODO Auto-generated method stub
          return S[t];
+    }
+
+    public void ShwEl(){
+        for (int i = t; i >-1 ; i--) {
+            if(S[i]!=null){
+               System.out.print(S[i]);
+               System.out.print(" ");
+            }
+        }
     }
     
 }
