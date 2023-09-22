@@ -82,9 +82,13 @@ public class Fila<T extends Object> implements FilaIS {
 
 
     public Fila<T> Copy(){
-        Fila copyFila = new Fila<T>(capacity, fi);
-        
-        return null;
+        Fila<T> copyFila = new Fila<T>(capacity, fi);
+        for (int i = this.size() -1; i >-1 ; i--) {
+            if(fila[i]!=null){
+                copyFila.enQueue(fila[i]);
+            }
+        }
+        return copyFila;
     }
 
 }

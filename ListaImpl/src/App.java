@@ -7,9 +7,9 @@ public class App {
         queue.enQueue(new Integer(5));
         queue.enQueue(new Integer(65));
         queue.enQueue(new Integer(45));
-        
         System.out.println(queue.deQueue());
         queue.enQueue(new Integer(5));
+        queue.ShowElements();
         System.out.println(queue.deQueue());
         queue.enQueue(new Integer(8));
         queue.enQueue(new Integer(84));
