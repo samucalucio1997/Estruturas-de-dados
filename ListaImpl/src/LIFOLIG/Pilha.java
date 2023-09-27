@@ -1,6 +1,7 @@
 package LIFOLIG;
 
 import FIFOLIG.No;
+import LIFOWFil.PilhaWException;
 
 public class Pilha<T> implements PilhaIM<T> {
     private int f;//f é o inicio
@@ -28,7 +29,7 @@ public class Pilha<T> implements PilhaIM<T> {
     @Override
     public void pop() {
         if (isEmpty()) {
-            throw new RuntimeException("Pilha vazia");
+            throw new PilhaWException("pilha vazia");
         } 
         // System.out.println(head.getValue());
         head=head.getNext();

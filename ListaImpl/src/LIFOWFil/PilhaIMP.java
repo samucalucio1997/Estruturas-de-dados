@@ -22,26 +22,36 @@ public class PilhaIMP implements PilhaI{
 
     @Override
     public Object pop() {
-        // TODO Auto-generated method stub
-        return null;
+        if(fila2.isEmpty()){
+             throw new PilhaWException("Pilha vazia"); 
+        }
+        Object pp = fila2.first();
+        fila2.deQueue();
+        fila1 = fila2.Copy();
+        return pp;
     }
 
     @Override
     public void push(Object o) {
         // TODO Auto-generated method stub
-        
+        fila1.enQueue(o);
+        fila2 = fila1.Copy();
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        if(isEmpty()){
+             throw new PilhaWException("pilha vazia");  
+        }
+        return fila1.size();
     }
 
     @Override
     public Object top() {
-        // TODO Auto-generated method stub
-        return null;
+        if(isEmpty()){
+             throw new PilhaWException("pilha vazia");  
+        }
+        return fila2.first();
     }
     
 }

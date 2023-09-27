@@ -6,17 +6,21 @@ public class Fila implements FilaIM{
     private Deque pilha1;
     private Deque pilha2;
 
-
-    
-
-
     public Fila() {
+        this.pilha1 = new Deque(0);
+        this.pilha2 = new Deque(0);
+    }
+
+    public Fila(int i, int j) {
         this.pilha1 = new Deque(0);
         this.pilha2 = new Deque(0);
     }
 
     @Override
     public Object dequeue() {
+        if(isEmpty()){
+            throw new FilaVaziaException("Não tem o que tirar coleguinha");
+        }
         Object out = pilha2.pop();
         pilha1 = pilha2.Copy();
      
@@ -34,30 +38,23 @@ public class Fila implements FilaIM{
 
     @Override
     public Object first() {
+        if(isEmpty()){
+            throw new 
+            FilaVaziaException("Fila vazia");
+        }
         // TODO Auto-generated method stub
-        return null;
+        return pilha2.top();
     }
 
     @Override
     public boolean isEmpty() {
         // TODO Auto-generated method stub
-        return false;
+        return pilha1.isEmpty();
     }
 
     @Override
     public int size() {
         // TODO Auto-generated method stub
-        return 0;
+        return pilha1.size();
     }
-
-    public void copy(Deque deque){
-       
-    }
-     
-    
-    
-
-
-    
-    
 }

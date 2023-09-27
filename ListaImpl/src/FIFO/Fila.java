@@ -81,7 +81,7 @@ public class Fila<T extends Object> implements FilaIS {
     }
 
 
-    public Fila<T> Copy(){
+    public Fila<T> Copy(){/*Aqui está o hacking para a copia da fila invertida para a implementação da pilha com duas filas*/
         Fila<T> copyFila = new Fila<T>(capacity, fi);
         for (int i = this.size() -1; i >-1 ; i--) {
             if(fila[i]!=null){
