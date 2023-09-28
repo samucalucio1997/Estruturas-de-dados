@@ -148,18 +148,24 @@ public class ArrayList implements ArrayListIM {
               for (int i = 0; i < antcapa; i++) {
                  if(ar[i]!=null){
                      novo[i]=ar[i];
-                      System.out.println(novo[i]);
+                    //   System.out.println(novo[i]);
                  } 
                 }
               ar=novo;
-              System.out.println("aqui");
             }
-            Object pri = ar[0];
+            System.out.println();
+            Object pri=null;
+            if(ar[0]!=null){
+                pri=ar[0];
+            }
             ar[0]=p;
-            for (int i = 1; i < this.c; i++) {
-                Object x = ar[i];
-                ar[i]=pri;
-                pri=x;
+            if(this.c>0&&ar[0]!=null){
+                for (int i = 1; i < size(); i++) {
+                    Object x = ar[i];
+                    ar[i]=pri;
+                    System.out.println(pri);
+                    pri=x;
+                }
             }
             this.c++;
             return ar[0];

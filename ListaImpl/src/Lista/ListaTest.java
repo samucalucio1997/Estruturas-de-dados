@@ -2,7 +2,7 @@ package Lista;
 
 public class ListaTest {
     public static void main(String[] args) {
-        ArrayList list = new ArrayList(1);
+        ArrayList list = new ArrayList(-1);
         list.insertFirst(new Integer(28));
         // System.out.println(list.size());
         list.insertFirst(new Integer(45));//entrou
