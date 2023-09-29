@@ -13,4 +13,5 @@ public interface ArrayListIM {
     abstract Object insertAfter(Object p, Object l);
     abstract Object insertFirst(Object p);
     abstract Object insertLast(Object m);
+    abstract Object remove(Object no);
 }

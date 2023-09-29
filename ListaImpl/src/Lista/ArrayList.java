@@ -34,7 +34,7 @@ public class ArrayList implements ArrayListIM {
       if(isEmpty()){
           throw new RuntimeException("lista vazia"); 
       }
-      if(ar[ar.length-1]==jk){
+      if(ar[this.c-1].equals(jk)){
         return true;
       }   
       else{
@@ -46,28 +46,43 @@ public class ArrayList implements ArrayListIM {
     @Override
     public Boolean isFirst(Object jk) {
         // TODO Auto-generated method stub
-
-        throw new UnsupportedOperationException("Unimplemented method 'isFirst'");
+         if(isEmpty()){
+          throw new RuntimeException("lista vazia"); 
+        }
+        if(ar[0].equals(jk)){
+            return true;
+        }else{
+            return false;
+        } 
     }
 
 
     @Override
     public Object First() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'First'");
+        if(isEmpty()){
+          throw new RuntimeException("lista vazia"); 
+        }
+        return ar[0];
     }
 
 
     @Override
     public Object Last() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Last'");
+        if(isEmpty()){
+          throw new RuntimeException("lista vazia"); 
+        }
+        return ar[this.c-1];
     }
 
 
     @Override
     public Object replaceElement(Object n, int o) {
         // TODO Auto-generated method stub
+            if(isEmpty()){
+              throw new RuntimeException("lista vazia"); 
+            }
             ar[o]=n;
             return ar[o];
         }
@@ -76,10 +91,13 @@ public class ArrayList implements ArrayListIM {
     @Override
     public Object swapElement(Object a, Object b) {
         // TODO Auto-generated method stub
+        if(isEmpty()){
+          throw new RuntimeException("lista vazia"); 
+        }
         int i=0;
         for (int j = 0; j < ar.length; j++) {
-            if(ar[j]==b){
-               ar[j]=a;
+            if(ar[j].equals(a)){
+               ar[j]=b;
                i=j;
                break;
             }
@@ -91,49 +109,49 @@ public class ArrayList implements ArrayListIM {
     @Override
     public Object insertBefore(Object p, Object o) {
         if(this.c==capacity-1){
-              int antcapa = capacity;
               capacity*=2;
               Object[] novo = new Object[capacity];
-              int con = ar.length; 
-              for (int i = 0; i < novo.length; i++) {
-                  novo[i]=ar[c];
-                  con=(con+1)%antcapa;
+              for (int i = 0; i < ar.length; i++) {
+                  novo[i]=ar[i];
                 }
               ar=novo;
+        }
+        int index = 0;
+        for (int i = 0; i < ar.length; i++) {
+            if(ar[i]!=null&&ar[i].equals(p)){
+               index = i;
             }
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insertBefore'");
+        }
+        for (int i = this.c+1; i > index; i--) {
+          ar[i]=ar[i-1];
+        }
+        ar[index]=o;
+        this.c++;
+        return ar[index];
     }
 
 
     @Override
     public Object insertAfter(Object p, Object l) {
-        if(this.c==capacity+1){
-              int antcapa = capacity;
+        if(this.c==capacity-1){
               capacity*=2;
               Object[] novo = new Object[capacity];
-              int con = ar.length; 
-              for (int i = 0; i < novo.length; i++) {
-                  novo[i]=ar[c];
-                  con=(con+1)%antcapa;
+              for (int i = 0; i < ar.length; i++) {
+                  novo[i]=ar[i];
                 }
               ar=novo;
             }
-            if(size()==1){
-                ar[0]=l;
-            }else{
-                for (int i = 0; i < ar.length; i++) {
-                    if(ar[i]==p){
-                        Object pri = ar[i];
-                        ar[i]=l;
-                         for (int j = i+1; j < ar.length; j++) {
-                          Object x = ar[j];
-                          ar[j]=pri;
-                          pri=x;
-                        }      
-                    }
+            int index = 0;
+            for (int i = 0; i < ar.length; i++) {
+                if(ar[i].equals(p)&&!(ar[i].equals(null))){
+                     index = i ;
+                     break;
                 }
+            }    
+            for (int i = this.c+1; i>index+1; i--) {
+                ar[i]=ar[i-1];
             }
+            ar[index+1]=l;
             this.c++;
      return l;       
     }
@@ -165,19 +183,16 @@ public class ArrayList implements ArrayListIM {
 
     @Override
     public Object insertLast(Object m) {
-        if(size()==capacity+1){
-              int antcapa = capacity;
+        if(this.c==capacity-1){
               capacity*=2;
               Object[] novo = new Object[capacity];
-              int con = ar.length; 
-              for (int i = 0; i < novo.length; i++) {
-                  novo[i]=ar[c];
-                  con=(con+1)%antcapa;
+              for (int i = 0; i < ar.length; i++) {
+                  novo[i]=ar[i];
                 }
               ar=novo;
             }
             ar[++c]=m;
-            return m;
+            return ar[this.c];
         }
          
         public void ShowElements(){
@@ -187,5 +202,23 @@ public class ArrayList implements ArrayListIM {
                 System.out.print(" ,"+ar[i]);
             }
             System.out.print("]");
+        }
+
+
+        @Override
+        public Object remove(Object no) {
+            if(size()==0){
+                throw new RuntimeException("Lista vazia");
+            }
+            int x=0;
+            for (int i = this.c; i > 0; i--) {
+                if(ar[i].equals(no)){
+                     x=i;break;
+                }
+            }
+            for (int i = x; i < this.c+1; i++) {
+                 ar[i]=ar[i+1];
+            }
+            return no;
         }
 }
