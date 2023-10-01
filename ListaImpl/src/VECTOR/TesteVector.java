@@ -27,6 +27,10 @@ public class TesteVector {
         vetor.insertAtRank(new Integer(22), 7);
         vetor.insertAtRank(new Integer(203), 0);
         vetor.showElemnts();
-
+        System.out.println("----------------------------------");
+        vetor.ReplaceAtRank(3, new Integer(104));
+        vetor.showElemnts();
+        vetor.removeAtRank(3);
+        vetor.showElemnts();
     }
 }

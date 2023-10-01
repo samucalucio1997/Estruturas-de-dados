@@ -14,8 +14,16 @@ public class VectorLIG implements VectorIM{
     @Override
     public Object ReplaceAtRank(int r, Object o) {
         // TODO Auto-generated method stub
-
-        return null;
+        No cursor = head;
+        No newNo = new No(o);
+        for (int i = 0; i <= r; i++) {
+            cursor = cursor.getNext();
+        }
+        newNo.setNext(cursor.getNext());
+        newNo.setPrev(cursor.getPrev());
+        cursor.getNext().setPrev(newNo);
+        cursor.getPrev().setNext(newNo); 
+        return newNo.getValue();
     }
 
     
@@ -29,7 +37,15 @@ public class VectorLIG implements VectorIM{
     @Override
     public Object elementAtRank(int index) {
         // TODO Auto-generated method stub
-        return null;
+        No cursor=head;
+        for (int i = 0; i < index; i++) {
+            if(!cursor.getNext().equals(tail)){
+                cursor = cursor.getNext();
+            }else{
+                throw new RuntimeException("valor de indice inválido");
+            }
+        }
+        return cursor.getNext().getValue();
     }
 
 
@@ -80,8 +96,8 @@ public class VectorLIG implements VectorIM{
     
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        return false;
+        
+        return c==-1;
     }
 
 
@@ -95,7 +111,17 @@ public class VectorLIG implements VectorIM{
     @Override
     public Object removeAtRank(int ar) {
         // TODO Auto-generated method stub
-        return null;
+        No cursor = new No();
+        cursor=head;
+        for (int i = 0; i <= ar; i++) {
+            cursor = cursor.getNext();
+        }
+        No node = cursor;
+        cursor.getNext().setPrev(cursor.getPrev());
+        cursor.getPrev().setNext(cursor.getNext());
+        cursor=null;
+        c--;
+        return node.getValue();
     }
     
     
@@ -109,9 +135,10 @@ public class VectorLIG implements VectorIM{
     @Override
     public int size() {
         // TODO Auto-generated method stub
-        return 0;
+        return c+1;
     }
-        public No getHead() {
+
+    public No getHead() {
             return head;
         }
     
