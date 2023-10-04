@@ -1,57 +1,205 @@
 package Lista;
 
-public class LinkedList<t> {
-    private No<t> firstNo;
-    private No<t> tailNo;
-    
+
+public class LinkedList implements ArrayListIM{
+    private No firstNo;
+    private No tailNo;
+    private int t=-1;
     
     
     public LinkedList() {
-        this.firstNo = null;
-        this.tailNo = null;
-    }
-   
-    public boolean add(No<t> newNo){
-        if(firstNo==null&&tailNo==null){
-           firstNo = newNo;
-        }else{
-            tailNo =newNo;
-        } 
-        return true;
-    }
-    
-    public boolean addAll(LinkedList<t> lista){
-        if(tailNo==null){
-           firstNo=lista.getFirstNo();
-           tailNo = lista.getTailNo();
-           return true;
-        }else{
-            tailNo.setNextNo(lista.getFirstNo());
-            return true;
-        }
+        this.firstNo = new No();
+        this.tailNo = new No();
     }
 
 
 
 
-    public No<t> getFirstNo() {
+    public No getFirstNo() {
         return firstNo;
     }
 
 
-    public void setFirstNo(No<t> firstNo) {
+    public void setFirstNo(No firstNo) {
         this.firstNo = firstNo;
     }
 
 
-    public No<t> getTailNo() {
+    public No getTailNo() {
         return tailNo;
     }
 
 
-    public void setTailNo(No<t> tailNo) {
+    public void setTailNo(No tailNo) {
         this.tailNo = tailNo;
     }
 
+    @Override
+    public Object First() {
+        // TODO Auto-generated method stub
+        
+        return firstNo.getNextNo().getValue();
+    }
+
+    @Override
+    public Object Last() {
+        // TODO Auto-generated method stub
+        return tailNo.getPrevNo().getValue();
+    }
+
+    @Override
+    public Object insertAfter(Object p, Object l) {
+        // TODO Auto-generated method stub
+        No new_no = new No(l);
+        if(t==-1){
+            firstNo.setNextNo(new_no);
+            tailNo.setPrevNo(new_no);
+        }else{
+            No cursNo = firstNo;
+            while(!cursNo.getNextNo().equals(tailNo)&&cursNo.getValue()!=p){
+                cursNo = cursNo.getNextNo();
+            }
+            new_no.setNextNo(cursNo.getNextNo());
+            new_no.setPrevNo(cursNo);
+            cursNo.getNextNo().setPrevNo(new_no);
+            cursNo.setNextNo(new_no);
+        }
+        t++;
+        return new_no;
+    }
+
+    @Override
+    public Object insertBefore(Object p, Object o) {
+        No new_no = new No(p); 
+        if(t==-1){
+            firstNo.setNextNo(new_no);
+            tailNo.setPrevNo(new_no);
+        }else{
+            No cursor = firstNo.getNextNo();
+            while(!cursor.getNextNo().getValue().equals(o)){
+                  cursor = cursor.getNextNo();
+            }
+            
+        }
+        return null;
+    }
+
+    @Override
+    public Object insertFirst(Object p) {
+        // TODO Auto-generated method stub
+        No new_no = new No(p); 
+        if(t==-1){
+            firstNo.setNextNo(new_no);
+            tailNo.setPrevNo(new_no);
+        }
+        else{
+            new_no.setNextNo(firstNo.getNextNo());
+            new_no.setPrevNo(firstNo);
+            firstNo.getNextNo().setPrevNo(new_no);
+            firstNo.setNextNo(new_no);
+        } 
+        t++;
+        return firstNo;
+    }
+
+    @Override
+    public Object insertLast(Object m) {
+        // TODO Auto-generated method stub
+        No new_no = new No(m);
+        if(isEmpty()){
+            firstNo.setNextNo(new_no);
+            tailNo.setPrevNo(new_no);
+        }else{
+            new_no.setNextNo(tailNo);
+            new_no.setPrevNo(tailNo.getPrevNo());
+            tailNo.getPrevNo().setNextNo(new_no);
+            tailNo.setPrevNo(new_no);
+        }
+        t++;
+        return tailNo.getPrevNo();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        // TODO Auto-generated method stub
+        return t==-1;
+    }
+
+    @Override
+    public Boolean isFirst(Object jk) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean isLast(Object jk) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Object remove(Object no) {
+        // TODO Auto-generated method stub
+        No cursNo = firstNo.getNextNo();
+        while(!cursNo.getValue().equals(no)){
+            cursNo = cursNo.getNextNo();
+        }
+        No remove = cursNo;
+        cursNo.getPrevNo().setNextNo(cursNo.getNextNo());
+        cursNo.getNextNo().setPrevNo(cursNo.getPrevNo());
+        cursNo = null;
+        return remove.getValue();
+    }
+
+    @Override
+    public Object replaceElement(Object n, int o) {
+        // TODO Auto-generated method stub
+        No cursor = firstNo.getNextNo();
+        No new_no = new No(n);
+        for (int i = 0; i < o; i++) {
+            cursor = cursor.getNextNo();
+        }
+        new_no.setNextNo(cursor.getNextNo());
+        new_no.setPrevNo(cursor.getPrevNo());
+        cursor.getPrevNo().setNextNo(new_no);
+        cursor.getNextNo().setPrevNo(new_no);
+        cursor =null;
+        return new_no.getValue();
+    }
+
+    @Override
+    public int size() {
+        // TODO Auto-generated method stub
+        return t+1;
+    }
+
+    @Override               //
+    public Object swapElement(Object a, Object b) {
+        // TODO Auto-generated method stub
+        No cursorNo = firstNo.getNextNo();
+        No cursor = firstNo.getNextNo();
+        int c=0;
+        int d=0;
+        while(!cursorNo.getValue().equals(a)){
+            cursorNo = cursorNo.getNextNo();c++;
+        }
+        while(!cursor.getValue().equals(b)){
+            cursor = cursor.getNextNo(); d++;    
+        }
+        replaceElement(cursor.getValue(), c);
+        replaceElement(cursorNo.getValue(), d);
+        return null;
+    }
+    
+    public void ShowElements(){
+        No cursNo = firstNo;
+        System.out.print("[");
+        while(cursNo.getNextNo()!=null&&!cursNo.getNextNo().equals(firstNo)){
+             System.out.print(cursNo.getNextNo().getValue()+", ");
+             cursNo = cursNo.getNextNo(); 
+        }
+        System.out.print("]");
+        System.out.println();
+    }
     
 }

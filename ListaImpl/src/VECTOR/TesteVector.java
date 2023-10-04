@@ -18,7 +18,7 @@ public class TesteVector {
 
         VectorLIG vetor = new VectorLIG();
         vetor.insertAtRank(new Integer(45), 0);
-        vetor.showElemnts();
+        vetor.showElements();
         vetor.insertAtRank(new Integer(27), 0);
         vetor.insertAtRank(new Integer(37), 0);
         vetor.insertAtRank(new Integer(32), 0);
@@ -26,11 +26,17 @@ public class TesteVector {
         vetor.insertAtRank(new Integer(56), 0);
         vetor.insertAtRank(new Integer(22), 7);
         vetor.insertAtRank(new Integer(203), 0);
-        vetor.showElemnts();
+        vetor.showElements();
+        
+        vetor.insertAfter(2, 81);
+        vetor.insertBefore(1, new Integer(72));
+        System.out.println(vetor.size());
+        
         System.out.println("----------------------------------");
-        vetor.ReplaceAtRank(3, new Integer(104));
-        vetor.showElemnts();
+        // vetor.ReplaceAtRank(3, new Integer(104));
+        // vetor.showElements();
+        // System.out.println(vetor.size());
+        vetor.showElements();
         vetor.removeAtRank(3);
-        vetor.showElemnts();
     }
 }

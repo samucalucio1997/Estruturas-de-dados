@@ -15,6 +15,9 @@ public class Vector implements VectorIM{
 
     @Override
     public Object ReplaceAtRank(int r, Object o) {
+        if(c==-1){
+            throw new RuntimeException("Vector vazio!!!");
+        }
         if(ar[r]!=null){
             ar[r]=o;
         }
@@ -24,6 +27,9 @@ public class Vector implements VectorIM{
     @Override
     public Object elementAtRank(int index) {
         // TODO Auto-generated method stub
+        if(c==-1){
+            throw new RuntimeException("Vector vazio!!!");
+        }
         return ar[index];
     }
 
@@ -55,8 +61,11 @@ public class Vector implements VectorIM{
     @Override
     public Object removeAtRank(int a) {
         // TODO Auto-generated method stub
+        if(c==-1){
+            throw new RuntimeException("Vector vazio!!");
+        }
         Object remo = ar[a];
-        for (int i = a+1; i < size(); i++) {
+        for (int i = a+1; i< size(); i++) {
             ar[i-1]=ar[i];
         }
         c--;

@@ -15,9 +15,6 @@ public class ArrayList implements ArrayListIM {
     @Override
     public int size() {
         // TODO Auto-generated method stub
-        if(c==-1){
-          throw new RuntimeException("lista vazia!!");
-        }  
         return c+1;
     }
 

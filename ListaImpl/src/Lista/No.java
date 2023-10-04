@@ -1,45 +1,43 @@
 package Lista;
 
-public class No<t> {
-    private t value;
-    private No<t> nextNo;
-    private No<t> prevNo;
+public class No {
+    private Object value;
+    private No nextNo;
+    private No prevNo;
+    
+    
+
+  
+    
 
     
-    
-    public No(t value) {
+    public No() {
+        
+    }
+
+    public No(Object value) {
         this.value = value;
-        this.nextNo =null; 
     }
 
-    public No<t> getPrevNo() {
-        return prevNo;
-    }
-
-    public void setPrevNo(No<t> prevNo) {
-        this.prevNo = prevNo;
-    }
-
-    
-    public t getValue() {
+    public Object getValue() {
         return value;
     }
-
-
-    public void setValue(t value) {
+    public void setValue(Object value) {
         this.value = value;
     }
-
-
-    public No<t> getNextNo() {
+    public No getNextNo() {
         return nextNo;
     }
-
-
-    public void setNextNo(No<t> nextNo) {
+    public void setNextNo(No nextNo) {
         this.nextNo = nextNo;
     }
-
+    public No getPrevNo() {
+        return prevNo;
+    }
+    public void setPrevNo(No prevNo) {
+        this.prevNo = prevNo;
+    }
+    
 
     
 
