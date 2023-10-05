@@ -28,9 +28,10 @@ public class ListaTest {
         lista.ShowElements();
         lista.replaceElement(new Integer(11), lista.size()-1);
         lista.insertLast(720);
-        lista.insertBefore(52, 64);
         lista.insertAfter(720, 32);
-        lista.insertBefore(64, 203);
+        lista.insertBefore(52, 91);
+        lista.ShowElements();
+        lista.remove(28);
         lista.insertAfter(91, 71);
         lista.ShowElements();
     }

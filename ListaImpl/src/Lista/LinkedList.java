@@ -52,6 +52,17 @@ public class LinkedList implements ArrayListIM{
         return tailNo.getPrevNo().getValue();
     }
 
+    public No Search(Object no){
+       No cursNo = firstNo.getNextNo(); 
+       while(!cursNo.getValue().equals(no)){
+                if(cursNo.getValue().equals(null)){
+                   throw new RuntimeException("Não tem o nó coleguinha");
+                }
+                cursNo = cursNo.getNextNo();
+            }
+        return cursNo;    
+    }
+
     @Override
     public Object insertAfter(Object p, Object l) {
         // TODO Auto-generated method stub
@@ -60,10 +71,7 @@ public class LinkedList implements ArrayListIM{
             firstNo.setNextNo(new_no);
             tailNo.setPrevNo(new_no);
         }else{
-            No cursNo = firstNo.getNextNo();
-            while(!cursNo.getValue().equals(p)){
-                cursNo = cursNo.getNextNo();
-            }
+            No cursNo = Search(p);
             new_no.setNextNo(cursNo.getNextNo());
             new_no.setPrevNo(cursNo);
             cursNo.getNextNo().setPrevNo(new_no);
@@ -80,10 +88,8 @@ public class LinkedList implements ArrayListIM{
             firstNo.setNextNo(new_no);
             tailNo.setPrevNo(new_no);
         }else{
-            No cursor = firstNo.getNextNo();
-            while(!cursor.getValue().equals(p)){
-                  cursor = cursor.getNextNo();
-            }
+            No cursor = Search(o);
+            cursor = cursor.getPrevNo();
             new_no.setNextNo(cursor);
             new_no.setPrevNo(cursor.getPrevNo());
             cursor.getNextNo().setPrevNo(new_no);
@@ -152,10 +158,11 @@ public class LinkedList implements ArrayListIM{
         if(isEmpty()){
             throw new RuntimeException("Lista vazia");
         }
-        No cursNo = firstNo.getNextNo();
-        while(!cursNo.getValue().equals(no)){
-            cursNo = cursNo.getNextNo();
-        }
+        No cursNo = Search(no);
+        // while(!cursNo.getValue().equals(no)){
+        //     cursNo = cursNo.getNextNo();
+        // }
+
         No remove = cursNo;
         cursNo.getPrevNo().setNextNo(cursNo.getNextNo());
         cursNo.getNextNo().setPrevNo(cursNo.getPrevNo());
