@@ -8,7 +8,7 @@ public interface ArrayListIM {
     abstract Object First();
     abstract Object Last();
     abstract Object replaceElement(Object n,int o);
-    abstract Object swapElement(Object a,Object b);
+    abstract void swapElement(Object a,Object b);
     abstract Object insertBefore(Object p,Object o);
     abstract Object insertAfter(Object p, Object l);
     abstract Object insertFirst(Object p);

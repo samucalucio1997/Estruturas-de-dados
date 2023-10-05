@@ -9,10 +9,10 @@ public class ListaTest {
         // list.insertFirst(new Integer(71));
         // list.insertFirst(new Integer(5));
         // list.insertFirst(new Integer(47));
-        // list.swapElement(new Integer(28), new Integer(6));
         // list.insertAfter(new Integer(71), new Integer(34));
         // list.insertBefore(new Integer(45), new Integer(12));
         // list.ShowElements();   
+        // list.swapElement(new Integer(28), new Integer(71));
         // System.out.println();
         // list.insertBefore(new Integer(45), new Integer(102));
         // list.ShowElements();
@@ -28,10 +28,10 @@ public class ListaTest {
         lista.ShowElements();
         lista.replaceElement(new Integer(11), lista.size()-1);
         lista.insertLast(720);
-
-        lista.swapElement(31, 45);
-        // lista.remove(720);
-        
+        lista.insertBefore(52, 64);
+        lista.insertAfter(720, 32);
+        lista.insertBefore(64, 203);
+        lista.insertAfter(91, 71);
         lista.ShowElements();
     }
 }

@@ -86,20 +86,25 @@ public class ArrayList implements ArrayListIM {
 
 
     @Override
-    public Object swapElement(Object a, Object b) {
+    public void swapElement(Object a, Object b) {
         // TODO Auto-generated method stub
         if(isEmpty()){
           throw new RuntimeException("lista vazia"); 
         }
-        int i=0;
-        for (int j = 0; j < ar.length; j++) {
+        int i=0,c=0;
+        for (int j = 0; j < size(); j++) {
             if(ar[j].equals(a)){
-               ar[j]=b;
                i=j;
                break;
             }
         }
-        return ar[i];
+        for (int j = 0; j < size(); j++) {
+            if(ar[j].equals(b)){
+                c=j;break;
+            }
+        }
+        ar[i]=b;
+        ar[c]=a; 
     }
 
 

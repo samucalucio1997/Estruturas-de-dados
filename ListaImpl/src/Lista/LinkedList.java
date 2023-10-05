@@ -37,13 +37,18 @@ public class LinkedList implements ArrayListIM{
     @Override
     public Object First() {
         // TODO Auto-generated method stub
-        
+        if(isEmpty()){
+           throw new RuntimeException("Lista vazia");
+        }
         return firstNo.getNextNo().getValue();
     }
 
     @Override
     public Object Last() {
         // TODO Auto-generated method stub
+        if(isEmpty()){
+           throw new RuntimeException("Lista vazia");
+        }
         return tailNo.getPrevNo().getValue();
     }
 
@@ -55,8 +60,8 @@ public class LinkedList implements ArrayListIM{
             firstNo.setNextNo(new_no);
             tailNo.setPrevNo(new_no);
         }else{
-            No cursNo = firstNo;
-            while(!cursNo.getNextNo().equals(tailNo)&&cursNo.getValue()!=p){
+            No cursNo = firstNo.getNextNo();
+            while(!cursNo.getValue().equals(p)){
                 cursNo = cursNo.getNextNo();
             }
             new_no.setNextNo(cursNo.getNextNo());
@@ -70,18 +75,22 @@ public class LinkedList implements ArrayListIM{
 
     @Override
     public Object insertBefore(Object p, Object o) {
-        No new_no = new No(p); 
+        No new_no = new No(o); 
         if(t==-1){
             firstNo.setNextNo(new_no);
             tailNo.setPrevNo(new_no);
         }else{
             No cursor = firstNo.getNextNo();
-            while(!cursor.getNextNo().getValue().equals(o)){
+            while(!cursor.getValue().equals(p)){
                   cursor = cursor.getNextNo();
             }
-            
+            new_no.setNextNo(cursor);
+            new_no.setPrevNo(cursor.getPrevNo());
+            cursor.getNextNo().setPrevNo(new_no);
+            cursor.getPrevNo().setNextNo(new_no);
         }
-        return null;
+        t++;
+        return new_no.getValue();
     }
 
     @Override
@@ -128,18 +137,21 @@ public class LinkedList implements ArrayListIM{
     @Override
     public Boolean isFirst(Object jk) {
         // TODO Auto-generated method stub
-        return null;
+        return firstNo.getNextNo().getValue().equals(jk);
     }
 
     @Override
     public Boolean isLast(Object jk) {
         // TODO Auto-generated method stub
-        return null;
+        return tailNo.getPrevNo().getValue().equals(jk);
     }
 
     @Override
     public Object remove(Object no) {
         // TODO Auto-generated method stub
+        if(isEmpty()){
+            throw new RuntimeException("Lista vazia");
+        }
         No cursNo = firstNo.getNextNo();
         while(!cursNo.getValue().equals(no)){
             cursNo = cursNo.getNextNo();
@@ -174,12 +186,15 @@ public class LinkedList implements ArrayListIM{
     }
 
     @Override               //
-    public Object swapElement(Object a, Object b) {
+    public void swapElement(Object a, Object b) {
         // TODO Auto-generated method stub
         No cursorNo = firstNo.getNextNo();
         No cursor = firstNo.getNextNo();
         int c=0;
         int d=0;
+        if(t==-1){
+           throw new RuntimeException("Lista vazia");
+        }
         while(!cursorNo.getValue().equals(a)){
             cursorNo = cursorNo.getNextNo();c++;
         }
@@ -188,7 +203,6 @@ public class LinkedList implements ArrayListIM{
         }
         replaceElement(cursor.getValue(), c);
         replaceElement(cursorNo.getValue(), d);
-        return null;
     }
     
     public void ShowElements(){
