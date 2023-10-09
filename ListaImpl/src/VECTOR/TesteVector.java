@@ -27,9 +27,6 @@ public class TesteVector {
         vetor.insertAtRank(new Integer(22), 7);
         vetor.insertAtRank(new Integer(203), 0);
         vetor.showElements();
-        
-        vetor.insertAfter(2, 81);
-        vetor.insertBefore(1, new Integer(72));
         System.out.println(vetor.size());
         
         System.out.println("----------------------------------");

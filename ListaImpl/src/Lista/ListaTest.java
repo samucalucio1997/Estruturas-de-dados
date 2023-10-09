@@ -11,12 +11,12 @@ public class ListaTest {
         // list.insertFirst(new Integer(47));
         // list.insertAfter(new Integer(71), new Integer(34));
         // list.insertBefore(new Integer(45), new Integer(12));
-        // list.ShowElements();   
+        // list.ShowElements();
         // list.swapElement(new Integer(28), new Integer(71));
         // System.out.println();
         // list.insertBefore(new Integer(45), new Integer(102));
         // list.ShowElements();
-      
+        
         LinkedList lista = new LinkedList();
         lista.insertFirst(new Integer(45));
         lista.insertFirst(new Integer(28));
@@ -25,14 +25,12 @@ public class ListaTest {
         lista.insertFirst(new Integer(91));
         lista.insertFirst(new Integer(52));
         lista.insertLast(new Integer(78));    
-        lista.ShowElements();
         lista.replaceElement(new Integer(11), lista.size()-1);
         lista.insertLast(720);
+        lista.ShowElements();
         lista.insertAfter(720, 32);
-        lista.insertBefore(52, 91);
-        lista.ShowElements();
-        lista.remove(28);
-        lista.insertAfter(91, 71);
-        lista.ShowElements();
+        lista.swapElement(31, 11);
+        lista.remove(45);
+        lista.ShowElements();       
     }
 }

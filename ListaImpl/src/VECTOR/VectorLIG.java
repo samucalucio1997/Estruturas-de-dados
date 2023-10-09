@@ -65,7 +65,12 @@ public class VectorLIG implements VectorIM {
     }
 
 ///////////////////////////////////////////////////////////////////
-    public void insertBefore(int index, Object elemento) {
+/*
+ 
+
+
+
+public void insertBefore(int index, Object elemento) {
         No new_node = new No(elemento);
         // if(head == null){
         //         he =  new node(null);
@@ -108,12 +113,7 @@ public class VectorLIG implements VectorIM {
         atual.setNext(new_node);
         ++c;
     }
-
-
-
-
-
-
+ */
 
 ////////////////////////////////////////////////////////////////////////////////////
 
