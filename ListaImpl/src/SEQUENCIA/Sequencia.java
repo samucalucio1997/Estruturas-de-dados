@@ -5,6 +5,7 @@ public class Sequencia implements SequenciaIM{
     private No head;
     private No tail;
     private int t=-1;
+    private No interNo;
      
 
     public Sequencia() {
@@ -16,6 +17,9 @@ public class Sequencia implements SequenciaIM{
     @Override
     public int RankOf(No no) {
         // TODO Auto-generated method stub
+        if(t==-1){
+            throw new RuntimeException("sequencia vazia!!");
+        }
         No n = head.getNext();
         int r=0;
         while((!n.getValue().equals(no.getValue()))){
@@ -29,6 +33,9 @@ public class Sequencia implements SequenciaIM{
     @Override
     public No atRank(int rank) {
         // TODO Auto-generated method stub
+        if(t==-1){
+            throw new RuntimeException("sequencia vazia!!");
+        }
         No new_node;
         if(rank <= size()/2){
             new_node = head.getNext();
@@ -48,12 +55,18 @@ public class Sequencia implements SequenciaIM{
     @Override
     public Object First() {
         // TODO Auto-generated method stub
+        if(t==-1){
+            throw new RuntimeException("sequencia vazia!!");
+        }
         return head.getNext().getValue();
     }
 
     @Override
     public Object Last() {
         // TODO Auto-generated method stub
+        if(t==-1){
+            throw new RuntimeException("sequencia vazia!!");
+        } 
         return tail.getPrev().getValue();
     }
 
@@ -120,11 +133,7 @@ public class Sequencia implements SequenciaIM{
             new_no.setNext(tail);
             new_no.setPrev(head);
         } else {
-            No cursor = new No();
-            cursor = head;
-            for (int i = 0; i < p; i++) {
-                cursor = cursor.getNext();
-            }
+            No cursor = Search(elementAtRank(--p));
             new_no.setPrev(cursor);
             new_no.setNext(cursor.getNext());
             cursor.getNext().setPrev(new_no);
@@ -137,6 +146,7 @@ public class Sequencia implements SequenciaIM{
         return new_no.getValue();
     }
 
+     
     @Override
     public Object insertBefore(Object p, Object o) {
         // TODO Auto-generated method stub
@@ -211,12 +221,18 @@ public class Sequencia implements SequenciaIM{
     @Override
     public Boolean isFirst(Object jk) {
         // TODO Auto-generated method stub
+        if(t==-1){
+            throw new RuntimeException("sequencia vazia!!");
+        }
         return head.getNext().getValue().equals(jk);
     }
 
     @Override
     public Boolean isLast(Object jk) {
         // TODO Auto-generated method stub
+        if(t==-1){
+            throw new RuntimeException("sequencia vazia!!");
+        }
         return tail.getPrev().getValue().equals(jk);
     }
 
