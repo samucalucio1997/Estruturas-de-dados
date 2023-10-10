@@ -287,6 +287,24 @@ public class Sequencia implements SequenciaIM{
         return t+1;
     }
 
+    public void Object(){
+        No curNo = head;
+        while(!curNo.getNext().equals(null)){
+            System.out.println(curNo.getNext().getValue());
+            curNo = curNo.getNext();
+        }
+    }
+
+    public Object nextObject(){
+        interNo = head.getNext();
+        return interNo.getValue();
+    }
+
+    public boolean hasNext(){
+        interNo = interNo==null?interNo.getNext():interNo;
+        return interNo.equals(null);
+    }
+
     @Override
     public void swapElement(Object a, Object b) {
         // TODO Auto-generated method stub

@@ -31,7 +31,7 @@ public class LinkedList implements ArrayListIM {
         if (isEmpty()) {
             throw new RuntimeException("Lista vazia");
         }
-        return firstNo.getNextNo();
+        return firstNo.getNextNo().getValue();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class LinkedList implements ArrayListIM {
         if (isEmpty()) {
             throw new RuntimeException("Lista vazia");
         }
-        return tailNo.getPrevNo();
+        return tailNo.getPrevNo().getValue();
     }
 
     public No Search(Object no) {
@@ -52,6 +52,7 @@ public class LinkedList implements ArrayListIM {
         }
         return cursNo;
     }
+
 
     @Override
     public Object insertAfter(Object p, Object l) {

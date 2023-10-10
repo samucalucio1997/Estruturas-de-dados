@@ -15,9 +15,9 @@ public class TesteSeq {
         System.out.println(seq.elementAtRank(7));
         seq.ReplaceAtRank(4, 86<<1);
         seq.insertAtRank(17, 3);
-        System.out.println(seq.atRank(2).getValue());
-        System.out.println(seq.RankOf(new No(31)));
-        System.out.println(seq.RankOf(new No(81)));
+        while(seq.hasNext()){
+             System.out.println(seq.nextObject());
+        }
         seq.showElements();
     }
 }
