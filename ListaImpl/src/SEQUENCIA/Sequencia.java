@@ -5,7 +5,6 @@ public class Sequencia implements SequenciaIM{
     private No head;
     private No tail;
     private int t=-1;
-    private No interNo;
      
 
     public Sequencia() {
@@ -73,11 +72,8 @@ public class Sequencia implements SequenciaIM{
     @Override
     public Object ReplaceAtRank(int r, Object o) {
         // TODO Auto-generated method stub
-        No cursor = head;
+        No cursor = atRank(r);
         No newNo = new No(o);
-        for (int i = 0; i <= r; i++) {
-            cursor = cursor.getNext();
-        }
         newNo.setNext(cursor.getNext());
         newNo.setPrev(cursor.getPrev());
         cursor.getNext().setPrev(newNo);
@@ -91,14 +87,7 @@ public class Sequencia implements SequenciaIM{
         if(t==-1){
            throw new RuntimeException("Sequencia vazia!");
         }
-        No cursor = head.getNext();
-       for (int i = 0; i < index; i++) {
-           if (!cursor.getNext().equals(tail)) {
-               cursor = cursor.getNext();
-           } else {
-               throw new RuntimeException("valor de índice inválido");
-           }
-       }
+        No cursor = atRank(index);
         return cursor.getValue();
     }
      
@@ -110,10 +99,15 @@ public class Sequencia implements SequenciaIM{
         */
         No new_no = new No(l);
         if (t == -1) {
-            head.setNext(new_no);
-            tail.setPrev(new_no);
+          head.setNext(new_no);
+          tail.setPrev(new_no);
+          new_no.setNext(tail);
+          new_no.setPrev(head);
+ 
         } else {
-            No cursNo = Search(p);
+            int rank=
+            RankOf(new No(p));//Search(p);
+            No cursNo = atRank(rank);
             new_no.setNext(cursNo.getNext());
             new_no.setPrev(cursNo);
             cursNo.getNext().setPrev(new_no);
@@ -133,11 +127,11 @@ public class Sequencia implements SequenciaIM{
             new_no.setNext(tail);
             new_no.setPrev(head);
         } else {
-            No cursor = Search(elementAtRank(--p));
-            new_no.setPrev(cursor);
+            No cursor = atRank(p); //Search(elementAtRank(--p));
+            new_no.setPrev(cursor.getPrev());
             new_no.setNext(cursor.getNext());
             cursor.getNext().setPrev(new_no);
-            cursor.setNext(new_no);
+            cursor.getPrev().setNext(new_no);
             if (p == t) {
                 tail.setPrev(new_no);
             }
@@ -154,13 +148,15 @@ public class Sequencia implements SequenciaIM{
       if (t == -1) {
           head.setNext(new_no);
           tail.setPrev(new_no);
+          new_no.setNext(tail);
+          new_no.setPrev(head);
       } else {
-          No cursor = Search(o);
-          cursor = cursor.getPrev();
+          int rank = RankOf(new No(p));
+          No cursor = atRank(rank);
           new_no.setNext(cursor);
           new_no.setPrev(cursor.getPrev());
-          cursor.getNext().setPrev(new_no);
           cursor.getPrev().setNext(new_no);
+          cursor.setPrev(new_no);
       }
       t++;
       return new_no;
@@ -185,6 +181,8 @@ public class Sequencia implements SequenciaIM{
         if (t == -1) {
             head.setNext(new_no);
             tail.setPrev(new_no);
+          new_no.setNext(tail);
+          new_no.setPrev(head);
         } else {
             new_no.setNext(head.getNext());
             new_no.setPrev(head);
@@ -200,8 +198,10 @@ public class Sequencia implements SequenciaIM{
         // TODO Auto-generated method stub
           No new_no = new No(m);
         if (isEmpty()) {
-            head.setNext(new_no);
-            tail.setPrev(new_no);
+          head.setNext(new_no);
+          tail.setPrev(new_no);
+          new_no.setNext(tail);
+          new_no.setPrev(head);
         } else {
             new_no.setNext(tail);
             new_no.setPrev(tail.getPrev());
@@ -242,26 +242,31 @@ public class Sequencia implements SequenciaIM{
         if (isEmpty()) {
            throw new RuntimeException("Lista vazia");
        }
-       No cursNo = Search(no);
+       int rank = RankOf(new No(no));
+       No cursNo = atRank(rank); //Search(no);
        No remove = cursNo;
-       cursNo.getPrev().setNext(cursNo.getNext());
-       cursNo.getNext().setPrev(cursNo.getPrev());
+       cursNo.getNext().setPrev(remove.getPrev());
+       cursNo.getPrev().setNext(remove.getNext());
        cursNo = null;
+       t--;
        return remove.getValue();
     }
 
     @Override
     public Object removeAtRank(int ar) {
         // TODO Auto-generated method stub
-       No cursor = new No();
-       cursor = head;
-       for (int i = 0; i <= ar; i++) {
-           cursor = cursor.getNext();
-       }
-       No node = cursor;
-       cursor.getNext().setPrev(cursor.getPrev());
-       cursor.getPrev().setNext(cursor.getNext());
-       cursor = null;
+    //    No cursor; //atRank(ar);
+    //    cursor = head;
+    //    for (int i = 0; i <= ar; i++) {
+    //        cursor = cursor.getNext();
+    //    }
+    //    No node = cursor;
+    //    cursor.getPrev().setNext(cursor.getNext());
+    //    cursor.getNext().setPrev(cursor.getPrev());
+    //    cursor = null;
+       No cursNo = atRank(ar);
+       No node = cursNo;
+       remove(cursNo.getValue());
        t--; 
        return node.getValue();
     }
@@ -287,42 +292,14 @@ public class Sequencia implements SequenciaIM{
         return t+1;
     }
 
-    public void Object(){
-        No curNo = head;
-        while(!curNo.getNext().equals(null)){
-            System.out.println(curNo.getNext().getValue());
-            curNo = curNo.getNext();
-        }
-    }
-
-    public Object nextObject(){
-        interNo = head.getNext();
-        return interNo.getValue();
-    }
-
-    public boolean hasNext(){
-        interNo = interNo==null?interNo.getNext():interNo;
-        return interNo.equals(null);
-    }
 
     @Override
     public void swapElement(Object a, Object b) {
         // TODO Auto-generated method stub
-        No cursorNo = head.getNext();
-        No cursor = head.getNext();
-        int c = 0;
-        int d = 0;
-        if (t == -1) {
-            throw new RuntimeException("Lista vazia");
-        }
-        while (!cursor.getValue().equals(a)) {
-            cursorNo = cursorNo.getNext();
-            c++;
-        }
-        while (!cursor.getValue().equals(b)) {
-            cursor = cursor.getNext();
-            d++;
-        }
+        int c = RankOf(new No(a));
+        int d = RankOf(new No(b));
+        No cursorNo = atRank(c);
+        No cursor = atRank(d);
         replaceElement(cursor.getValue(), c);
         replaceElement(cursorNo.getValue(), d);
     }

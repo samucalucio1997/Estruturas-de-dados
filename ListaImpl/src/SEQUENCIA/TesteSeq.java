@@ -12,12 +12,17 @@ public class TesteSeq {
         seq.insertLast(105);
         System.out.println(seq.First());
         seq.insertAfter(19, 71);
-        System.out.println(seq.elementAtRank(7));
-        seq.ReplaceAtRank(4, 86<<1);
-        seq.insertAtRank(17, 3);
-        while(seq.hasNext()){
-             System.out.println(seq.nextObject());
-        }
+        seq.insertAtRank(108, 2);
+        seq.showElements();
+        System.out.println(seq.removeAtRank(2));
+        seq.showElements();
+        // seq.remove(31);
+
+        // System.out.println(seq.elementAtRank(7));
+        // seq.insertAtRank(17, 3);
+        // System.out.println(seq.RankOf(new No(11)));
+        // System.out.println(seq.atRank(2).getValue());
+        // seq.ReplaceAtRank(4, 86<<1);
         seq.showElements();
     }
 }

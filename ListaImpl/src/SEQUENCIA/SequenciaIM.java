@@ -3,7 +3,7 @@ package SEQUENCIA;
 import Lista.ArrayListIM;
 import VECTOR.VectorIM;
 
-public interface SequenciaIM extends ArrayListIM,VectorIM{
+public interface SequenciaIM extends ArrayListIM, VectorIM {
 
     @Override
     default Object First() {
@@ -110,5 +110,4 @@ public interface SequenciaIM extends ArrayListIM,VectorIM{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'removeAtRank'");
     }
-    
 }
