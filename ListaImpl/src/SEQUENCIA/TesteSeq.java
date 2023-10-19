@@ -16,7 +16,7 @@ public class TesteSeq {
         seq.showElements();
         System.out.println(seq.removeAtRank(2));
         seq.showElements();
-        // seq.remove(31);
+        seq.remove(31);
 
         // System.out.println(seq.elementAtRank(7));
         // seq.insertAtRank(17, 3);

@@ -53,7 +53,6 @@ public class LinkedList implements ArrayListIM {
         return cursNo;
     }
 
-
     @Override
     public Object insertAfter(Object p, Object l) {
         No new_no = new No(l);

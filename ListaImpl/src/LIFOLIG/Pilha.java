@@ -19,21 +19,33 @@ public class Pilha<T> implements PilhaIM<T> {
     @Override
     public T push(T o) {
         No<T> mod = new No<>(o);
-        
-            mod.setNext(head);
+        mod.setNext(head);
         head = mod;
         this.f++;
         return mod.getValue();
     }
 
+    public void AdicionaPilha(Pilha<T> p){
+        Pilha<T> ipl = new Pilha<>();
+        
+        while (!p.isEmpty()) {
+            ipl.push(p.pop());
+        }
+        while(!ipl.isEmpty()){
+           p.push(ipl.first());
+           push(ipl.pop());
+        }
+    }
+
     @Override
-    public void pop() {
+    public T pop() {
         if (isEmpty()) {
             throw new PilhaWException("pilha vazia");
         } 
-        // System.out.println(head.getValue());
+        Object topo = head.getValue();
         head=head.getNext();
         f--;
+        return (T) topo;
     }
 
     @Override

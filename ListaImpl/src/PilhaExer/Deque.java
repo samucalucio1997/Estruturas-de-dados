@@ -40,13 +40,40 @@ public class Deque implements PilhaIS{
         // TODO Auto-generated method stub
     }
 
-    public Deque Copy(){
+    public Deque Copy(){//copia invertida
         Deque copy = new Deque(0);
         for (int i = size()-1; i >-1; i--) {
-            
-            copy.push(S[i]);
+            copy.push(S[i]);//não foi usado o pop() para não esvaziar esta pilha que foi usada para gerar a cópia!!
         }
         return copy;
+    }
+
+
+    public void AdicionaPilha(Deque p){
+        Deque aux = new Deque(0);
+        while(!p.isEmpty()) {
+            aux.push(p.top());p.pop();
+        }
+          while(!aux.isEmpty()) {
+              p.push(aux.top());
+              this.push(aux.top());aux.pop();
+          }
+    }
+
+    public Deque Inverse(){
+         Deque nova =new Deque(0);
+        //  int i=0;
+        //  while (i<this.size()) {
+        //     nova.push(S[i]);i++;
+        //  }
+         while (!isEmpty()) {
+            nova.push(pop());
+         }
+         return nova;
+    }
+
+    public void empty(){
+        t=-1;
     }
 
     @Override
@@ -73,6 +100,7 @@ public class Deque implements PilhaIS{
                System.out.print(" ");
             }
         }
+        System.out.println();
     }
     
 }
