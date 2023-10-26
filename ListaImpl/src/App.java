@@ -1,6 +1,7 @@
 import java.util.function.Function;
 
 import FIFO.Fila;
+import Pilha.PilhaArray;
 
 public class App {
 
@@ -37,23 +38,32 @@ public class App {
     }
     public static void main(String[] args) throws Exception {
 
-        Lista lista = new Lista();
-        Lista new_Lista = new Lista();
-        new_Lista.addFirst(new Node(75));
-        new_Lista.addFirst(new Node(18));
-        new_Lista.addFirst(new Node(46));
-        new_Lista.addFirst(new Node(31));
-        new_Lista.addFirst(new Node(56));
-        new_Lista.addFirst(new Node(11));
-        lista.addFirst(new Node(9));
-        lista.addFirst(new Node(84));
-        lista.addFirst(new Node(15));
-        lista.addFirst(new Node(11));
-        lista.addFirst(new Node(7));
-        new_Lista.ShowElements();
-        // new_Lista.makeFirst(2);
-        lista.AdicionaLista(new_Lista);
-        new_Lista.ShowElements();
+        // Lista lista = new Lista();
+        // Lista new_Lista = new Lista();
+        // new_Lista.addFirst(new Node(75));
+        // new_Lista.addFirst(new Node(18));
+        // new_Lista.addFirst(new Node(46));
+        // new_Lista.addFirst(new Node(31));
+        // new_Lista.addFirst(new Node(56));
+        // new_Lista.addFirst(new Node(11));
+        // lista.addFirst(new Node(9));
+        // lista.addFirst(new Node(84));
+        // lista.addFirst(new Node(15));
+        // lista.addFirst(new Node(11));
+        // lista.addFirst(new Node(7));
+        // new_Lista.ShowElements();
+        // // new_Lista.makeFirst(2);
+        // lista.AdicionaLista(new_Lista);
+        // new_Lista.ShowElements();
+
+        PilhaArray test = new PilhaArray(1, 0);
+        test.pushRed(302);
+        test.pushBlack(45);
+        test.pushBlack(22);
+        test.pushRed(88);
+        test.pushRed(101);
+        test.pushRed(25);
+        test.ShowElements();
 
 
         // Fila<Integer> queue = new Fila<Integer>(1, -2);

@@ -9,7 +9,6 @@ public class FilaTest {
 		f.enQueue(2);
 		f.enQueue(3);
 		f.enQueue(4);
-		try{
 			System.out.println(f.first());
 			f.deQueue();
 			System.out.println(f.first());
@@ -17,13 +16,10 @@ public class FilaTest {
 			System.out.println(f.first());
 			f.deQueue();
 			System.out.println(f.first());
-			f.deQueue();
-			System.out.println(f.first());
+			// f.deQueue();
+			// System.out.println(f.first());
 			// f.dequeue();
 		
-		}catch(FilaVaziaException erro){
-			System.out.println(erro.getMessage());
-			
-		}
+		
     }
 }

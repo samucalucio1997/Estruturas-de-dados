@@ -34,7 +34,7 @@ public class PilhaArray implements PilhaInterface {
     }
 
     @Override
-    public int topVermelho() throws PilhaVaziaExcecao {
+    public Object topVermelho() throws PilhaVaziaExcecao {
         if (this.isEmpty() || v <= -1) {
             throw new PilhaVaziaExcecao("É Pilha vazia man");
         }
@@ -71,17 +71,17 @@ public class PilhaArray implements PilhaInterface {
     }
 
     public void pushRed(Object cor) {
-        Cor cores = (Cor) cor;
+        Cor cores = new Vermelho(cor);//(Cor) cor;
         push(cores);
     }
 
     public void pushBlack(Object cor) {
-        Cor cor2 = (Cor) cor;
+        Cor cor2 = new Preto(cor);
         push(cor2);
     }
 
     @Override
-    public int popVermelha() throws PilhaVaziaExcecao {
+    public Object popVermelha() throws PilhaVaziaExcecao {
         // TODO Auto-generated method stub
         if (v <= -1) {
             throw new PilhaVaziaExcecao("Pilha vazia");
@@ -93,7 +93,7 @@ public class PilhaArray implements PilhaInterface {
         return retorno.getValue();
     }
 
-    public int popPreto() {
+    public Object popPreto() {
         if (p >= capacidade) {
             throw new PilhaVaziaExcecao("pilha vazia");
         }
@@ -105,7 +105,7 @@ public class PilhaArray implements PilhaInterface {
     }
 
     @Override
-    public int topPreto() throws PilhaVaziaExcecao {
+    public Object topPreto() throws PilhaVaziaExcecao {
         // TODO Auto-generated method stub]
         if (isEmpty() || p >= capacidade) {
             throw new PilhaVaziaExcecao("É pilha vazia man");
@@ -115,7 +115,7 @@ public class PilhaArray implements PilhaInterface {
 
     public void ShowElements() {
         System.out.print("[");
-        int k = (S[0] != null) ? S[0].getValue() : -1;
+        Object k = (S[0] != null) ? S[0].getValue() : -1;
         System.out.print(k + ", ");
         for (int i = 1; i < S.length - 1; i++) {
             k = S[i] != null ? S[i].getValue() : -1;

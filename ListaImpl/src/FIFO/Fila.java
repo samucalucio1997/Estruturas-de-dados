@@ -67,7 +67,6 @@ public class Fila<T extends Object> implements FilaIS {
 
     @Override
     public Boolean isEmpty() {
-
         return i == f;
     }
 

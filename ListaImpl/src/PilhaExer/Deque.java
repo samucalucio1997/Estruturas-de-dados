@@ -30,14 +30,14 @@ public class Deque implements PilhaIS{
 
     @Override
     public int size() {
-        return t+1;
         // TODO Auto-generated method stub
+        return t+1;
     }
 
     @Override
     public boolean isEmpty() {
-        return t==-1;
         // TODO Auto-generated method stub
+        return t==-1;
     }
 
     public Deque Copy(){//copia invertida

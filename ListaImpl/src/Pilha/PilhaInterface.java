@@ -5,11 +5,11 @@ public interface PilhaInterface {
 
     public boolean isEmpty();
 
-    public int topVermelho() throws PilhaVaziaExcecao;
+    public Object topVermelho() throws PilhaVaziaExcecao;
 
-    public int topPreto() throws PilhaVaziaExcecao;
+    public Object topPreto() throws PilhaVaziaExcecao;
 
-    public int popVermelha() throws PilhaVaziaExcecao;
+    public Object popVermelha() throws PilhaVaziaExcecao;
 
     public void pushRed(Object o);
 

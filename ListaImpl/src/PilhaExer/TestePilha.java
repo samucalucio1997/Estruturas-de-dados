@@ -3,9 +3,9 @@ package PilhaExer;
 public class TestePilha {
     
     
-    private class Principal{
+    // private class Principal{
         
-    }
+    // }
     
     
     public static void main(String[] args) {
@@ -21,7 +21,7 @@ public class TestePilha {
         pil2.push(45);
         pil2.push(77);
         pil2.push(120);
-        // pil2.ShwEl();
+        pil2.ShwEl();
         pil2.AdicionaPilha(pilha);
         // System.out.println(pilha.pop());
         // System.out.println(pilha.size());

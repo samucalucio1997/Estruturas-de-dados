@@ -1,15 +1,15 @@
 package Pilha;
 
 public class Cor {
-    private int value;
+    private Object value;
     protected String nome;
 
     
 
-    public Cor(int value) {
+    public Cor(Object value) {
         this.value = value;
     }
-    public int getValue() {
+    public Object getValue() {
         return value;
     }
     public String getNome() {
