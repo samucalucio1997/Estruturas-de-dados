@@ -41,7 +41,7 @@ public class Fila<T extends Object> implements FilaIS {
     @Override
     public Object deQueue() {
         if(isEmpty()){
-            throw new FilaExecption("pilha vazia meu chapa");
+            throw new FilaExecption("pilha vazia");
         }
         if (i == capacity) {
             i = 0;
