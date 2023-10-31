@@ -1,6 +1,5 @@
   import java.util.Iterator;
 
-import GenericTree.ArvoreGeni;
 import GenericTree.ArvreGeni;
 import GenericTree.No;
 
