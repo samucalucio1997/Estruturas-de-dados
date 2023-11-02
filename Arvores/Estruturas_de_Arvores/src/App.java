@@ -4,16 +4,7 @@ import GenericTree.ArvreGeni;
 import GenericTree.No;
 
   public class App {
-      public static void main(String[] args) throws Exception {
-    //  ArvoreGeni<String> SetNodes = new ArvoreGeni<>();
-    //   No<String> node1 = new No<String>("primeiro");
-    //   No<String> node2 = new No<String>("segundo");
-    //   No<String> node3 = new No<String>("terceiro"); 
-    //   SetNodes.InsertNo(SetNodes.getRoot(), node1);
-    //   SetNodes.InsertNo(node1, node2);
-    //   SetNodes.InsertNo(node1, node3);
-    //   SetNodes.InsertNo(node2, new No<String>("carro"));
-    //   SetNodes.InsertNo(node1, new No<String>("cerca"));
+  public static void main(String[] args) throws Exception {
     ArvreGeni<Integer> tree = new ArvreGeni<Integer>(54);
     No<Integer> node1 = new No<Integer>(tree.root(), 125);
     No<Integer> node2 = new No<Integer>(node1, 56);
@@ -28,12 +19,15 @@ import GenericTree.No;
     tree.addChild(node2, new No<Integer>(node2,22));
     tree.addChild(node2,new No<Integer>(node2,3));
     // tree.preOrdem(tree.root());
-    System.out.println(tree.depth(node4));
-    System.out.println(tree.Pesquisar(new No<Integer>(tree.root(), 112)));
+    // System.out.println(tree.depth(node4));
+    // System.out.println(tree.Pesquisar(new No<Integer>(tree.root(), 112)));
 
     Iterator<No<Integer>> princ =  tree.elements(); 
     while (princ.hasNext()) {
       System.out.println(princ.next());
     }  
+    // System.out.println(tree.height());
+    // System.out.println(tree.depth(node4));
+       System.out.println(tree.size());
   }
   }

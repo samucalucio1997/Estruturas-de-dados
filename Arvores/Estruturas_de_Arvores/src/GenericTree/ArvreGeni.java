@@ -24,7 +24,7 @@ public class ArvreGeni<t>{
 	}
 
 	/** retorna os filhos de um No<t> */
-	public Iterator children(No<t> v)
+	public Iterator<No<t>> children(No<t> v)
 	{
 		return v.children();
 	}
@@ -45,16 +45,14 @@ public class ArvreGeni<t>{
 		return v.element().equals(raiz.element()); 
 	}
 	/** Adiciona um filho a um No<t> */
-	public void addChild(No<t> v, No<t> o)
-	{
+	public void addChild(No<t> v, No<t> o){
 		v.addChild(o);
 		tamanho++;
 	}
 	/** Remove um No<t>
 	 *  Só pode remover Nos externos e que tenham um pai (não seja raiz)
 	*/
-	public t remove(No<t> v) throws InvalidNoException
-	{
+	public t remove(No<t> v) throws InvalidNoException{
 		No<t> pai = v.parent();
 		if (pai != null || isExternal(v))
 			pai.removeChild(v);
@@ -65,8 +63,7 @@ public class ArvreGeni<t>{
 		return o;
 	}
 	/** Troca dois elementos de posição */
-	public void swapElements(No<t> v, No<t> w)
-	{
+	public void swapElements(No<t> v, No<t> w){
 		/*Método que serve de exercício
 		 * Este método deverá fazer com que o objeto
 		 * que estava na posição v fique na posição w
@@ -78,27 +75,44 @@ public class ArvreGeni<t>{
 		v.setElement(save);        
 	}
 	/** Retorna a profundidade de um No<t> */
-	public int depth(No<t> v)
-	{
+	public int depth(No<t> v){
 		int profundidade = profundidade(v);
 		return profundidade;
 	}
-	private int profundidade(No<t> v)
-	{
+	private int profundidade(No<t> v){
 		if (v == raiz)
 			return 0;
 		else
 			return 1 + profundidade(v.parent());
 	}
+
+    private int Altura(No<t> no){
+		if(isExternal(no)){
+			return 0;	
+		}else{
+			Iterator<No<t>> it = no.children();
+			int h=0;
+			while (it.hasNext()) {
+				int b = Altura(it.next());
+				if(b>h){
+                      h=b;
+				}
+			}
+			return 1+h;
+		}
+	}
+
+
 	/** Retorna a altura da árvore */
-	public int height()
-	{
+	public int height(){
 		// Método que serve de exercício
-		int altura = 0;
+        
+		// profundidade(raiz);
+		int altura = this.Altura(raiz);
 		return altura;
 	}
 
-    private void preOrdemTree(No<t> no, List<No<t>> lista){
+    private void preOrdemTree(No<t> no, List<No<t>> lista){// usado pelo método pesquisar
          if(no == null){
 			return;
 		 }
@@ -108,7 +122,7 @@ public class ArvreGeni<t>{
 				No<t> filho = fil.next();
 				preOrdem(filho);
 		 }
-	}
+		}
 
 	public No<t> Pesquisar(No<t> no){
 		No<t> cursNo=null;
@@ -121,21 +135,20 @@ public class ArvreGeni<t>{
 	}
 
 	/** Retorna um iterator com os elementos armazenados na árvore */
-	public Iterator elements(){
+	public Iterator<No<t>> elements(){
 		// Método que serve de exercício
         List<No<t>> lista = new ArrayList<>();
-		preOrdemTree(raiz, lista);    
+		preOrdemTree(this.root(), lista);    
 		return lista.iterator();
 	}
 	/** Retorna um iterator com as posições (Nos) da árvore */
-	public Iterator Nos(){
+	public Iterator<No<t>> Nos(){
 		// Método que serve de exercício
         List<No<t>> it = new ArrayList<>();
 
         return null;
 	}
-	/** Retorna o número de Nos da árvore
-	 */
+	/** Retorna o número de Nos da árvore*/
 	public int size()
 	{
 	 // Método que serve de exercício
@@ -155,6 +168,7 @@ public class ArvreGeni<t>{
            preOrdem(cursor);           
         }
     }
+
 	/** Retorna se a ávore está vazia. Sempre vai ser falso, pois não permitimos remover a raiz
 	 */
 	public boolean isEmpty()
@@ -164,7 +178,8 @@ public class ArvreGeni<t>{
 	public t replace(No<t> v, t o)
 	{
 	 // Método que serve de exercício
-		return null;
+	    v.setElement(o);
+		return o;
 	} 
     
 }
