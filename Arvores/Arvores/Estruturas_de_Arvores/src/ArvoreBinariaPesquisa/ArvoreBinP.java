@@ -36,7 +36,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public Comparador<t> getComparador() {
         // TODO Auto-generated method stub
-        return null;
+        return this.comp;
     }
 
     @Override
@@ -100,19 +100,16 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public no<t> pesquisar(no<t> no, t key) {
         // TODO Auto-generated method stub
+        if(no==null){
+            throw new RuntimeException("Não encontrado");
+        }
         if(no.getValue().equals(key)){
              return no;
         }
         else{
-            if(no.getLeftChild()!=null){
-                return pesquisar(no.getLeftChild(), key);
-            }else{
-                if(no.getRightChild()!=null){
-                    return pesquisar(no.getRightChild(), key);
-              }else{
-                return null;
-              }
-            }
+            no<t> ret = pesquisar(no.getLeftChild(), key);
+            ret = !ret.getValue().equals(key)?pesquisar(no.getRightChild(), key):ret;
+            return ret;
         }
     }
 

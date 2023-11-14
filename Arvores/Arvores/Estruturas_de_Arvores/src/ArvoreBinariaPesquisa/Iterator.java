@@ -10,8 +10,9 @@ public class Iterator<t> implements java.util.Iterator<t>{
         // TODO Auto-generated method stub
         return !pilha.isEmpty();
     }
+
     private void RealOck(no<t> node){
-       
+          
     }
 
     @Override
