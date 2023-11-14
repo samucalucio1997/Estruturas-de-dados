@@ -3,10 +3,20 @@ package ArvoreBinariaPesquisa;
 public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
     private no<t> root;
-    private Comparador<t> comp = new Comparador<>();
+    private Comparador<t> comp;
 
     public ArvoreBinP(no<t> root) {
         this.root = root;
+        this.comp =new Comparador<t>() {
+            @Override
+            public int compare(no<t> no1, no<t> no2) {
+                // TODO Auto-generated method stub
+                int p1 = (Integer) no1.getValue();
+                int p2 = (Integer) no2.getValue();
+                return p1-p2;
+            }
+            
+        };
     }
     //altura(no.getLeftChild())
     //altura(no.getRightChild())
@@ -101,22 +111,27 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     public no<t> pesquisar(no<t> no, t key) {
         // TODO Auto-generated method stub
         if(no==null){
-            throw new RuntimeException("Não encontrado");
+            return null;
         }
         if(no.getValue().equals(key)){
              return no;
         }
         else{
-            no<t> ret = pesquisar(no.getLeftChild(), key);
-            ret = !ret.getValue().equals(key)?pesquisar(no.getRightChild(), key):ret;
-            return ret;
+            no<t> ret = pesquisar(no.getRightChild()!=null?no.getRightChild():null, key);
+            no<t> let = pesquisar(no.getLeftChild()!=null?no.getLeftChild():null, key);
+            return ret.getValue().equals(key)?ret:let;    
         }
     }
 
     @Override
     public void posOrdem(no<t> no) {
         // TODO Auto-generated method stub
-        
+        if(no==null){
+            return;
+        }else{
+            posOrdem(no.getLeftChild());
+            posOrdem(no.getRightChild());
+        }
     }
 
     @Override

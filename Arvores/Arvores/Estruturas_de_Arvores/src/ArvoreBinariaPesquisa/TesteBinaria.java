@@ -14,6 +14,8 @@ public class TesteBinaria {
         System.out.println(ar.incluir(node4.getValue()).getValue());
         System.out.println(ar.incluir(node5.getValue()).getValue());
         System.out.println(ar.incluir(node6.getValue()).getValue());
-        System.out.println(ar.pesquisar(ar.getRaiz(), 6).getValue());
+        ar.posOrdem(node1);
+        ////////////////////////////
+        System.out.println(ar.pesquisar(ar.getRaiz(), 45).getValue());
     }
 }
