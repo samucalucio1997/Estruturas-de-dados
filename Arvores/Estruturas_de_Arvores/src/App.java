@@ -18,16 +18,21 @@ import GenericTree.No;
     tree.addChild(node3, node4);  
     tree.addChild(node2, new No<Integer>(node2,22));
     tree.addChild(node2,new No<Integer>(node2,3));
-    // tree.preOrdem(tree.root());
-    // System.out.println(tree.depth(node4));
-    // System.out.println(tree.Pesquisar(new No<Integer>(tree.root(), 112)));
 
-    Iterator<No<Integer>> princ =  tree.elements(); 
+    // System.out.println(tree.remove(node2));
+    Iterator<No<Integer>> princ = tree.elements(); 
     while (princ.hasNext()) {
-      System.out.println(princ.next());
-    }  
+      System.out.println(princ.next().element());
+    }
+
+    // Iterator<Integer> prllo = tree.Nos();
+    // while (prllo.hasNext()) {
+    //    System.out.println(prllo.next());
+    // }
+
+    System.out.println(tree.isExternal(node4)); 
     // System.out.println(tree.height());
     // System.out.println(tree.depth(node4));
-       System.out.println(tree.size());
+    // System.out.println(tree.size());
   }
   }

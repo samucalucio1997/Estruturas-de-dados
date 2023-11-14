@@ -57,7 +57,7 @@ public class ArvreGeni<t>{
 		if (pai != null || isExternal(v))
 			pai.removeChild(v);
 		else
-			throw new InvalidNoException();
+			throw new InvalidNoException("O nó é interno");
 		t o = v.element();
 		tamanho--;
 		return o;
@@ -79,6 +79,7 @@ public class ArvreGeni<t>{
 		int profundidade = profundidade(v);
 		return profundidade;
 	}
+
 	private int profundidade(No<t> v){
 		if (v == raiz)
 			return 0;
@@ -102,7 +103,6 @@ public class ArvreGeni<t>{
 		}
 	}
 
-
 	/** Retorna a altura da árvore */
 	public int height(){
 		// Método que serve de exercício
@@ -120,21 +120,12 @@ public class ArvreGeni<t>{
 		 Iterator<No<t>> fil = no.children();
 		 while (fil.hasNext()) {
 				No<t> filho = fil.next();
-				preOrdem(filho);
+				preOrdemTree(filho,lista);
 		 }
 		}
 
-	public No<t> Pesquisar(No<t> no){
-		No<t> cursNo=null;
-		while(elements().hasNext()){
-			if(elements().next().equals(no.element())){
-				cursNo = (No<t>) elements().next();break;
-			}
-		}
-		return cursNo;
-	}
-
-	/** Retorna um iterator com os elementos armazenados na árvore */
+		
+		/** Retorna um iterator com os elementos armazenados na árvore */
 	public Iterator<No<t>> elements(){
 		// Método que serve de exercício
         List<No<t>> lista = new ArrayList<>();
@@ -142,33 +133,32 @@ public class ArvreGeni<t>{
 		return lista.iterator();
 	}
 	/** Retorna um iterator com as posições (Nos) da árvore */
-	public Iterator<No<t>> Nos(){
+	public Iterator<t> Nos(){
 		// Método que serve de exercício
-        List<No<t>> it = new ArrayList<>();
-
-        return null;
+        List<t> it = new ArrayList<>();
+		preOrT(raiz, it);
+        return it.iterator();
 	}
+    //preOrT
+	private void preOrT(No<t> no, List<t> lista){// usado pelo método pesquisar
+		No<t> cursor = no;
+		if(cursor == null){
+			return;
+		 }
+		 lista.add(no.element());
+		 Iterator<No<t>> fil = cursor.children();
+		 while (fil.hasNext()) {
+				cursor = fil.next();
+				preOrT(cursor, lista);
+		 }
+		}
+
 	/** Retorna o número de Nos da árvore*/
 	public int size()
 	{
-	 // Método que serve de exercício
+		// Método que serve de exercício
 		return tamanho;
 	}
-    /********************************************* */
-    public void preOrdem(No<t> no) {
-        // TODO Auto-generated method stub
-        No<t> cursor = no;
-        if(cursor == null){
-            return;
-        }
-        System.out.println(cursor.element());
-        Iterator<No<t>> agarra = cursor.children();
-        while(agarra.hasNext()){
-           cursor = agarra.next();
-           preOrdem(cursor);           
-        }
-    }
-
 	/** Retorna se a ávore está vazia. Sempre vai ser falso, pois não permitimos remover a raiz
 	 */
 	public boolean isEmpty()
@@ -190,16 +180,40 @@ public class ArvreGeni<t>{
 
 
 // public int getTam() {
-//     return tam;
-// }
-// public void setTam(int tam) {
-//     this.tam = tam;
-// }
+	//     return tam;
+	// }
+	// public void setTam(int tam) {
+		//     this.tam = tam;
+		// }
+		
+		// public No<t> Pesquisar(No<t> no){
+			// 	No<t> cursNo=null;
+			// 	while(elements().hasNext()){
+				// 		if(elements().next().equals(no.element())){
+					// 			cursNo = (No<t>) elements().next();break;
+		// 		}
+		// 	}
+		// 	return cursNo;
+		// }
 
-// public ArvreGeni(t value) {
-//     this.raiz = new No<t><t>(value);
-// }
-
+		// private void preOrdem(No<t> no) {
+		// 	// TODO Auto-generated method stub
+		//     No<t> cursor = no;
+		//     if(cursor == null){
+		//         return;
+		//     }
+		//     // System.out.println(cursor.element());
+		//     Iterator<No<t>> agarra = cursor.children();
+		//     while(agarra.hasNext()){
+		// 		cursor = agarra.next();
+		// 		preOrdem(cursor);           
+		//     }
+		// }
+		
+		// public ArvreGeni(t value) {
+			//     this.raiz = new No<t><t>(value);
+			// }
+	
 // public Boolean isInternal(No<t><t> no){
 //    if(no.getFilhos().hasNext()){
 //        return false;
