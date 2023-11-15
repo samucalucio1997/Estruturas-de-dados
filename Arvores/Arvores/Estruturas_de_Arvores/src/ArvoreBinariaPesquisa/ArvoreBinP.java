@@ -18,8 +18,6 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             
         };
     }
-    //altura(no.getLeftChild())
-    //altura(no.getRightChild())
     @Override
     public int altura(no<t> no) {
         // TODO Auto-generated method stub
@@ -116,10 +114,11 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         if(no.getValue().equals(key)){
              return no;
         }
-        else{
-            no<t> ret = pesquisar(no.getRightChild()!=null?no.getRightChild():null, key);
-            no<t> let = pesquisar(no.getLeftChild()!=null?no.getLeftChild():null, key);
-            return ret.getValue().equals(key)?ret:let;    
+        no<t> ret = pesquisar(no.getRightChild(),key);
+        if(ret!=null){
+            return ret;
+        }else{
+            return pesquisar(no.getLeftChild(), key);
         }
     }
 
@@ -129,6 +128,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         if(no==null){
             return;
         }else{
+            System.out.println(no.getValue());
             posOrdem(no.getLeftChild());
             posOrdem(no.getRightChild());
         }
@@ -143,13 +143,35 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public int profundidade(no<t> no) {
         // TODO Auto-generated method stub
-        return 0;
+        if(no==null){
+            return -1;
+        }
+        if(no.getValue().equals(getRaiz().getValue())){
+            return 0;
+        }
+        else{
+            int p = profundidade(no.getFather());
+            return 1 + p;
+        }
     }
 
     @Override
     public t remover(t key) {
         // TODO Auto-generated method stub
-        return null;
+        no<t> curNo = pesquisar(getRaiz(), key); 
+        t rert = curNo.getValue();
+        if(curNo.getLeftChild()!=null){
+            curNo.setValue(curNo.getLeftChild().getValue());
+            curNo.getLeftChild().setValue(null);
+        }else{
+            if(curNo.getRightChild()!=null){
+                curNo.setValue(curNo.getRightChild().getValue());
+                curNo.getRightChild().setValue(null);
+            }else{
+                curNo.setValue(null);
+            }
+        }
+        return rert;
     }
 
     @Override
