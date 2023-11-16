@@ -4,6 +4,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
     private no<t> root;
     private Comparador<t> comp;
+    private int num_elem;
 
     public ArvoreBinP(no<t> root) {
         this.root = root;
@@ -68,7 +69,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             while (curNo!=null) {
                 int ret = comp.compare(new_no, curNo);
                 if(ret>0){
-                    if(curNo.getRightChild()!=null){
+                    if(curNo.getRightChild()!=null&&curNo.getLeftChild()!=null){
                         curNo = curNo.getRightChild();continue;
                     }else{
                         curNo.setRightChild(new_no);break;
@@ -83,7 +84,8 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             }
         }
         new_no.setFather(curNo);
-        return curNo;
+        this.num_elem++;
+        return new_no;
     }
 
 
@@ -127,17 +129,24 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         // TODO Auto-generated method stub
         if(no==null){
             return;
-        }else{
-            System.out.println(no.getValue());
+        }
+        else{
             posOrdem(no.getLeftChild());
             posOrdem(no.getRightChild());
+            System.out.println(no.getValue());
         }
     }
 
     @Override
     public void preOrdem(no<t> no) {
         // TODO Auto-generated method stub
-        
+        if(no==null){
+            return;
+        }else{
+            System.out.println(no.getValue());
+            posOrdem(no.getLeftChild());
+            posOrdem(no.getRightChild());
+        }
     }
 
     @Override
@@ -160,17 +169,17 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         // TODO Auto-generated method stub
         no<t> curNo = pesquisar(getRaiz(), key); 
         t rert = curNo.getValue();
-        if(curNo.getLeftChild()!=null){
-            curNo.setValue(curNo.getLeftChild().getValue());
-            curNo.getLeftChild().setValue(null);
-        }else{
-            if(curNo.getRightChild()!=null){
-                curNo.setValue(curNo.getRightChild().getValue());
-                curNo.getRightChild().setValue(null);
-            }else{
-                curNo.setValue(null);
-            }
+        curNo = curNo.getRightChild();
+        while(curNo!=null){
+           int ret = getComparador().compare(curNo.getLeftChild(), curNo.getRightChild());
+           if(ret>0){
+            curNo = curNo.getRightChild();
+           }else{
+            curNo = curNo.getLeftChild();
+           } 
         }
+        no<t> novo = pesquisar(getRaiz(), key);
+        novo.setValue(curNo.getValue());
         return rert;
     }
 
@@ -189,7 +198,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public int size() {
         // TODO Auto-generated method stub
-        return 0;
+        return this.num_elem;
     }
 
     

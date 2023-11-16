@@ -10,15 +10,22 @@ public class TesteBinaria {
         no<Integer> node6 = new no<Integer>(25);
         no<Integer> node7 = new no<Integer>(7);
         ArvoreBinP<Integer> ar = new ArvoreBinP<>(node1);
-        System.out.println(ar.incluir(node2.getValue()).getValue());
-        System.out.println(ar.incluir(node3.getValue()).getValue());
-        System.out.println(ar.incluir(node4.getValue()).getValue());
-        System.out.println(ar.incluir(node5.getValue()).getValue());
-        System.out.println(ar.incluir(node6.getValue()).getValue());
-        System.out.println(ar.incluir(node7.getValue()).getValue());
-        ar.posOrdem(node7);
+        node2 = ar.incluir(node2.getValue());
+        node3 = ar.incluir(node3.getValue());
+        node4 = ar.incluir(node4.getValue());
+        node5 = ar.incluir(node5.getValue());
+        node6 = ar.incluir(node6.getValue());
+        node7 = ar.incluir(node7.getValue());
+        System.out.println(node3.getFather());
+        System.out.println();
+        // ar.posOrdem(node1);
+        System.out.println();
+        ar.remover(6);
+        ar.posOrdem(node1);
+        System.out.println();
+        System.out.println(node4.getRightChild().getValue());
         ////////////////////////////
-        // System.out.println(ar.pesquisar(ar.getRaiz(), 25).getValue());
-        // System.out.println(ar.profundidade(node7));
+        System.out.println();
+        System.out.println(ar.profundidade(node5));
     }
 }
