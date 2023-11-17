@@ -1,10 +1,14 @@
 package ArvoreBinariaPesquisa;
 
+import java.util.ArrayList;
+
 public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
     private no<t> root;
     private Comparador<t> comp;
     private int num_elem;
+    private ArrayList<t> list;
+    private t[][] arr;
 
     public ArvoreBinP(no<t> root) {
         this.root = root;
@@ -101,6 +105,17 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         
     }
 
+    private void buildMatriz(no<t> no){
+       if(no==null){
+            list.add(null);
+            return;
+       }
+       buildMatriz(no.getLeftChild());
+       list.add(no.getValue());
+       buildMatriz(no.getRightChild());
+    }
+    
+
     @Override
     public Iterator<t> nos() {
         // TODO Auto-generated method stub
@@ -167,20 +182,27 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public t remover(t key) {
         // TODO Auto-generated method stub
-        no<t> curNo = pesquisar(getRaiz(), key); 
-        t rert = curNo.getValue();
-        curNo = curNo.getRightChild();
-        while(curNo!=null){
-           int ret = getComparador().compare(curNo.getLeftChild(), curNo.getRightChild());
-           if(ret>0){
-            curNo = curNo.getRightChild();
-           }else{
-            curNo = curNo.getLeftChild();
-           } 
+        no<t> nt = pesquisar(root, key);
+        t value = nt.getValue();
+        if(nt.getRightChild()!=null){
+                nt = nt.getRightChild();
         }
-        no<t> novo = pesquisar(getRaiz(), key);
-        novo.setValue(curNo.getValue());
-        return rert;
+        while (nt.getLeftChild()!=null) {
+            nt = nt.getLeftChild();
+        }
+        no<t> sgTroca = pesquisar(root, nt.getValue());
+        no<t> novo  =pesquisar(root, key);
+        novo.setValue(nt.getValue());
+        nt=nt.getRightChild()!=null?nt.getRightChild():null;
+        while (nt!=null&&nt.getLeftChild()!=null) {
+            nt = nt.getLeftChild();
+        }
+        if(nt!=null){
+            sgTroca.setValue(nt.getValue()); 
+        }else{
+            sgTroca.setValue(null);
+        }
+        return value;
     }
 
     @Override
