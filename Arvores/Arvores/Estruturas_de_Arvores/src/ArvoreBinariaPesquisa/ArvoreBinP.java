@@ -1,6 +1,7 @@
 package ArvoreBinariaPesquisa;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
@@ -37,7 +38,11 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public Iterator<t> elements() {
         // TODO Auto-generated method stub
-        return null;
+        List<t> arrTs = new ArrayList<>();
+        for (t t : list) {
+            arrTs.add(t);
+        }
+        return  (Iterator<t>) arrTs.iterator();
     }
 
     @Override
@@ -102,6 +107,9 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public void mostrar() {
         // TODO Auto-generated method stub
+        double a = this.altura(root);
+        double b = 2;
+        this.arr = (t[][]) new Object[this.altura(root)][(int) Math.pow(b, a)];
         
     }
 
@@ -119,7 +127,8 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public Iterator<t> nos() {
         // TODO Auto-generated method stub
-        return null;
+        buildMatriz(root);
+        return (Iterator<t>) this.list.iterator();
     }
 
     @Override

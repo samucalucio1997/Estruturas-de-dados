@@ -30,11 +30,12 @@ public class TesteBinaria {
         System.out.println();
         // ar.posOrdem(node1);
         System.out.println();
-        ar.remover(6);
+        ar.remover(9);
         ar.posOrdem(node1);
         System.out.println();
-        System.out.println(node2.getValue());
-        System.out.println(node2.getRightChild().getLeftChild().getValue());
+        System.out.println(node3.getValue());
+        System.out.println(node2.getRightChild().getLeftChild()
+        .getValue());
         ////////////////////////////
         System.out.println();
         System.out.println(ar.profundidade(node5));
