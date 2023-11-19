@@ -39,7 +39,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         this.setComparator(new Comparador<t>() {
 
             @Override
-            public int compare(no<T> no1, no<T> no2) {
+            public int compare(no<t> no1, no<t> no2) {
                 // TODO Auto-generated method stub
                 throw new UnsupportedOperationException("Unimplemented method 'compare'");
             }
@@ -138,28 +138,36 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         // TODO Auto-generated method stub
         double a = this.altura(root);
         double b = 2;
-        this.arr = (t[][]) new Object[this.altura(root)][(int) Math.pow(b, a)];
-        printTree(root, 1,(int) Math.pow(b, a)/2,arr);
-        for (int i = 1; i <= a; i++) {
+        this.arr = (t[][]) new Object[this.altura(root)+1][(int) Math.pow(b, a)];
+        printTree(root,(int) Math.pow(b, a)/2,arr);
+        for (int i = 0; i <= a; i++) {
             for (int j = 0; j < (int) Math.pow(b, a); j++) {
-                System.out.print(arr[i]
-                [j]);
-                System.out.print(" ");
+                if(arr[i][j]!=null){
+                    System.out.print(" " + arr[i][j]+ " ");
+                }else{
+                    System.out.print(" ");
+                }
             }
             System.out.println();
         }
     }
     
-    private void printTree(no<t> node, int linha, int col, t[][] arr) {
-        if(node==null||(linha<1&&linha>this.altura(root)&&
-        col<0&&col>(int) Math.pow(2, this.altura(root)))){
+    private void printTree(no<t> node, int col, t[][] arr) {
+        if(node==null||(col<0&&col>(int) Math.pow(2, this.altura(root)))){
             return;
         }
-        else{
-            printTree(node.getLeftChild(),linha+1,col--,arr);
-            arr[linha][col]=(t) node.getValue();
-            printTree(node.getRightChild(), linha+1, col++, arr);
-        } 
+        if(node.Isinternal()){
+           printTree(node.getLeftChild(), col+2, arr);
+        }
+        arr[profundidade(node)][((int)(node.getValue())+1)%col] = node.getValue();
+        if(node.Isinternal()){
+           printTree(node.getRightChild(), col-6, arr);    
+        }
+        // else{
+        //     arr[profundidade(node)][col]=(t) node.getValue();
+        //     printTree(node.getLeftChild(),col-4,arr);
+        //     printTree(node.getRightChild(), col+2, arr);
+        // } 
     }
 
     private void buildMatriz(no<t> no){

@@ -34,9 +34,8 @@ public class TesteBinaria {
         // ar.preOrdem(node1);
         ar.mostrar();
         System.out.println();
-        System.out.println(node3.getValue());
-        System.out.println(node2.getRightChild().getLeftChild()
-        .getValue());
+        // System.out.println(node3.getValue());
+        // System.out.println(node2.getRightChild().getLeftChild().getValue());
         ////////////////////////////
         System.out.println();
         System.out.println(ar.profundidade(node5));

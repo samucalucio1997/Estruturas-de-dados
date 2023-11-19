@@ -41,5 +41,8 @@ public class no<t> {
     public void setRightChild(no<t> rightChild) {
         RightChild = rightChild;
     }
+    public boolean Isinternal(){
+        return this.leftChild!=null||this.RightChild!=null;
+    }
 
 }
