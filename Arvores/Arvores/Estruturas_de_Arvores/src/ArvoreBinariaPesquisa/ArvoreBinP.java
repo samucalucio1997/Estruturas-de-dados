@@ -1,7 +1,10 @@
 package ArvoreBinariaPesquisa;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+
+import javax.swing.tree.TreeNode;
 
 public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
@@ -21,17 +24,43 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
                 int p2 = (Integer) no2.getValue();
                 return p1-p2;
             }
+
+            @Override
+            public int compareT(int no1, int no2) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'compareT'");
+            }
             
         };
     }
     @Override
     public int altura(no<t> no) {
         // TODO Auto-generated method stub
-        if(no==null||no.equals(getRaiz())){
+        this.setComparator(new Comparador<t>() {
+
+            @Override
+            public int compare(no<T> no1, no<T> no2) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'compare'");
+            }
+
+            @Override
+            public int compareT(int no1, int no2) {
+                // TODO Auto-generated method stub
+                return no1 - no2;
+            }
+            
+        });
+        if(no==null){
             return 0;
         }else{
-            int p=altura(no.getFather());
-            return 1 + p; 
+            int p=this.getComparador()
+            .compareT(altura(no.getRightChild()), altura(no.getLeftChild()));
+            if(p>0){
+                return 1 + altura(no.getRightChild());
+            }else{
+                return 1 + altura(no.getLeftChild()); 
+            }
         }
     }
 
@@ -110,7 +139,27 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         double a = this.altura(root);
         double b = 2;
         this.arr = (t[][]) new Object[this.altura(root)][(int) Math.pow(b, a)];
-        
+        printTree(root, 1,(int) Math.pow(b, a)/2,arr);
+        for (int i = 1; i <= a; i++) {
+            for (int j = 0; j < (int) Math.pow(b, a); j++) {
+                System.out.print(arr[i]
+                [j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+    
+    private void printTree(no<t> node, int linha, int col, t[][] arr) {
+        if(node==null||(linha<1&&linha>this.altura(root)&&
+        col<0&&col>(int) Math.pow(2, this.altura(root)))){
+            return;
+        }
+        else{
+            printTree(node.getLeftChild(),linha+1,col--,arr);
+            arr[linha][col]=(t) node.getValue();
+            printTree(node.getRightChild(), linha+1, col++, arr);
+        } 
     }
 
     private void buildMatriz(no<t> no){
