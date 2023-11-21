@@ -30,7 +30,7 @@ public class TesteBinaria {
         System.out.println();
         System.out.println();
         ar.remover(6);
-        // ar.remover(13);
+        ar.remover(13);
         System.out.println(node10.getFather().getValue());
         // ar.emOrdem(node1);
         // ar.preOrdem(node1);

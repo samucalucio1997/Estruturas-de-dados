@@ -302,9 +302,9 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             }
             // Caso 3: Nó a ser removido tem dois filhos
             else {
-                no<t> sucessor = encontrarSucessor(atual.getRightChild());
-                while (atual.getRightChild()!=null) {
-                    
+                no<t> sucessor = atual.getRightChild();
+                while (sucessor.getLeftChild()!=null) {
+                   sucessor = sucessor.getLeftChild();    
                 }
                 t valorSucessor = sucessor.getValue();
                 remover(sucessor.getValue()); // Remove recursivamente o sucessor
@@ -314,12 +314,6 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         } 
     
         return valorRemovido;
-    }
-    private no<t> encontrarSucessor(no<t> atual) {
-        while (atual.getLeftChild() != null) {
-            atual = atual.getLeftChild();
-        }
-        return atual;
     }
     
     // // TODO Auto-generated method stub
