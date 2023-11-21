@@ -28,9 +28,11 @@ public class TesteBinaria {
         node12 = ar.incluir(node12.getValue());
         System.out.println(ar.altura(node1));
         System.out.println();
-        // ar.posOrdem(node1);
         System.out.println();
-        // ar.remover(9);
+        ar.remover(6);
+        // ar.remover(13);
+        System.out.println(node10.getFather().getValue());
+        // ar.emOrdem(node1);
         // ar.preOrdem(node1);
         ar.mostrar();
         System.out.println();

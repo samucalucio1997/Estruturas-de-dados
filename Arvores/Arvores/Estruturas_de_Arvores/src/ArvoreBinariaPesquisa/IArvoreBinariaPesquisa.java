@@ -27,7 +27,7 @@ public interface IArvoreBinariaPesquisa<t> {
 
 	void mostrar();
 
-	Iterator<t> nos();
+	Iterator<no<t>> nos();
 
 	Iterator<t> elements();
 

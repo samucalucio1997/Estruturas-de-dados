@@ -1,22 +1,20 @@
 package ArvoreBinariaPesquisa;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-import javax.swing.tree.TreeNode;
 
 public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
     private no<t> root;
     private Comparador<t> comp;
     private int num_elem;
-    private ArrayList<t> list;
+    private ArrayList<no<t>> list;
     private t[][] arr;
 
     public ArvoreBinP(no<t> root) {
         this.root = root;
-        this.comp =new Comparador<t>() {
+        this.comp = new Comparador<t>() {
             @Override
             public int compare(no<t> no1, no<t> no2) {
                 // TODO Auto-generated method stub
@@ -68,8 +66,8 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     public Iterator<t> elements() {
         // TODO Auto-generated method stub
         List<t> arrTs = new ArrayList<>();
-        for (t t : list) {
-            arrTs.add(t);
+        for (no<t> t : list) {
+            arrTs.add(t.getValue());
         }
         return  (Iterator<t>) arrTs.iterator();
     }
@@ -77,7 +75,16 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public void emOrdem(no<t> no) {
         // TODO Auto-generated method stub
-        
+        if(no==null){
+            return;
+        }
+        if(no.Isinternal()){
+            emOrdem(no.getLeftChild());;
+        }
+        System.out.println(no.getValue());
+        if(no.Isinternal()){
+            emOrdem(no.getRightChild());
+        }
     }
 
     @Override
@@ -105,7 +112,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             }
         }else{
             while (curNo!=null) {
-                int ret = comp.compare(new_no, curNo);
+                int ret = getComparador().compare(new_no, curNo);
                 if(ret>0){
                     if(curNo.getRightChild()!=null&&curNo.getLeftChild()!=null){
                         curNo = curNo.getRightChild();continue;
@@ -151,23 +158,25 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             System.out.println();
         }
     }
-    
+
     private void printTree(no<t> node, int col, t[][] arr) {
         if(node==null||(col<0&&col>(int) Math.pow(2, this.altura(root)))){
             return;
         }
         if(node.Isinternal()){
-           printTree(node.getLeftChild(), col+2, arr);
+           printTree(node.getLeftChild(), col, arr);
         }
-        arr[profundidade(node)][((int)(node.getValue())+1)%col] = node.getValue();
+
+        // if((int)node.getValue()>col){
+        //     arr[profundidade(node)][(int)node.getValue()%col] = node.getValue();   
+        //     System.out.println(col);         
+        // }else{
+            arr[profundidade(node)][(int)node.getValue()] = node.getValue();
+        // }
+        
         if(node.Isinternal()){
-           printTree(node.getRightChild(), col-6, arr);    
+           printTree(node.getRightChild(), col, arr);    
         }
-        // else{
-        //     arr[profundidade(node)][col]=(t) node.getValue();
-        //     printTree(node.getLeftChild(),col-4,arr);
-        //     printTree(node.getRightChild(), col+2, arr);
-        // } 
     }
 
     private void buildMatriz(no<t> no){
@@ -176,16 +185,16 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             return;
        }
        buildMatriz(no.getLeftChild());
-       list.add(no.getValue());
+       list.add(no);
        buildMatriz(no.getRightChild());
     }
     
 
     @Override
-    public Iterator<t> nos() {
+    public Iterator<no<t>> nos() {
         // TODO Auto-generated method stub
         buildMatriz(root);
-        return (Iterator<t>) this.list.iterator();
+        return (Iterator<no<t>>) this.list.iterator();
     }
 
     @Override
@@ -248,29 +257,93 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public t remover(t key) {
         // TODO Auto-generated method stub
-        no<t> nt = pesquisar(root, key);
-        t value = nt.getValue();
-        if(nt.getRightChild()!=null){
-                nt = nt.getRightChild();
+        no<t> pai = null;
+        no<t> atual = root;
+        while (atual != null && !atual.getValue().equals(key)) {
+            pai = atual;// a cada loop, o pai é atualizado com o atual afim de guardar a referência, pois o atual pegará os filhos
+            if (getComparador().compareT((int)key, (int)atual.getValue()) < 0) {
+                atual = atual.getLeftChild();
+            } else {
+                atual = atual.getRightChild();
+            }
         }
-        while (nt.getLeftChild()!=null) {
-            nt = nt.getLeftChild();
+    
+        if (atual == null) {
+            return null; // Se o nó não foi encontrado
         }
-        no<t> sgTroca = pesquisar(root, nt.getValue());
-        no<t> novo  =pesquisar(root, key);
-        novo.setValue(nt.getValue());
-        nt=nt.getRightChild()!=null?nt.getRightChild():null;
-        while (nt!=null&&nt.getLeftChild()!=null) {
-            nt = nt.getLeftChild();
+    
+        t valorRemovido = atual.getValue();
+    /*Nesse escopo inicia a busca pelo sucessor do no */
+        // Caso 1: Nó a ser removido é um nó folha
+        if (atual.getLeftChild() == null && atual.getRightChild() == null) {
+            if (pai == null) {
+                root = null; // Remover a raiz
+            } else{
+                if (atual == pai.getLeftChild()) {
+                   pai.setLeftChild(null);
+               } else {
+                   pai.setRightChild(null);
+               }
+            }
         }
-        if(nt!=null){
-            sgTroca.setValue(nt.getValue()); 
-        }else{
-            sgTroca.setValue(null);
-        }
-        return value;
+        // Caso 2: Nó a ser removido tem apenas um filho
+        else{
+            if (atual.getLeftChild() == null || atual.getRightChild() == null) {
+                no<t> filho = (atual.getLeftChild() != null) ? atual.getLeftChild() : atual.getRightChild();
+                if (pai == null) {
+                    root = filho; // O filho se torna a nova raiz
+                } else{
+                    if (atual == pai.getLeftChild()) {
+                        pai.setLeftChild(filho);
+                    } else {
+                        pai.setRightChild(filho);
+                    }
+                } 
+            }
+            // Caso 3: Nó a ser removido tem dois filhos
+            else {
+                no<t> sucessor = encontrarSucessor(atual.getRightChild());
+                while (atual.getRightChild()!=null) {
+                    
+                }
+                t valorSucessor = sucessor.getValue();
+                remover(sucessor.getValue()); // Remove recursivamente o sucessor
+        
+                atual.setValue(valorSucessor);
+            }
+        } 
+    
+        return valorRemovido;
     }
-
+    private no<t> encontrarSucessor(no<t> atual) {
+        while (atual.getLeftChild() != null) {
+            atual = atual.getLeftChild();
+        }
+        return atual;
+    }
+    
+    // // TODO Auto-generated method stub
+    // no<t> nt = pesquisar(root, key);
+    // t value = nt.getValue();
+    // if(nt.getLeftChild()==null&&nt.getRightChild()==null){
+    //     nt=null;
+    // }else{
+    //     if(nt.getRightChild()!=null){
+    //             nt = nt.getRightChild();
+    //     }
+    //     while (nt.getLeftChild()!=null) {
+    //         nt = nt.getLeftChild();
+    //     }
+    //     ///////////////////////////////////////////////////
+    //     no<t> sgTroca = pesquisar(root, nt.getValue());
+    //     no<t> novo = pesquisar(root, key);
+    //     novo.setValue(nt.getValue());
+    //     if(nt.getRightChild()!=null&&nt.getLeftChild()==null){
+    //         sgTroca=nt.getRightChild(); 
+    //     }
+    // }
+    // return value;
+    
     @Override
     public void setComparator(Comparador<t> c) {
         // TODO Auto-generated method stub
