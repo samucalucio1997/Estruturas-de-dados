@@ -104,6 +104,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         // TODO Auto-generated method stub
         no<t> new_no = new no<t>(key);
         no<t> curNo = getRaiz();
+        // caso a arvore esteja somente com no raiz
         if(curNo.getLeftChild()==null&&curNo.getRightChild()==null){
             if(comp.compare(new_no, curNo)>0){
                  curNo.setRightChild(new_no);
@@ -111,6 +112,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
                 curNo.setLeftChild(new_no);
             }
         }else{
+            //comparando as chaves do no cursor e do no a ser inserido
             while (curNo!=null) {
                 int ret = getComparador().compare(new_no, curNo);
                 if(ret>0){
@@ -258,23 +260,15 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     public t remover(t key) {
         // TODO Auto-generated method stub
         no<t> pai = null;
-        no<t> atual = root;
-        while (atual != null && !atual.getValue().equals(key)) {
-            pai = atual;// a cada loop, o pai é atualizado com o atual afim de guardar a referência, pois o atual pegará os filhos
-            if (getComparador().compareT((int)key, (int)atual.getValue()) < 0) {
-                atual = atual.getLeftChild();
-            } else {
-                atual = atual.getRightChild();
-            }
-        }
-    
+        no<t> atual = pesquisar(root, key);
+        pai = atual.getFather();
         if (atual == null) {
             return null; // Se o nó não foi encontrado
         }
     
         t valorRemovido = atual.getValue();
     /*Nesse escopo inicia a busca pelo sucessor do no */
-        // Caso 1: Nó a ser removido é um nó folha
+        // no a ser removido é um no folha
         if (atual.getLeftChild() == null && atual.getRightChild() == null) {
             if (pai == null) {
                 root = null; // Remover a raiz
@@ -286,7 +280,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
                }
             }
         }
-        // Caso 2: Nó a ser removido tem apenas um filho
+        // no a ser removido tem apenas um filho
         else{
             if (atual.getLeftChild() == null || atual.getRightChild() == null) {
                 no<t> filho = (atual.getLeftChild() != null) ? atual.getLeftChild() : atual.getRightChild();
@@ -300,14 +294,14 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
                     }
                 } 
             }
-            // Caso 3: Nó a ser removido tem dois filhos
+            // no a ser removido tem dois filhos
             else {
                 no<t> sucessor = atual.getRightChild();
                 while (sucessor.getLeftChild()!=null) {
                    sucessor = sucessor.getLeftChild();    
                 }
                 t valorSucessor = sucessor.getValue();
-                remover(sucessor.getValue()); // Remove recursivamente o sucessor
+                remover(sucessor.getValue()); // remove recursivamente o sucessor
         
                 atual.setValue(valorSucessor);
             }
@@ -316,27 +310,6 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         return valorRemovido;
     }
     
-    // // TODO Auto-generated method stub
-    // no<t> nt = pesquisar(root, key);
-    // t value = nt.getValue();
-    // if(nt.getLeftChild()==null&&nt.getRightChild()==null){
-    //     nt=null;
-    // }else{
-    //     if(nt.getRightChild()!=null){
-    //             nt = nt.getRightChild();
-    //     }
-    //     while (nt.getLeftChild()!=null) {
-    //         nt = nt.getLeftChild();
-    //     }
-    //     ///////////////////////////////////////////////////
-    //     no<t> sgTroca = pesquisar(root, nt.getValue());
-    //     no<t> novo = pesquisar(root, key);
-    //     novo.setValue(nt.getValue());
-    //     if(nt.getRightChild()!=null&&nt.getLeftChild()==null){
-    //         sgTroca=nt.getRightChild(); 
-    //     }
-    // }
-    // return value;
     
     @Override
     public void setComparator(Comparador<t> c) {
