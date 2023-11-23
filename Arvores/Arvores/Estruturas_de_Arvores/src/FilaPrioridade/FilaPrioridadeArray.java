@@ -6,6 +6,7 @@ import ArvoreBinariaPesquisa.no;
 public class FilaPrioridadeArray<t> implements FilaI<t>{
     private t[] arr;
     private int tam = 2;
+    private int c=0;
     private int index;
     private Comparador<t> comp;
 
@@ -14,6 +15,7 @@ public class FilaPrioridadeArray<t> implements FilaI<t>{
         this.arr = (t[]) new Object[this.tam];
         arr[this.tam-1] = root.getValue(); 
         index = this.tam - 1;
+        this.c = index;
         this.comp = new Comparador<t>() {
 
             @Override
@@ -35,9 +37,9 @@ public class FilaPrioridadeArray<t> implements FilaI<t>{
     public void insert(t chave, no<t> valor) {
         // TODO Auto-generated method stub
         valor.setValue(chave);
-        if(2*index >= this.arr.length){
+        if(2*c >= this.arr.length){
             int k = this.tam;
-            this.tam = 2*index+1;
+            this.tam *=2;
             t[] novo = (t[]) new Object[this.tam];
             for (int i = 1; i < k; i++) {
                 novo[i] = arr[i];
@@ -45,12 +47,15 @@ public class FilaPrioridadeArray<t> implements FilaI<t>{
             }
             arr = novo;
         }
-        if(arr[2*index] == null){
-            arr[2*index] = valor.getValue();
+        if(arr[2*c] == null){
+            arr[2*c] = valor.getValue();
+            index=2*c;
         }else{
-            arr[2*index + 1] = valor.getValue(); 
+            arr[2*c + 1] = valor.getValue();
+            index = 2*c+1;
+            c++; 
         }
-        index = arr[2*index]!=null&&arr[2*index+1]!=null?index*2+1:index;
+        
     }
 
     public void upHeap(){
@@ -60,7 +65,7 @@ public class FilaPrioridadeArray<t> implements FilaI<t>{
     }
     
     public void mostrar(){
-        for (int i = 1; i < arr.length; i++) {
+        for (int i = 1; i < this.arr.length; i++) {
             // if(arr[i]!=null){
                 System.out.print("- "+arr[i]+"="+ i+" -"); 
             // }
