@@ -37,30 +37,32 @@ public class FilaPrioridadeArray<t> implements FilaI<t>{
         valor.setValue(chave);
         if(2*index >= this.arr.length){
             int k = this.tam;
-            this.tam *= 2;
+            this.tam = 2*index+1;
             t[] novo = (t[]) new Object[this.tam];
             for (int i = 1; i < k; i++) {
                 novo[i] = arr[i];
+                index = i;
             }
             arr = novo;
         }
         if(arr[2*index] == null){
             arr[2*index] = valor.getValue();
         }else{
-            arr[2*index + 1] = valor.getValue(); index = 2*index + 1;
+            arr[2*index + 1] = valor.getValue(); 
         }
+        index = arr[2*index]!=null&&arr[2*index]!=null?index*2+1:index;
     }
 
-    public void orderHeap(){
+    public void upHeap(){
         for (int i = 1; i < arr.length; i++) {
-           
+                  
         }
     }
     
     public void mostrar(){
         for (int i = 1; i < arr.length; i++) {
             // if(arr[i]!=null){
-                System.out.print(arr[i]+" "); 
+                System.out.print("- "+arr[i]+"="+ i+" -"); 
             // }
         }
         System.out.println();

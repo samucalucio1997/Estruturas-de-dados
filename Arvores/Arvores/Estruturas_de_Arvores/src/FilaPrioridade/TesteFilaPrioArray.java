@@ -13,7 +13,5 @@ public class TesteFilaPrioArray {
         fila.insert(1, new no<Integer>(null));
         System.out.println(fila.altura(null));
         fila.mostrar();
-        fila.orderHeap();
-        fila.mostrar();
     }
 }
