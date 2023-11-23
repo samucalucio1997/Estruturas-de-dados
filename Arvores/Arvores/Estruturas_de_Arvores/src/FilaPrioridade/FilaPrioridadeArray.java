@@ -50,7 +50,7 @@ public class FilaPrioridadeArray<t> implements FilaI<t>{
         }else{
             arr[2*index + 1] = valor.getValue(); 
         }
-        index = arr[2*index]!=null&&arr[2*index]!=null?index*2+1:index;
+        index = arr[2*index]!=null&&arr[2*index+1]!=null?index*2+1:index;
     }
 
     public void upHeap(){
