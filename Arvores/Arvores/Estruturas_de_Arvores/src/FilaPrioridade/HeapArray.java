@@ -48,6 +48,9 @@ public class HeapArray<t> implements FilaI<t>{
             }
             arr = novo;
         }
+        // if(this.comp.compareT(index, c)){
+
+        // }
         if(arr[2*c] == null){
             arr[2*c] = valor.getValue();
             index=2*c;
