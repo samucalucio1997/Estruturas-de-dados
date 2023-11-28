@@ -19,7 +19,7 @@ public class HeapNo<t> implements FilaI<t>{
     }
     
     @Override
-    public void insert(t arg0, no<t> arg1) {
+    public void insert(no<t> arg1) {
         // TODO Auto-generated method stub
         no<t> refu = this.ultim_node;
         //caso o ultimo no seja filho da esquerda, isso quer dizer que o filho da direita é null, ou seja, o no assumira o posto
@@ -40,25 +40,25 @@ public class HeapNo<t> implements FilaI<t>{
             while (refu.getFather()!=null && refu.getFather().getLeftChild() != null &&
              refu.getFather().getRightChild() != null) {
                 //caso o no esteja na direita ele irá pro no pai
-                if(!refu.getFather().getLeftChild().equals(refu)&&refu.getFather().getRightChild()!=null){
+                if(!refu.getFather().getLeftChild().equals(refu) && refu.getFather().getRightChild() != null){
                     refu = refu.getFather();continue;
                 }else{
-                    if(refu.getFather().getRightChild()==null){
+                    if(refu.getFather().getRightChild() == null){
                         refu.getFather().setRightChild(arg1);
                         setUltim_node(arg1);    
                         arg1.setFather(refu);
                         upHeap();
                     }
-                    if(refu.getFather().getLeftChild() != null&&refu.getFather().getLeftChild().equals(refu)){
+                    if(refu.getFather().getLeftChild() != null && refu.getFather().getLeftChild().equals(refu)){
                         refu = refu.getFather().getRightChild();break;
                     }else{
-                        if(refu.getFather().getLeftChild()!=null){
+                        if(refu.getFather().getLeftChild() != null){
                            refu = refu.getFather().getLeftChild();break;
                        }
                     }
                 }
             }
-            while (refu.getLeftChild()!=null) {
+            while (refu.getLeftChild() != null) {
                 refu = refu.getLeftChild();
             }
             refu.setLeftChild(arg1);
@@ -71,8 +71,7 @@ public class HeapNo<t> implements FilaI<t>{
     
     private void upHeap(){
         no<t> cursiNo = getUltim_node();
-        while (!cursiNo.equals(getRaiz()) &&
-        (int) cursiNo.getValue() > (int) cursiNo.getFather().getValue()) {
+        while (!cursiNo.equals(getRaiz()) && (int) cursiNo.getValue() > (int) cursiNo.getFather().getValue()) {
             t valueNo = cursiNo.getValue();
             cursiNo.setValue(cursiNo.getFather().getValue());
             cursiNo.getFather().setValue(valueNo);
@@ -121,20 +120,20 @@ public class HeapNo<t> implements FilaI<t>{
         // TODO Auto-generated method stub
         no<t> curNo = getUltim_node();
         //caso o no seja filho da direita
-        if(curNo.getFather()!=null&&curNo.getFather().getRightChild()!=null&&curNo.getFather().getRightChild().equals(curNo)){
+        if(curNo.getFather()!=null && curNo.getFather().getRightChild() != null && curNo.getFather().getRightChild().equals(curNo)){
                curNo = curNo.getFather().getLeftChild();
                curNo.getFather().setRightChild(null);
                setUltim_node(curNo);
         }else{
             //no excluido filho da esquerda mas não tá na ponta
-            if(curNo.getFather()!=null&&curNo.getFather().getLeftChild().equals(curNo)&&curNo.getFather().getRightChild()!=null){
+            if(curNo.getFather() != null && curNo.getFather().getLeftChild().equals(curNo) && curNo.getFather().getRightChild() != null){
                 curNo = curNo.getFather();
                 curNo.setLeftChild(null);
-                while (curNo.getFather()!=null&&curNo.getFather().getRightChild()!=null&&curNo.getFather().getRightChild().equals(curNo)) {
+                while (curNo.getFather() != null && curNo.getFather().getRightChild() != null && curNo.getFather().getRightChild().equals(curNo)) {
                      curNo = curNo.getFather();
                 }
                 curNo = curNo.getLeftChild();
-                while (curNo.getRightChild()!=null) {
+                while (curNo.getRightChild() != null) {
                     curNo = curNo.getRightChild();
                 }
                 setUltim_node(curNo);
@@ -143,11 +142,11 @@ public class HeapNo<t> implements FilaI<t>{
             else{
                 curNo = curNo.getFather();
                 curNo.setLeftChild(null);
-                while (curNo.getFather()!=null) {
+                while (curNo.getFather() != null) {
                     curNo = curNo.getFather();
                 }
                 
-                if(curNo.getFather()==null&&curNo.getLeftChild().equals(curNo)){
+                if(curNo.getFather() == null && curNo.getLeftChild().equals(curNo)){
                       curNo = curNo.getRightChild();
                       while(curNo.getLeftChild()!=null){
                           curNo = curNo.getRightChild();
@@ -155,13 +154,14 @@ public class HeapNo<t> implements FilaI<t>{
                       setUltim_node(curNo); 
                 }else{
                     curNo = curNo.getRightChild();
-                    while (curNo.getRightChild()!=null) {
+                    while (curNo.getRightChild() != null) {
                         curNo = curNo.getRightChild();
                     }
                     setUltim_node(curNo);
                 }
             }
         }
+        this.tam--;
     }
 
     @Override
@@ -171,15 +171,15 @@ public class HeapNo<t> implements FilaI<t>{
     }
 
     public void emOrdem(no<t> node){
-        if(node==null){
+        if(node == null){
             return;
         }
         if(node.Isinternal()){
             emOrdem(node.getLeftChild());;
         }
-        no<t> paiNo = node.getFather()!=null?node.getFather():node;
+        no<t> paiNo = node.getFather() != null?node.getFather():node;
         System.out.println(node.getValue() + " filho de " + paiNo.getValue());
-        paiNo =null;
+        paiNo = null;
         if(node.Isinternal()){
             emOrdem(node.getRightChild());
         }

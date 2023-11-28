@@ -1,6 +1,5 @@
 package FilaPrioridade;
 
-import ArvoreBinariaPesquisa.Comparador;
 import ArvoreBinariaPesquisa.no;
 
 public class HeapArray<t> implements FilaI<t>{
@@ -9,7 +8,6 @@ public class HeapArray<t> implements FilaI<t>{
     private int c=0;
     private int index;
     
-    private Comparador<t> comp;
 
     public HeapArray(t value) {
         no<t> root = new no<t>(value);
@@ -17,27 +15,11 @@ public class HeapArray<t> implements FilaI<t>{
         arr[this.tam-1] = root.getValue(); 
         index = this.tam - 1;
         this.c = index;
-        this.comp = new Comparador<t>() {
-
-            @Override
-            public int compare(no<t> no1, no<t> no2) {
-                // TODO Auto-generated method stub
-                return (int)no1.getValue() - (int)no2.getValue();
-            }
-
-            @Override
-            public int compareT(int no1, int no2) {
-                // TODO Auto-generated method stub
-                return no1 - no2;
-            }
-            
-        };
     }
     
     @Override
-    public void insert(t chave, no<t> valor) {
+    public void insert(no<t> valor) {
         // TODO Auto-generated method stub
-        valor.setValue(chave);
         if(2*c >= this.arr.length){
             int k = this.tam;
             this.tam *=2;
@@ -48,44 +30,43 @@ public class HeapArray<t> implements FilaI<t>{
             }
             arr = novo;
         }
-        // if(this.comp.compareT(index, c)){
-
-        // }
+        
         if(arr[2*c] == null){
             arr[2*c] = valor.getValue();
             index=2*c;
+            upHeap();
         }else{
             arr[2*c + 1] = valor.getValue();
             index = 2*c+1;
+            upHeap();
             c++; 
         }
     }
-
-    public void upHeap(){
-        for (int i = 1; i < arr.length-1; i++) {
-            int in = i;
-            for (int j = i+1; j < arr.length; j++) {
-                int p = this.comp.compareT((int)arr[in], (int)arr[j]);
-                if(p>0){
-                   in=j;
+    
+    private void upHeap(){
+        int k = index;
+        int k1 = index-1;
+        while (k>1&&k1>1) {
+            if((int)arr[k]>(int)arr[k/2]){
+                t aux = arr[k/2];
+                arr[k/2] = arr[k];
+                      arr[k]=aux;
+                      k/=2; 
+            }else{
+                if((int)arr[k1]>(int)arr[k1/2]){
+                    t aux = arr[k1/2];
+                    arr[k1/2] = arr[k1];
+                    arr[k1] = aux;
+                    k1/=2;   
+                }else{
+                    break;
                 }
             }
-            if(in!=i){
-                t aux = arr[i];
-                arr[i] = arr[in];
-                arr[in] = aux; 
-            } 
         }
+        
+        
     }
 
-    public void DownHeap(){
-        this.upHeap(); int c=1;
-        t[] dnovo = (t[]) new Object[arr.length];
-        for (int i = arr.length-1; i > 0; i--) {
-            dnovo[c++] = arr[i];
-        }
-        arr = dnovo;
-    }
     
     public void mostrar(){
         for (int i = 1; i < this.arr.length; i++) {
@@ -103,13 +84,18 @@ public class HeapArray<t> implements FilaI<t>{
     @Override
     public t min() {
         // TODO Auto-generated method stub
-        return null;
+        return arr[index];
     }
     
     @Override
     public void removeMin() {
         // TODO Auto-generated method stub
-        
+        arr[index] = null;
+        if(arr[index-1]==null){
+            index/=2;
+        }else{
+            index--;
+        }
     }
     
     @Override
