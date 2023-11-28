@@ -20,8 +20,10 @@ public class TesteFilaPrioridadeNode {
         fila.insert(45, n3);
         fila.insert(45, n4);
         fila.insert(47, n5);
-        System.out.println(fila.getUltim_node().getFather().getValue());
-        System.out.println(fila.getUltim_node().getFather().getLeftChild().getValue());
-        
+        System.out.println(fila.getRaiz().getValue());
+        System.out.println(fila.getRaiz().getLeftChild().getValue());
+        System.out.println(fila.getRaiz().getRightChild().getValue());
+        System.out.println();
+        fila.emOrdem(fila.getRaiz());
     }
 }
