@@ -1,12 +1,12 @@
 package ArvoreBinariaPesquisa;
 
-public class no<t> {
+public class No<t extends Object> {
     private t value;
-    private no<t> father;
-    private no<t> leftChild;
-    private no<t> RightChild;
+    private No<t> father;
+    private No<t> leftChild;
+    private No<t> RightChild;
     
-    public no(t value) {
+    public No(t value) {
         this.value = value;
     } 
     
@@ -18,27 +18,27 @@ public class no<t> {
         this.value = value;
     }
 
-    public no<t> getFather() {
+    public No<t> getFather() {
         return father;
     }
 
-    public void setFather(no<t> father) {
+    public void setFather(No<t> father) {
         this.father = father;
     }
 
-    public no<t> getLeftChild() {
+    public No<t> getLeftChild() {
         return leftChild;
     }
 
-    public void setLeftChild(no<t> leftChild) {
+    public void setLeftChild(No<t> leftChild) {
         this.leftChild = leftChild;
     }
 
-    public no<t> getRightChild() {
+    public No<t> getRightChild() {
         return RightChild;
     }
 
-    public void setRightChild(no<t> rightChild) {
+    public void setRightChild(No<t> rightChild) {
         RightChild = rightChild;
     }
     public boolean Isinternal(){

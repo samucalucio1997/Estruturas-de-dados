@@ -2,18 +2,18 @@ package ArvoreBinariaPesquisa;
 
 public class TesteBinaria {
     public static void main(String[] args) {
-        no<Integer> node1 = new no<Integer>(15);
-        no<Integer> node2 = new no<Integer>(6);
-        no<Integer> node3 = new no<Integer>(9);
-        no<Integer> node4 = new no<Integer>(2);
-        no<Integer> node5 = new no<Integer>(45);
-        no<Integer> node6 = new no<Integer>(25);
-        no<Integer> node7 = new no<Integer>(7);
-        no<Integer> node8 = new no<Integer>(8);
-        no<Integer> node9 = new no<Integer>(13);
-        no<Integer> node10 = new no<Integer>(12);
-        no<Integer> node11 = new no<Integer>(11);
-        no<Integer> node12 = new no<Integer>(14);
+        No<Integer> node1 = new No<Integer>(15);
+        No<Integer> node2 = new No<Integer>(6);
+        No<Integer> node3 = new No<Integer>(9);
+        No<Integer> node4 = new No<Integer>(2);
+        No<Integer> node5 = new No<Integer>(45);
+        No<Integer> node6 = new No<Integer>(25);
+        No<Integer> node7 = new No<Integer>(7);
+        No<Integer> node8 = new No<Integer>(8);
+        No<Integer> node9 = new No<Integer>(13);
+        No<Integer> node10 = new No<Integer>(12);
+        No<Integer> node11 = new No<Integer>(11);
+        No<Integer> node12 = new No<Integer>(14);
         ArvoreBinP<Integer> ar = new ArvoreBinP<>(node1);
         node2 = ar.incluir(node2.getValue());
         node3 = ar.incluir(node3.getValue());

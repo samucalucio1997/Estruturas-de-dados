@@ -5,29 +5,29 @@ public interface IArvoreBinariaPesquisa<t> {
 
 	Comparador<t> getComparador();
 
-	no<t> pesquisar(no<t> no, t key);
+	No<t> pesquisar(No<t> no, t key);
 
-	no<t> incluir(t key);
+	No<t> incluir(t key);
 
 	t remover(t key);
 
-	no<t> getRaiz();
+	No<t> getRaiz();
 
-	void setRaiz(no<t> p);
+	void setRaiz(No<t> p);
 
-	void emOrdem(no<t> no);
+	void emOrdem(No<t> no);
 
-	void preOrdem(no<t> no);
+	void preOrdem(No<t> no);
 
-	void posOrdem(no<t> no);
+	void posOrdem(No<t> no);
 
-	int altura(no<t> no);
+	int altura(No<t> no);
 
-	int profundidade(no<t> no);
+	int profundidade(No<t> no);
 
 	void mostrar();
 
-	Iterator<no<t>> nos();
+	Iterator<No<t>> nos();
 
 	Iterator<t> elements();
 

@@ -6,17 +6,17 @@ import java.util.List;
 
 public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
-    private no<t> root;
+    private No<t> root;
     private Comparador<t> comp;
     private int num_elem;
-    private ArrayList<no<t>> list;
+    private ArrayList<No<t>> list;
     private t[][] arr;
 
-    public ArvoreBinP(no<t> root) {
+    public ArvoreBinP(No<t> root) {
         this.root = root;
         this.comp = new Comparador<t>() {
             @Override
-            public int compare(no<t> no1, no<t> no2) {
+            public int compare(No<t> no1, No<t> no2) {
                 // TODO Auto-generated method stub
                 int p1 = (Integer) no1.getValue();
                 int p2 = (Integer) no2.getValue();
@@ -32,12 +32,12 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         };
     }
     @Override
-    public int altura(no<t> no) {
+    public int altura(No<t> no) {
         // TODO Auto-generated method stub
         this.setComparator(new Comparador<t>() {
 
             @Override
-            public int compare(no<t> no1, no<t> no2) {
+            public int compare(No<t> no1, No<t> no2) {
                 // TODO Auto-generated method stub
                 throw new UnsupportedOperationException("Unimplemented method 'compare'");
             }
@@ -66,14 +66,14 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     public Iterator<t> elements() {
         // TODO Auto-generated method stub
         List<t> arrTs = new ArrayList<>();
-        for (no<t> t : list) {
+        for (No<t> t : list) {
             arrTs.add(t.getValue());
         }
         return  (Iterator<t>) arrTs.iterator();
     }
 
     @Override
-    public void emOrdem(no<t> no) {
+    public void emOrdem(No<t> no) {
         // TODO Auto-generated method stub
         if(no==null){
             return;
@@ -94,16 +94,16 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     }
 
     @Override
-    public no<t> getRaiz() {
+    public No<t> getRaiz() {
         // TODO Auto-generated method stub
         return this.root;
     }
 
     @Override
-    public no<t> incluir(t key) {
+    public No<t> incluir(t key) {
         // TODO Auto-generated method stub
-        no<t> new_no = new no<t>(key);
-        no<t> curNo = getRaiz();
+        No<t> new_no = new No<t>(key);
+        No<t> curNo = getRaiz();
         // caso a arvore esteja somente com no raiz
         if(curNo.getLeftChild()==null&&curNo.getRightChild()==null){
             if(comp.compare(new_no, curNo)>0){
@@ -161,7 +161,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         }
     }
 
-    private void printTree(no<t> node, int col, t[][] arr) {
+    private void printTree(No<t> node, int col, t[][] arr) {
         if(node==null||(col<0&&col>(int) Math.pow(2, this.altura(root)))){
             return;
         }
@@ -181,7 +181,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         }
     }
 
-    private void buildMatriz(no<t> no){
+    private void buildMatriz(No<t> no){
        if(no==null){
             list.add(null);
             return;
@@ -193,14 +193,14 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
 
     @Override
-    public Iterator<no<t>> nos() {
+    public Iterator<No<t>> nos() {
         // TODO Auto-generated method stub
         buildMatriz(root);
-        return (Iterator<no<t>>) this.list.iterator();
+        return (Iterator<No<t>>) this.list.iterator();
     }
 
     @Override
-    public no<t> pesquisar(no<t> no, t key) {
+    public No<t> pesquisar(No<t> no, t key) {
         // TODO Auto-generated method stub
         if(no==null){
             return null;
@@ -208,7 +208,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         if(no.getValue().equals(key)){
              return no;
         }
-        no<t> ret = pesquisar(no.getRightChild(),key);
+        No<t> ret = pesquisar(no.getRightChild(),key);
         if(ret!=null){
             return ret;
         }else{
@@ -217,7 +217,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     }
 
     @Override
-    public void posOrdem(no<t> no) {
+    public void posOrdem(No<t> no) {
         // TODO Auto-generated method stub
         if(no==null){
             return;
@@ -230,7 +230,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     }
 
     @Override
-    public void preOrdem(no<t> no) {
+    public void preOrdem(No<t> no) {
         // TODO Auto-generated method stub
         if(no==null){
             return;
@@ -242,7 +242,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     }
 
     @Override
-    public int profundidade(no<t> no) {
+    public int profundidade(No<t> no) {
         // TODO Auto-generated method stub
         if(no==null){
             return -1;
@@ -259,8 +259,8 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public t remover(t key) {
         // TODO Auto-generated method stub
-        no<t> pai = null;
-        no<t> atual = pesquisar(root, key);
+        No<t> pai = null;
+        No<t> atual = pesquisar(root, key);
         pai = atual.getFather();
         if (atual == null) {
             return null; // Se o nó não foi encontrado
@@ -283,7 +283,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         // no a ser removido tem apenas um filho
         else{
             if (atual.getLeftChild() == null || atual.getRightChild() == null) {
-                no<t> filho = (atual.getLeftChild() != null) ? atual.getLeftChild() : atual.getRightChild();
+                No<t> filho = (atual.getLeftChild() != null) ? atual.getLeftChild() : atual.getRightChild();
                 if (pai == null) {
                     root = filho; // O filho se torna a nova raiz
                 } else{
@@ -296,7 +296,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             }
             // no a ser removido tem dois filhos
             else {
-                no<t> sucessor = atual.getRightChild();
+                No<t> sucessor = atual.getRightChild();
                 while (sucessor.getLeftChild()!=null) {
                    sucessor = sucessor.getLeftChild();    
                 }
@@ -318,7 +318,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     }
 
     @Override
-    public void setRaiz(no<t> p) {
+    public void setRaiz(No<t> p) {
         // TODO Auto-generated method stub
         this.root = p;
     }

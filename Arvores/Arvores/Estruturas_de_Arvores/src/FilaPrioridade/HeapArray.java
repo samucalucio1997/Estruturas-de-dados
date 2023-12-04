@@ -1,6 +1,6 @@
 package FilaPrioridade;
 
-import ArvoreBinariaPesquisa.no;
+import ArvoreBinariaPesquisa.No;
 
 public class HeapArray<t> implements FilaI<t>{
     private t[] arr;
@@ -10,7 +10,7 @@ public class HeapArray<t> implements FilaI<t>{
     
 
     public HeapArray(t value) {
-        no<t> root = new no<t>(value);
+        No<t> root = new No<t>(value);
         this.arr = (t[]) new Object[this.tam];
         arr[this.tam-1] = root.getValue(); 
         index = this.tam - 1;
@@ -18,7 +18,7 @@ public class HeapArray<t> implements FilaI<t>{
     }
     
     @Override
-    public void insert(no<t> valor) {
+    public void insert(No<t> valor) {
         // TODO Auto-generated method stub
         if(2*c >= this.arr.length){
             int k = this.tam;
@@ -104,7 +104,7 @@ public class HeapArray<t> implements FilaI<t>{
         return this.tam;
     }
 
-    public int altura(no<t> node){
+    public int altura(No<t> node){
         int height = 1;
         for (int i = 1; i < arr.length; i*=2) {
            if(arr[i] != null){

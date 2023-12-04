@@ -1,27 +1,29 @@
 package FilaPrioridade;
 
-import ArvoreBinariaPesquisa.no;
+import ArvoreBinariaPesquisa.No;
 
 public class HeapNo<t> implements FilaI<t>{
-    private no<t> ultim_node;
+    private No<t> ultim_node;
     
-    private no<t> raiz;
+    private No<t> raiz;
 
     private int tam;
 
+    private No<t> menor_node;
+
     
-    
-    
-    public HeapNo(no<t> raiz) {
+    public HeapNo(No<t> raiz) {
         this.raiz = raiz;
         this.tam = 1;
+        this.menor_node = raiz;
         this.ultim_node = this.raiz;
     }
     
     @Override
-    public void insert(no<t> arg1) {
+    public void insert(No<t> arg1) {
         // TODO Auto-generated method stub
-        no<t> refu = this.ultim_node;
+        No<t> refu = this.ultim_node;
+        menor_node = (int)menor_node.getValue()>(int)arg1.getValue()?arg1:menor_node;
         //caso o ultimo no seja filho da esquerda, isso quer dizer que o filho da direita é null, ou seja, o no assumira o posto
         if(refu.getFather() == null && refu.getLeftChild() == null){
               refu.setLeftChild(arg1);setUltim_node(arg1);
@@ -70,7 +72,7 @@ public class HeapNo<t> implements FilaI<t>{
     }
     
     private void upHeap(){
-        no<t> cursiNo = getUltim_node();
+        No<t> cursiNo = getUltim_node();
         while (!cursiNo.equals(getRaiz()) && (int) cursiNo.getValue() > (int) cursiNo.getFather().getValue()) {
             t valueNo = cursiNo.getValue();
             cursiNo.setValue(cursiNo.getFather().getValue());
@@ -79,20 +81,32 @@ public class HeapNo<t> implements FilaI<t>{
         }
     }
 
-    public no<t> getRaiz() {
+    private void DHeap(No<t> heap){
+        No<t> cursiNo = heap;
+        while (!cursiNo.equals(getRaiz()) && (int) cursiNo.getValue() < (int) cursiNo.getFather().getValue()) {
+            t valueNo = cursiNo.getValue();
+            cursiNo.setValue(cursiNo.getFather().getValue());
+            cursiNo.getFather().setValue(valueNo);
+            cursiNo = cursiNo.getFather();
+        }
+    }
+
+    
+
+    public No<t> getRaiz() {
         return raiz;
     }
 
-    public void setRaiz(no<t> raiz) {
+    public void setRaiz(No<t> raiz) {
         this.raiz = raiz;
     }
 
 
-    public no<t> getUltim_node() {
+    public No<t> getUltim_node() {
             return ultim_node;
     }
     
-    public void setUltim_node(no<t> ultim_node) {
+    public void setUltim_node(No<t> ultim_node) {
             this.ultim_node = ultim_node;
     }
     /*
@@ -112,13 +126,33 @@ public class HeapNo<t> implements FilaI<t>{
     @Override
     public t min() {
         // TODO Auto-generated method stub
-        return getRaiz().getValue();
+        return getMenor_node().getValue();
+    }
+
+    public No<t> getMenor_node() {
+        return menor_node;
+    }
+
+    public void setMenor_node(No<t> menor_node) {
+        this.menor_node = menor_node;
     }
 
     @Override
     public void removeMin() {
+        // No<t> removedNo = getMenor_node();
+        getMenor_node().setValue(getUltim_node().getValue());
+        DHeap(getMenor_node());
+        removeUltimo();  
+        setMenor_node(getRaiz());
+        newMenorNo(getRaiz()); 
+       
+    //************** ********************************** *****************************************  
+    this.tam--;
+}
+
+private void removeUltimo(){
         // TODO Auto-generated method stub
-        no<t> curNo = getUltim_node();
+        No<t> curNo = getUltim_node();
         //caso o no seja filho da direita
         if(curNo.getFather()!=null && curNo.getFather().getRightChild() != null && curNo.getFather().getRightChild().equals(curNo)){
                curNo = curNo.getFather().getLeftChild();
@@ -140,20 +174,20 @@ public class HeapNo<t> implements FilaI<t>{
             }
             //no filho da esquerda na ponta
             else{
-                curNo = curNo.getFather();
+                curNo = curNo.getFather()!=null?curNo.getFather():curNo;
                 curNo.setLeftChild(null);
                 while (curNo.getFather() != null) {
                     curNo = curNo.getFather();
                 }
                 
-                if(curNo.getFather() == null && curNo.getLeftChild().equals(curNo)){
+                if(curNo.getFather() == null && curNo.getLeftChild()!=null && curNo.getLeftChild().equals(curNo)){
                       curNo = curNo.getRightChild();
                       while(curNo.getLeftChild()!=null){
                           curNo = curNo.getRightChild();
                       }
                       setUltim_node(curNo); 
                 }else{
-                    curNo = curNo.getRightChild();
+                    // curNo = curNo.getRightChild();
                     while (curNo.getRightChild() != null) {
                         curNo = curNo.getRightChild();
                     }
@@ -161,7 +195,6 @@ public class HeapNo<t> implements FilaI<t>{
                 }
             }
         }
-        this.tam--;
     }
 
     @Override
@@ -170,14 +203,27 @@ public class HeapNo<t> implements FilaI<t>{
         return this.tam;
     }
 
-    public void emOrdem(no<t> node){
+    private void newMenorNo(No<t> node){
         if(node == null){
             return;
         }
         if(node.Isinternal()){
             emOrdem(node.getLeftChild());;
         }
-        no<t> paiNo = node.getFather() != null?node.getFather():node;
+         this.menor_node = (int)node.getValue()<(int)getMenor_node().getValue()?node:getMenor_node();
+        if(node.Isinternal()){
+            emOrdem(node.getRightChild());
+        }
+    }
+
+    public void emOrdem(No<t> node){
+        if(node == null){
+            return;
+        }
+        if(node.Isinternal()){
+            emOrdem(node.getLeftChild());;
+        }
+        No<t> paiNo = node.getFather() != null?node.getFather():node;
         System.out.println(node.getValue() + " filho de " + paiNo.getValue());
         paiNo = null;
         if(node.Isinternal()){
