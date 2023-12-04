@@ -83,7 +83,7 @@ public class HeapNo<t> implements FilaI<t>{
 
     private void DHeap(No<t> heap){
         No<t> cursiNo = heap;
-        while (!cursiNo.equals(getRaiz()) && (int) cursiNo.getValue() < (int) cursiNo.getFather().getValue()) {
+        while (!cursiNo.equals(getRaiz()) && (int) cursiNo.getValue() > (int) cursiNo.getFather().getValue()) {
             t valueNo = cursiNo.getValue();
             cursiNo.setValue(cursiNo.getFather().getValue());
             cursiNo.getFather().setValue(valueNo);
@@ -157,7 +157,7 @@ private void removeUltimo(){
         if(curNo.getFather()!=null && curNo.getFather().getRightChild() != null && curNo.getFather().getRightChild().equals(curNo)){
                curNo = curNo.getFather().getLeftChild();
                curNo.getFather().setRightChild(null);
-               setUltim_node(curNo);
+               setUltim_node(curNo);upHeap();
         }else{
             //no excluido filho da esquerda mas não tá na ponta
             if(curNo.getFather() != null && curNo.getFather().getLeftChild().equals(curNo) && curNo.getFather().getRightChild() != null){
@@ -170,7 +170,7 @@ private void removeUltimo(){
                 while (curNo.getRightChild() != null) {
                     curNo = curNo.getRightChild();
                 }
-                setUltim_node(curNo);
+                setUltim_node(curNo);upHeap();
             }
             //no filho da esquerda na ponta
             else{
@@ -185,13 +185,13 @@ private void removeUltimo(){
                       while(curNo.getLeftChild()!=null){
                           curNo = curNo.getRightChild();
                       }
-                      setUltim_node(curNo); 
+                      setUltim_node(curNo);upHeap(); 
                 }else{
                     // curNo = curNo.getRightChild();
                     while (curNo.getRightChild() != null) {
                         curNo = curNo.getRightChild();
                     }
-                    setUltim_node(curNo);
+                    setUltim_node(curNo);upHeap();
                 }
             }
         }
@@ -208,11 +208,11 @@ private void removeUltimo(){
             return;
         }
         if(node.Isinternal()){
-            emOrdem(node.getLeftChild());;
+            newMenorNo(node.getLeftChild());;
         }
          this.menor_node = (int)node.getValue()<(int)getMenor_node().getValue()?node:getMenor_node();
-        if(node.Isinternal()){
-            emOrdem(node.getRightChild());
+         if(node.Isinternal()){
+            newMenorNo(node.getRightChild());
         }
     }
 

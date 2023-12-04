@@ -4,6 +4,12 @@ import ArvoreBinariaPesquisa.No;
 
 public class TesteFilaPrioridadeNode {
     public static void main(String[] args) {
+        /*
+                                         22
+                            12                           17              
+                     10            9              16            15
+                8          7 
+        */
         HeapNo<Integer> fila = new HeapNo<>(new No<Integer>(15));
         No<Integer> n1 = new No<>(12);
         No<Integer> n2 = new No<>(16);
@@ -32,6 +38,8 @@ public class TesteFilaPrioridadeNode {
         System.out.println();
         System.out.println(fila.min());
         fila.removeMin();
+        fila.removeMin();
+        System.out.println("-------------------------------------------");
         System.out.println(fila.min());
         System.out.println(fila.getUltim_node().getValue());
     }
