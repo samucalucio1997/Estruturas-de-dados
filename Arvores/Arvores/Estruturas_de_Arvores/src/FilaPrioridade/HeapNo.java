@@ -139,12 +139,28 @@ public class HeapNo<t> implements FilaI<t>{
 
     @Override
     public void removeMin() {
+        getRaiz().setValue(getUltim_node().getValue());
+        setUltim_node(null);
+        No<t> refu = getRaiz();
+        while(refu.Isinternal()){
+            if((int)refu.getRightChild().getValue()>(int)refu.getLeftChild().getValue()){
+                t aux = refu.getRightChild().getValue();
+                refu.getRightChild().setValue(refu.getValue());
+                refu.setValue(aux);
+                refu = refu.getRightChild();                  
+            }else{
+                t ax = refu.getLeftChild().getValue();
+                refu.getRightChild().setValue(refu.getValue());
+                refu.setValue(ax);
+                refu = refu.getLeftChild();
+            }
+        }
         // No<t> removedNo = getMenor_node();
-        getMenor_node().setValue(getUltim_node().getValue());
-        DHeap(getMenor_node());
-        removeUltimo();  
-        setMenor_node(getRaiz());
-        newMenorNo(getRaiz()); 
+        // getMenor_node().setValue(getUltim_node().getValue());
+        // DHeap(getMenor_node());
+        // removeUltimo();  
+        // setMenor_node(getRaiz());
+        // newMenorNo(getRaiz()); 
        
     //************** ********************************** *****************************************  
     this.tam--;

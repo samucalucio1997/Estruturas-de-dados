@@ -8,7 +8,7 @@ public class TesteFilaPrioridadeNode {
                                          22
                             12                           17              
                      10            9              16            15
-                8          7 
+                8          7  4        6      14       13    
         */
         HeapNo<Integer> fila = new HeapNo<>(new No<Integer>(15));
         No<Integer> n1 = new No<>(12);
@@ -19,6 +19,7 @@ public class TesteFilaPrioridadeNode {
         No<Integer> n6 = new No<>(17);
         No<Integer> n7 = new No<>(8);
         No<Integer> n8 = new No<>(7);
+        No<Integer> n9 = new No<>(3);
         fila.insert(n1);
         fila.insert(n2);
         fila.insert(n3);
