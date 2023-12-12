@@ -85,8 +85,17 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     public t InsertItem(t chave, Obj<t> element) {
         // TODO Auto-generated method stub
         element.setValue(chave);
-        if(el==Dic.length){
+        if(size()/Dic.length>=0.5){//pegar 
               tam *= 2;
+              int ref = tam;
+              int p=0;
+              ref/=2;
+              while(p <= 2){
+                if(tam%ref != 0){
+                    p++;
+                }    
+                ref--;
+              }
               Obj<t>[] novo = (Obj<t>[]) new Object[tam];
               for (int i = 0; i < Dic.length; i++) {
                 int ind = (int)Dic[i].getValue()%novo.length;
@@ -99,7 +108,7 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
             if(Dic[index].getValue().equals(chave)){
                 throw new RuntimeException("O elemento já existe");
             }
-            index = (index+1)%tam;
+            index = (index + 1)%tam;
         }
         Dic[index] = element;
         el++;
