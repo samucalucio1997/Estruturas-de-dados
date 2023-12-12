@@ -1,19 +1,19 @@
-public class Obj {
+public class Obj<t> {
 
-private Object value;
+private t value;
 
 public Obj(){}
 
-public Obj(Object value) {
+public Obj(t value) {
     this.value = value;
 }
 
 
-public Object getValue() {
+public t getValue() {
     return value;
 }
 
-public void setValue(Object value) {
+public void setValue(t value) {
     this.value = value;
 }
    

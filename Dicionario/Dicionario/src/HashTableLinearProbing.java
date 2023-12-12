@@ -4,73 +4,111 @@ import java.util.List;
 
 public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t>{
      
-    private Obj[] Dic;
+    private Obj<t>[] Dic;
     private int tam;
     private int el=0;
     private List<t> keys = new ArrayList<>();
-    private List<Obj> Elements = new ArrayList<>();
+    private List<Obj<t>> Elements = new ArrayList<>();
 
 
-    public HashTableLinearProbing() {
-        Dic =  (Obj[]) new Object[tam];
+    public HashTableLinearProbing(int tam) {
+        this.tam = tam;
+        Dic =  (Obj[]) new Object[this.tam];
     }
 
 
     @Override
     public boolean isEmpty() {
         // TODO Auto-generated method stub
-        return false;
+        return el != 0; 
     }
 
     @Override
-    public Obj removeElement(t chave) {
+    public Obj<t> removeElement(t chave) {
         // TODO Auto-generated method stub
-        return null;
+        Obj<t> removed = null;
+        for (int i = 0; i < Dic.length; i++) {
+             if(Dic[i].getValue().equals(chave)){
+                   removed = Dic[i];
+                   Dic[i]=null;
+                   break;
+             }
+        }
+        return removed;
     }
 
     @Override
     public int size() {
         // TODO Auto-generated method stub
-        return 0;
+        return this.el;
     }
 
     @Override
-    public Iterator<Obj> Element() {
+    public Iterator<Obj<t>> Element() {
         // TODO Auto-generated method stub
-        return null;
+        for (int i = 0; i < Dic.length; i++) {
+            if(Dic[i].getValue() != null){
+                this.Elements.add(Dic[i]); 
+            }
+        }
+        return this.Elements.iterator();
     }
 
     @Override
     public Iterator<t> Key() {
         // TODO Auto-generated method stub
-        return null;
+        for (int i = 0; i < Dic.length; i++) {
+            if(Dic[i].getValue()!=null){
+                this.keys.add((t) Dic[i].getValue());
+            }
+        }
+        return this.keys.iterator();
     }
 
     @Override
-    public Obj findElement(t chave) {
+    public Obj<t> findElement(t chave) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findElement'");
+        Obj<t> ret = null;
+        for (int i = 0; i < Dic.length; i++) {
+            if(Dic[i].getValue().equals(chave)){
+                 ret=Dic[i];break;
+            }
+        }
+        if(ret!=null){
+            return ret;
+        }else{
+            throw new RuntimeException("Este elemento não existe");
+        }
     }
 
-
     @Override
-    public t InsertItem(t chave, Obj element) {
+    public t InsertItem(t chave, Obj<t> element) {
         // TODO Auto-generated method stub
+        element.setValue(chave);
         if(el==Dic.length){
-              tam*=2;
-              Obj[] novo = (Obj[]) new Object[tam];
+              tam *= 2;
+              Obj<t>[] novo = (Obj<t>[]) new Object[tam];
               for (int i = 0; i < Dic.length; i++) {
-                   novo[i] = Dic[i];
+                int ind = (int)Dic[i].getValue()%novo.length;
+                novo[ind] = Dic[i];
               }
               Dic = novo;
         }
-        int index = (int)chave%tam;
+        int index = (int) chave % tam;
         while(Dic[index] != null){
-            index++;
+            if(Dic[index].getValue().equals(chave)){
+                throw new RuntimeException("O elemento já existe");
+            }
+            index = (index+1)%tam;
         }
         Dic[index] = element;
         el++;
         return chave;
     }
-
+      
+    public void Print(){
+        for (int i = 0; i < Dic.length; i++) {
+            System.out.println(i+"tem "+ Dic[i].getValue());
+        }
+    }
 }

@@ -14,17 +14,15 @@ public class HashTableHashDuplo<t> implements DicionarioImp<t> {
     }
     
     @Override
-    public Iterator<Obj> Element() {
+    public Iterator<Obj<t>> Element() {
         // TODO Auto-generated method stub
         return null;
     }
     @Override
-    public t InsertItem(t chave, Obj element) {
+    public t InsertItem(t chave, Obj<t> element) {
         // TODO Auto-generated method stub
         int index = (int) chave%tam;
-        if(true){
-
-        }
+            
         return null;
     }
     @Override
@@ -33,7 +31,7 @@ public class HashTableHashDuplo<t> implements DicionarioImp<t> {
         return null;
     }
     @Override
-    public Obj findElement(t chave) {
+    public Obj<t> findElement(t chave) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -43,7 +41,7 @@ public class HashTableHashDuplo<t> implements DicionarioImp<t> {
         return false;
     }
     @Override
-    public Obj removeElement(t chave) {
+    public Obj<t> removeElement(t chave) {
         // TODO Auto-generated method stub
         return null;
     }
