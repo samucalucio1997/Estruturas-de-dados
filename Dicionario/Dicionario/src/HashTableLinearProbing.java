@@ -85,16 +85,26 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     public t InsertItem(t chave, Obj<t> element) {
         // TODO Auto-generated method stub
         element.setValue(chave);
-        if(size()/tam >= 0.5){//pegar 
+        double b=(double)size()/tam;
+        if(b >= 0.5){//pegar 
+            // System.out.println(b);
+            System.out.println(tam);
             tam *= 2;
-            while(!Isprimo(tam) && size()/tam >= 0.5){
+            while(!Isprimo(tam)){
                 tam++;
             }
             Obj<t>[] novo = (Obj<t>[]) new Obj[tam];
             for (int i = 0; i < Dic.length; i++) {
-                int ind = (int)Dic[i].getValue()%tam;
-                novo[ind] = Dic[i];
+                if(Dic[i]!=null){
+                    System.out.println(Dic[i].getValue());
+                    int ind = (int)Dic[i].getValue()%tam;
+                    while(novo[ind]!=null){
+                        ind=(ind+1)%tam;
+                    }
+                    novo[ind] = Dic[i];
+                }
             }
+            System.out.println("--------------------------");
             Dic = novo;
         }
         int index = (int) chave % tam;
@@ -109,7 +119,7 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
         return chave;
     }
     
-    public boolean Isprimo(int num) {
+    private boolean Isprimo(int num) {
         int p=num-1;
         p/=2; 
         int con=0;
@@ -132,7 +142,7 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     public void Print(){
         for (int i = 0; i < Dic.length; i++) {
             if(Dic[i]!=null){
-                System.out.println(i+"tem "+ Dic[i].getValue());
+                System.out.println(i+" tem "+ Dic[i].getValue());
             }
         }
     }

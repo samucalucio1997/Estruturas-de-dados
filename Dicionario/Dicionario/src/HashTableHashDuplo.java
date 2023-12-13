@@ -3,14 +3,14 @@ import java.util.Iterator;
 import java.util.List;
 
 public class HashTableHashDuplo<t> implements DicionarioImp<t> {
-    private Obj[] Dic;
+    private Obj<t>[] Dic;
     private int tam;
     private int el=0;
     private List<t> keys = new ArrayList<>();
-    private List<Obj> Elements = new ArrayList<>();
+    private List<Obj<t>> Elements = new ArrayList<>();
     
     public HashTableHashDuplo() {
-        Dic =(Obj[]) new Object[tam];
+        Dic =(Obj<t>[]) new Obj[tam];
     }
     
     @Override
@@ -21,8 +21,11 @@ public class HashTableHashDuplo<t> implements DicionarioImp<t> {
     @Override
     public t InsertItem(t chave, Obj<t> element) {
         // TODO Auto-generated method stub
+        element.setValue(chave);
         int index = (int) chave%tam;
+        while(Dic[index]!=null){
             
+        }    
         return null;
     }
     @Override
