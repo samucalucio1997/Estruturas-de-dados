@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t>{
      
     private Obj<t>[] Dic;
@@ -28,12 +30,17 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
         // TODO Auto-generated method stub
         Obj<t> removed = null;
         for (int i = 0; i < Dic.length; i++) {
-            if(Dic[i].getValue().equals(chave)){
+            if(Dic[i]!=null && Dic[i].getClass().getName()!="Available" && Dic[i].getValue().equals(chave)){
                 removed = Dic[i];
-                Dic[i]=null;
+                Dic[i]=new Available();
+                // System.out.println(Dic[i].getClass().getName());
                 break;
             }
         }
+        if(removed==null){
+            throw new RuntimeErrorException(new Error("No_such_key"));
+        }
+        el--;
         return removed;
     }
     
@@ -85,31 +92,30 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     public t InsertItem(t chave, Obj<t> element) {
         // TODO Auto-generated method stub
         element.setValue(chave);
-        double b=(double)size()/tam;
-        if(b >= 0.5){//pegar 
-            // System.out.println(b);
-            System.out.println(tam);
+        double fator=(double)size()/tam;
+        if(fator >= 0.5){//pegar 
+            // System.out.println(tam);
             tam *= 2;
             while(!Isprimo(tam)){
                 tam++;
             }
             Obj<t>[] novo = (Obj<t>[]) new Obj[tam];
             for (int i = 0; i < Dic.length; i++) {
-                if(Dic[i]!=null){
-                    System.out.println(Dic[i].getValue());
-                    int ind = (int)Dic[i].getValue()%tam;
-                    while(novo[ind]!=null){
+                if(Dic[i]!=null && !(Dic[i] instanceof Available)){
+                    // System.out.println(Dic[i].getValue());
+                    int ind = (int) Dic[i].getValue()%tam;
+                    while(novo[ind] != null){
                         ind=(ind+1)%tam;
                     }
                     novo[ind] = Dic[i];
                 }
             }
-            System.out.println("--------------------------");
+            // System.out.println("----------------------------------");
             Dic = novo;
         }
         int index = (int) chave % tam;
-        while(Dic[index] != null){
-            if(Dic[index].getValue().equals(chave)){
+        while((Dic[index] instanceof Available) || Dic[index] != null){
+            if(Dic[index] != null&&Dic[index].getValue()!=null&&Dic[index].getValue().equals(chave)){
                 throw new RuntimeException("O elemento já existe");
             }
             index = (index + 1) % tam;
@@ -142,7 +148,7 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     public void Print(){
         for (int i = 0; i < Dic.length; i++) {
             if(Dic[i]!=null){
-                System.out.println(i+" tem "+ Dic[i].getValue());
+                System.out.println(i+" tem "+ Dic[i].getValue() + " " + Dic[i].getClass().getName());
             }
         }
     }

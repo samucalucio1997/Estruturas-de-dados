@@ -24,10 +24,15 @@ public class HashTableHashDuplo<t> implements DicionarioImp<t> {
         element.setValue(chave);
         int index = (int) chave%tam;
         while(Dic[index]!=null){
-            
+            index = h2(index);
         }    
-        return null;
+        return element.getValue();
     }
+
+    private int h2(int chave) {
+        return 2 - chave%2;
+    }
+
     @Override
     public Iterator<t> Key() {
         // TODO Auto-generated method stub

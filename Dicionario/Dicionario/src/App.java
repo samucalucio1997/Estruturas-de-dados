@@ -14,7 +14,14 @@ public class App {
         hash.InsertItem(73, new Obj<>(23));
         hash.InsertItem(21, new Obj<>(23));
         hash.InsertItem(80, new Obj<>(80));
-        System.out.println(hash.getTam());
+        hash.removeElement(23);
+        hash.removeElement(73);
+        hash.InsertItem(68, new Obj<>(68));
+        hash.InsertItem(33, new Obj<>(33));
         hash.Print(); 
+        hash.InsertItem(44, new Obj<>(44));
+        System.out.println("--------------------------------------------");
+        System.out.println(hash.getTam());
+        hash.Print();
     }
 }
