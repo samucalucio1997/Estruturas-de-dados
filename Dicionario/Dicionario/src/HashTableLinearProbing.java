@@ -7,14 +7,14 @@ import javax.management.RuntimeErrorException;
 public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t>{
      
     private Obj<t>[] Dic;
-    private int tam;
+    private int tam=2;
     private int el=0;
     private List<t> keys = new ArrayList<>();
     private List<Obj<t>> Elements = new ArrayList<>();
     
     
-    public HashTableLinearProbing(int tam) {
-        this.tam = tam;
+    public HashTableLinearProbing() {
+        // this.tam = tam;
         Dic =  (Obj[]) new Obj[this.tam];
     }
 
@@ -22,7 +22,7 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     @Override
     public boolean isEmpty() {
         // TODO Auto-generated method stub
-        return el != 0; 
+        return this.el == 0; 
     }
 
     @Override
@@ -65,7 +65,7 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     public Iterator<t> Key() {
         // TODO Auto-generated method stub
         for (int i = 0; i < Dic.length; i++) {
-            if(Dic[i].getValue()!=null){
+            if(Dic[i].getValue() != null){
                 this.keys.add((t) Dic[i].getValue());
             }
         }
@@ -76,12 +76,13 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     public Obj<t> findElement(t chave) {
         // TODO Auto-generated method stub
         Obj<t> ret = null;
-        for (int i = 0; i < Dic.length; i++) {
-            if(Dic[i].getValue().equals(chave)){
-                ret=Dic[i];break;
+        for (int i = (int)chave % tam; i < tam; i = (i+1) % tam) {
+            if(!(Dic[i] instanceof Available) && Dic[i] != null && Dic[i].getValue().equals(chave)){
+                ret = Dic[i];
+                break;
             }
         }
-        if(ret!=null){
+        if(ret != null){
             return ret;
         }else{
             throw new RuntimeException("Este elemento não existe");
@@ -92,7 +93,7 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     public t InsertItem(t chave, Obj<t> element) {
         // TODO Auto-generated method stub
         element.setValue(chave);
-        double fator=(double)size()/tam;
+        double fator = (double) size()/tam;
         if(fator >= 0.5){//pegar 
             // System.out.println(tam);
             tam *= 2;
@@ -101,11 +102,11 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
             }
             Obj<t>[] novo = (Obj<t>[]) new Obj[tam];
             for (int i = 0; i < Dic.length; i++) {
-                if(Dic[i]!=null && !(Dic[i] instanceof Available)){
+                if(Dic[i] != null && !(Dic[i] instanceof Available)){
                     // System.out.println(Dic[i].getValue());
                     int ind = (int) Dic[i].getValue()%tam;
                     while(novo[ind] != null){
-                        ind=(ind+1)%tam;
+                        ind = (ind+1) % tam;
                     }
                     novo[ind] = Dic[i];
                 }
@@ -114,8 +115,8 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
             Dic = novo;
         }
         int index = (int) chave % tam;
-        while((Dic[index] instanceof Available) || Dic[index] != null){
-            if(Dic[index] != null&&Dic[index].getValue()!=null&&Dic[index].getValue().equals(chave)){
+        while(Dic[index] != null){
+            if(Dic[index] != null && Dic[index].getValue() != null && Dic[index].getValue().equals(chave)){
                 throw new RuntimeException("O elemento já existe");
             }
             index = (index + 1) % tam;
@@ -126,21 +127,21 @@ public class HashTableLinearProbing<t extends Object> implements DicionarioImp<t
     }
     
     private boolean Isprimo(int num) {
-        int p=num-1;
-        p/=2; 
+        int p = num - 1;
+        p /= 2; 
         int con=0;
         boolean ret;
-        if(num%2==0){
+        if(num % 2 == 0){
             ret = false;
             return ret;
         }else{
-            while (p>1) {
-                if(num%p==0){
+            while (p > 1) {
+                if(num % p == 0){
                     con++;
                 }
                 p--;
             }
-            return ret=con>0?false:true;
+            return ret = con > 0 ? false : true;
         }
     }
 
