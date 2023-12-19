@@ -61,10 +61,12 @@ public class LinkedList implements ArrayListIM {
             tailNo.setPrevNo(new_no);
         } else {
             No cursNo = Search(p);
-            new_no.setNextNo(cursNo.getNextNo());
-            new_no.setPrevNo(cursNo);
-            cursNo.getNextNo().setPrevNo(new_no);
-            cursNo.setNextNo(new_no);
+            if(cursNo != null){
+                new_no.setNextNo(cursNo.getNextNo());
+                new_no.setPrevNo(cursNo);
+                cursNo.getNextNo().setPrevNo(new_no);
+                cursNo.setNextNo(new_no);
+            }
         }
         t++;
         return new_no;
