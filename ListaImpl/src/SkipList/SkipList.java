@@ -1,8 +1,6 @@
 package SkipList;
 
-import java.rmi.server.ObjID;
 import java.util.LinkedList;
-import java.util.List;
 
 import Lista.No;
 
@@ -34,33 +32,46 @@ void InsertItem(Object chave){
     if(i>=h){
         this.linkedList = AddLista();
     }
-    No shift = this.linkedList.getFirst();
-    shift.setNextNo(this.linkedList.size()>2?this.linkedList.getFirst().getNextNo():this.linkedList.getLast());
-    shift = ProcuraNoLista(shift, chave);
+
+    No shift = ProcuraNoLista(this.linkedList.getFirst(), chave);//procura posição do no a ser inserido
     int index = this.S0.indexOf(shift);
     No new_No = new No(chave);
     new_No.setPrevNo(shift);
     new_No.setNextNo(shift.getNextNo());
+    shift.getNextNo().setPrevNo(new_No);
+    shift.setNextNo(new_No);
     S0.add(index+1, new_No); // inserir depois do no achado
     shift = S0.get(index+1);
-    
+    No curNo = S0.getFirst().getUpNo();//ref para o começo da lista
+    while(i != 0){//procura o a lista de cima
+     curNo = ProcuraNoLista(curNo, chave);
+     No nodNo = new No(chave);
+     nodNo.setPrevNo(curNo);
+     nodNo.setNextNo(curNo.getNextNo());
+     nodNo.setDownNo(shift);
+     shift.setUpNo(nodNo);
+     curNo.getNextNo().setPrevNo(nodNo);
+     curNo.setNextNo(nodNo);
+     shift = nodNo;
+    //  curNo
+     
+     --i;
+    }
 }
 
-private No ProcuraNoLista(No shift, Object chave){
-    while(shift.getValue()!=null&&shift.getNextNo() != null&&(int)shift.getNextNo().getValue() < (int)chave){
-        if(shift.getDownNo()!=null && (int)shift.getNextNo().getValue() > (int)chave){
-            shift = dropDown(shift);
+public No ProcuraNoLista(No node,Object chave){
+
+    while (node.getNextNo()!=null) {
+        if (node.getDownNo()!=null && (int)node.getValue()>(int)chave) {
+            node = node.getDownNo();
             continue;
         }else{
-            if (shift.getNextNo() != null && (int)shift.getNextNo().getValue() < (int)chave) {
-                shift = scanForward(shift);
-                continue;
-            }else{
-                break;
+            if (node.getNextNo()!=null && (int)node.getValue()<(int)chave) {
+                node = node.getNextNo();continue;
             }
         }
     }
-    return shift;
+    return node;
 }
 
 public void mostra(LinkedList<No> list){
