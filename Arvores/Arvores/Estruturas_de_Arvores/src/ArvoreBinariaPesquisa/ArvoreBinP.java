@@ -25,8 +25,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
 
             @Override
             public int compareT(int no1, int no2) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'compareT'");
+                return no1 - no2;
             }
             
         };
@@ -34,21 +33,21 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public int altura(No<t> no) {
         // TODO Auto-generated method stub
-        this.setComparator(new Comparador<t>() {
+        // this.setComparator(new Comparador<t>() {
 
-            @Override
-            public int compare(No<t> no1, No<t> no2) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'compare'");
-            }
+        //     @Override
+        //     public int compare(No<t> no1, No<t> no2) {
+        //         // TODO Auto-generated method stub
+        //         throw new UnsupportedOperationException("Unimplemented method 'compare'");
+        //     }
 
-            @Override
-            public int compareT(int no1, int no2) {
-                // TODO Auto-generated method stub
-                return no1 - no2;
-            }
+        //     @Override
+        //     public int compareT(int no1, int no2) {
+        //         // TODO Auto-generated method stub
+        //         return no1 - no2;
+        //     }
             
-        });
+        // });
         if(no==null){
             return 0;
         }else{
@@ -251,8 +250,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             return 0;
         }
         else{
-            int p = profundidade(no.getFather());
-            return 1 + p;
+            return 1 + profundidade(no.getFather());
         }
     }
 
@@ -262,12 +260,8 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         No<t> pai = null;
         No<t> atual = pesquisar(root, key);
         pai = atual.getFather();
-        if (atual == null) {
-            return null; // Se o nó não foi encontrado
-        }
-    
         t valorRemovido = atual.getValue();
-    /*Nesse escopo inicia a busca pelo sucessor do no */
+        /*Nesse escopo inicia a busca pelo sucessor do no */
         // no a ser removido é um no folha
         if (atual.getLeftChild() == null && atual.getRightChild() == null) {
             if (pai == null) {
@@ -284,7 +278,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         else{
             if (atual.getLeftChild() == null || atual.getRightChild() == null) {
                 No<t> filho = (atual.getLeftChild() != null) ? atual.getLeftChild() : atual.getRightChild();
-                if (pai == null) {
+                if (pai == null) {// pro caso do do pai ser o root
                     root = filho; // O filho se torna a nova raiz
                 } else{
                     if (atual == pai.getLeftChild()) {
@@ -329,5 +323,34 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         return this.num_elem;
     }
 
-    
+    private void remocaoCaso(int casoRemocao, No<t> node){
+         No<t> pai = node.getFather();
+         switch (casoRemocao) {
+             case 1:
+                 if (pai == null) {
+                     root = null; // Remover a raiz
+                 } else {
+                     if (node == pai.getLeftChild()) {
+                         pai.setLeftChild(null);
+                     } else {
+                         pai.setRightChild(null);
+                     }
+                 }
+                 break;
+             case 2:
+                 No<t> filho = (node.getLeftChild() != null) ? node.getLeftChild() : node.getRightChild();
+                 if (pai == null) {// pro caso do do pai ser o root
+                     root = filho; // O filho se torna a nova raiz
+                 } else {
+                     if (node == pai.getLeftChild()) {
+                         pai.setLeftChild(filho);
+                     } else {
+                         pai.setRightChild(filho);
+                     }
+                 }
+                 break; 
+            default:
+                break;
+         }   
+    }
 }

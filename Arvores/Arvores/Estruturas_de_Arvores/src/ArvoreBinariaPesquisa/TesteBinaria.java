@@ -28,6 +28,7 @@ public class TesteBinaria {
         node12 = ar.incluir(node12.getValue());
         System.out.println(ar.altura(node1));
         System.out.println();
+        ar.mostrar();
         System.out.println();
         ar.remover(6);
         ar.remover(13);
@@ -39,7 +40,7 @@ public class TesteBinaria {
         // System.out.println(node3.getValue());
         // System.out.println(node2.getRightChild().getLeftChild().getValue());
         ////////////////////////////
-        System.out.println();
-        System.out.println(ar.profundidade(node5));
+        System.out.println(ar.altura(node12));
+        System.out.println(ar.profundidade(node11));
     }
 }
