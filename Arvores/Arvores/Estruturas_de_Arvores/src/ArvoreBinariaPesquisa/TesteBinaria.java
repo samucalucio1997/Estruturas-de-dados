@@ -2,8 +2,8 @@ package ArvoreBinariaPesquisa;
 
 public class TesteBinaria {
     public static void main(String[] args) {
-        No<Integer> node1 = new No<Integer>(15);
         No<Integer> node2 = new No<Integer>(6);
+        No<Integer> node1 = new No<Integer>(15);
         No<Integer> node3 = new No<Integer>(9);
         No<Integer> node4 = new No<Integer>(2);
         No<Integer> node5 = new No<Integer>(45);
@@ -30,17 +30,18 @@ public class TesteBinaria {
         System.out.println();
         ar.mostrar();
         System.out.println();
-        ar.remover(6);
-        ar.remover(13);
-        System.out.println(node10.getFather().getValue());
+        // ar.remover(6);
+        // ar.remover(13);
+        // System.out.println(node10.getFather().getValue());
         // ar.emOrdem(node1);
         // ar.preOrdem(node1);
-        ar.mostrar();
-        System.out.println();
+        // ar.mostrar();
+        // System.out.println();
         // System.out.println(node3.getValue());
         // System.out.println(node2.getRightChild().getLeftChild().getValue());
         ////////////////////////////
-        System.out.println(ar.altura(node12));
-        System.out.println(ar.profundidade(node11));
+        ar.emOrdem(ar.getRaiz());
+        // System.out.println(ar.altura(node12));
+        // System.out.println(ar.profundidade(node11));
     }
 }

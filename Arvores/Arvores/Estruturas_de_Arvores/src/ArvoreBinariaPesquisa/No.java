@@ -5,9 +5,11 @@ public class No<t extends Object> {
     private No<t> father;
     private No<t> leftChild;
     private No<t> RightChild;
-    
+    private int FB;
+
     public No(t value) {
         this.value = value;
+        this.FB = 0;
     } 
     
     public t getValue() {
@@ -44,5 +46,10 @@ public class No<t extends Object> {
     public boolean Isinternal(){
         return this.leftChild!=null||this.RightChild!=null;
     }
-
+    public int getFB() {
+        return FB;
+    }
+    public void setFB(int fB) {
+        FB = fB;
+    }
 }

@@ -2,6 +2,9 @@ package ArvoreBinariaPesquisa;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
@@ -32,22 +35,6 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     }
     @Override
     public int altura(No<t> no) {
-        // TODO Auto-generated method stub
-        // this.setComparator(new Comparador<t>() {
-
-        //     @Override
-        //     public int compare(No<t> no1, No<t> no2) {
-        //         // TODO Auto-generated method stub
-        //         throw new UnsupportedOperationException("Unimplemented method 'compare'");
-        //     }
-
-        //     @Override
-        //     public int compareT(int no1, int no2) {
-        //         // TODO Auto-generated method stub
-        //         return no1 - no2;
-        //     }
-            
-        // });
         if(no==null){
             return 0;
         }else{
@@ -64,10 +51,9 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public Iterator<t> elements() {
         // TODO Auto-generated method stub
-        List<t> arrTs = new ArrayList<>();
-        for (No<t> t : list) {
-            arrTs.add(t.getValue());
-        }
+        final var arrTs = list.stream()
+        .map(No::getValue)
+        .collect(Collectors.toList());
         return  (Iterator<t>) arrTs.iterator();
     }
 
@@ -78,9 +64,10 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             return;
         }
         if(no.Isinternal()){
-            emOrdem(no.getLeftChild());;
+            emOrdem(no.getLeftChild());
         }
-        System.out.println(no.getValue());
+        final var paiNo = Optional.ofNullable(no.getFather()).map(No::getValue).orElse(null);
+        System.out.println("No: " + no.getValue() + ", Pai => " + no.getFB());
         if(no.Isinternal()){
             emOrdem(no.getRightChild());
         }
@@ -107,8 +94,10 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         if(curNo.getLeftChild()==null&&curNo.getRightChild()==null){
             if(comp.compare(new_no, curNo)>0){
                  curNo.setRightChild(new_no);
+                 this.atualizadorFB(curNo.getFather(), -1);
             }else{
                 curNo.setLeftChild(new_no);
+                this.atualizadorFB(curNo.getFather(), 1);
             }
         }else{
             //comparando as chaves do no cursor e do no a ser inserido
@@ -116,15 +105,20 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
                 int ret = getComparador().compare(new_no, curNo);
                 if(ret>0){
                     if(curNo.getRightChild()!=null&&curNo.getLeftChild()!=null){
-                        curNo = curNo.getRightChild();continue;
+                        curNo = curNo.getRightChild();
+                        continue;
                     }else{
-                        curNo.setRightChild(new_no);break;
+                        curNo.setRightChild(new_no);
+                        this.atualizadorFB(curNo.getFather(), -1);
+                        break;
                     } 
                 }else{
                     if(curNo.getLeftChild()!=null){
                         curNo = curNo.getLeftChild();continue; 
                     }else{
-                        curNo.setLeftChild(new_no);break;
+                        curNo.setLeftChild(new_no);
+                        this.atualizadorFB(curNo.getFather(), 1);
+                        break;
                     }
                 }
             }
@@ -172,7 +166,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         //     arr[profundidade(node)][(int)node.getValue()%col] = node.getValue();   
         //     System.out.println(col);         
         // }else{
-            arr[profundidade(node)][(int)node.getValue()] = node.getValue();
+               arr[profundidade(node)][(int)node.getValue()] = node.getValue();
         // }
         
         if(node.Isinternal()){
@@ -189,8 +183,21 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
        list.add(no);
        buildMatriz(no.getRightChild());
     }
-    
 
+    private void atualizadorFB(No<t> pai, int balanceadorInsert) {
+        if (pai == null) {
+            return;
+        }
+        final var valorAtualizado = pai.getFB() + balanceadorInsert;
+        pai.setFB(valorAtualizado);
+
+        if (pai.getFB() == 0) {
+            return;
+        }
+
+        atualizadorFB(pai.getFather(), balanceadorInsert);
+    }   
+    
     @Override
     public Iterator<No<t>> nos() {
         // TODO Auto-generated method stub
