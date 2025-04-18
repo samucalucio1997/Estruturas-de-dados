@@ -44,7 +44,7 @@ public class No<t extends Object> {
         RightChild = rightChild;
     }
     public boolean Isinternal(){
-        return this.leftChild!=null||this.RightChild!=null;
+        return this.leftChild!=null || this.RightChild!=null;
     }
     public int getFB() {
         return FB;

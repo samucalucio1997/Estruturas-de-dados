@@ -1,11 +1,10 @@
 package ArvoreBinariaPesquisa;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
 
 public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     
@@ -21,6 +20,9 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
             @Override
             public int compare(No<t> no1, No<t> no2) {
                 // TODO Auto-generated method stub
+                if (no1.equals(no2)) {
+                    throw new RuntimeErrorException(new Error("Aquele erro"));
+                }
                 int p1 = (Integer) no1.getValue();
                 int p2 = (Integer) no2.getValue();
                 return p1-p2;
@@ -51,10 +53,10 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public Iterator<t> elements() {
         // TODO Auto-generated method stub
-        final var arrTs = list.stream()
+        // final var arrTs = ;
+        return  (Iterator<t>) this.list.stream()
         .map(No::getValue)
-        .collect(Collectors.toList());
-        return  (Iterator<t>) arrTs.iterator();
+        .collect(Collectors.toList()).iterator();
     }
 
     @Override
@@ -66,7 +68,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         if(no.Isinternal()){
             emOrdem(no.getLeftChild());
         }
-        final var paiNo = Optional.ofNullable(no.getFather()).map(No::getValue).orElse(null);
+        // final var paiNo = Optional.ofNullable(no.getFather()).map(No::getValue).orElse(null);
         System.out.println("No: " + no.getValue() + ", Pai => " + no.getFB());
         if(no.Isinternal()){
             emOrdem(no.getRightChild());
@@ -90,40 +92,50 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         // TODO Auto-generated method stub
         No<t> new_no = new No<t>(key);
         No<t> curNo = getRaiz();
-        // caso a arvore esteja somente com no raiz
-        if(curNo.getLeftChild()==null&&curNo.getRightChild()==null){
-            if(comp.compare(new_no, curNo)>0){
-                 curNo.setRightChild(new_no);
-                 this.atualizadorFB(curNo.getFather(), -1);
-            }else{
-                curNo.setLeftChild(new_no);
-                this.atualizadorFB(curNo.getFather(), 1);
-            }
+        No<t> pai = pesquisar(curNo, key);
+
+        final var coefComp = this.getComparador().compare(new_no, pai);
+        if (coefComp > 0) {
+            pai.setRightChild(new_no);
+            // this.atualizadorFB(pai, -1);
         }else{
-            //comparando as chaves do no cursor e do no a ser inserido
-            while (curNo!=null) {
-                int ret = getComparador().compare(new_no, curNo);
-                if(ret>0){
-                    if(curNo.getRightChild()!=null&&curNo.getLeftChild()!=null){
-                        curNo = curNo.getRightChild();
-                        continue;
-                    }else{
-                        curNo.setRightChild(new_no);
-                        this.atualizadorFB(curNo.getFather(), -1);
-                        break;
-                    } 
-                }else{
-                    if(curNo.getLeftChild()!=null){
-                        curNo = curNo.getLeftChild();continue; 
-                    }else{
-                        curNo.setLeftChild(new_no);
-                        this.atualizadorFB(curNo.getFather(), 1);
-                        break;
-                    }
-                }
-            }
+            pai.setLeftChild(new_no);
+            // this.atualizadorFB(pai, 1);
         }
-        new_no.setFather(curNo);
+        // caso a arvore esteja somente com no raiz
+        // if(curNo.getLeftChild()==null&&curNo.getRightChild()==null){
+        //     if(comp.compare(new_no, curNo)>0){
+        //          curNo.setRightChild(new_no);
+        //          this.atualizadorFB(curNo, -1);
+        //     }else{
+        //         curNo.setLeftChild(new_no);
+        //         this.atualizadorFB(curNo, 1);
+        //     }
+        // }else{
+        //     //comparando as chaves do no cursor e do no a ser inserido
+        //     while (curNo!=null) {
+        //         int ret = getComparador().compare(new_no, curNo);
+        //         if(ret>0){
+        //             if(curNo.getRightChild()!=null&&curNo.getLeftChild()!=null){
+        //                 curNo = curNo.getRightChild();
+        //                 continue;
+        //             }else{
+        //                 curNo.setRightChild(new_no);
+        //                 this.atualizadorFB(curNo, -1);
+        //                 break;
+        //             } 
+        //         }else{
+        //             if(curNo.getLeftChild()!=null){
+        //                 curNo = curNo.getLeftChild();continue; 
+        //             }else{
+        //                 curNo.setLeftChild(new_no);
+        //                 this.atualizadorFB(curNo, 1);
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
+        new_no.setFather(pai);
         this.num_elem++;
         return new_no;
     }
@@ -132,7 +144,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public boolean isEmpty() {
         // TODO Auto-generated method stub
-        return false;
+        return this.num_elem == 0;
     }
 
     @Override
@@ -162,12 +174,11 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
            printTree(node.getLeftChild(), col, arr);
         }
 
-        // if((int)node.getValue()>col){
-        //     arr[profundidade(node)][(int)node.getValue()%col] = node.getValue();   
-        //     System.out.println(col);         
-        // }else{
-               arr[profundidade(node)][(int)node.getValue()] = node.getValue();
-        // }
+        if((int)node.getValue()>col){
+            arr[profundidade(node)][(int)node.getValue()%col] = node.getValue();         
+        }else{
+            arr[profundidade(node)][(int)node.getValue()] = node.getValue();
+        }
         
         if(node.Isinternal()){
            printTree(node.getRightChild(), col, arr);    
@@ -184,19 +195,21 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
        buildMatriz(no.getRightChild());
     }
 
-    private void atualizadorFB(No<t> pai, int balanceadorInsert) {
-        if (pai == null) {
-            return;
-        }
-        final var valorAtualizado = pai.getFB() + balanceadorInsert;
-        pai.setFB(valorAtualizado);
+    // private void atualizadorFB(No<t> pai, int balanceadorInsert) {
+    //     if (pai == null) {
+    //         return;
+    //     }
+    //     final var valorAtualizado = pai.getFB() + balanceadorInsert;
+    //     pai.setFB(valorAtualizado);
 
-        if (pai.getFB() == 0) {
-            return;
-        }
+    //     while (pai.getFB() != 0 && pai.getFather() != null) {
+    //         pai = pai.getFather();
+    //         final var FBNode = pai.getFB();
+    //         pai.setFB(FBNode + balanceadorInsert);
+    //     }
 
-        atualizadorFB(pai.getFather(), balanceadorInsert);
-    }   
+    //     // atualizadorFB(pai.getFather(), balanceadorInsert);
+    // }   
     
     @Override
     public Iterator<No<t>> nos() {
@@ -208,18 +221,31 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public No<t> pesquisar(No<t> no, t key) {
         // TODO Auto-generated method stub
-        if(no==null){
-            return null;
+        if(!no.Isinternal()){
+            return no;
         }
-        if(no.getValue().equals(key)){
+        if(no.getValue() == key){
              return no;
         }
-        No<t> ret = pesquisar(no.getRightChild(),key);
-        if(ret!=null){
-            return ret;
+        int coef = this.getComparador().compare(no, new No<t>(key));
+        if (coef > 0) {
+            if (no.getLeftChild()==null) {
+                return no;
+            }
+            return pesquisar(no.getLeftChild(),key);
         }else{
-            return pesquisar(no.getLeftChild(), key);
+            if (no.getRightChild()==null) {
+                return no;
+            }
+            return pesquisar(no.getRightChild(),key);
         }
+
+        // No<t> ret = pesquisar(no.getRightChild(),key);
+        // if(ret!=null){
+        //     return ret;
+        // }else{
+        //     return pesquisar(no.getLeftChild(), key);
+        // }
     }
 
     @Override
@@ -264,58 +290,104 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public t remover(t key) {
         // TODO Auto-generated method stub
-        No<t> pai = null;
+        No<t> pai;
         No<t> atual = pesquisar(root, key);
         pai = atual.getFather();
         t valorRemovido = atual.getValue();
+        if (atual.getLeftChild() == null && atual.getRightChild() == null) {
+            remocaoCaso(1,atual);
+        }
+        if(atual.getLeftChild() == null ^ atual.getRightChild() == null){
+            remocaoCaso(2, atual);
+        }
+        if (atual.getLeftChild() != null && atual.getRightChild() != null) {
+            remocaoCaso(0, atual);
+        }
         /*Nesse escopo inicia a busca pelo sucessor do no */
         // no a ser removido é um no folha
-        if (atual.getLeftChild() == null && atual.getRightChild() == null) {
-            if (pai == null) {
-                root = null; // Remover a raiz
-            } else{
-                if (atual == pai.getLeftChild()) {
-                   pai.setLeftChild(null);
-               } else {
-                   pai.setRightChild(null);
-               }
-            }
-        }
-        // no a ser removido tem apenas um filho
-        else{
-            if (atual.getLeftChild() == null || atual.getRightChild() == null) {
-                No<t> filho = (atual.getLeftChild() != null) ? atual.getLeftChild() : atual.getRightChild();
+        // if (atual.getLeftChild() == null && atual.getRightChild() == null) {
+        //     if (pai == null) {
+        //         root = null; // Remover a raiz
+        //     } else{
+        //         if (atual == pai.getLeftChild()) {
+        //            pai.setLeftChild(null);
+        //        } else {
+        //            pai.setRightChild(null);
+        //        }
+        //     }
+        // }
+        // // no a ser removido tem apenas um filho
+        // else{
+        //     if (atual.getLeftChild() == null || atual.getRightChild() == null) {
+        //         No<t> filho = (atual.getLeftChild() != null) ? atual.getLeftChild() : atual.getRightChild();
+        //         if (pai == null) {// pro caso do do pai ser o root
+        //             root = filho; // O filho se torna a nova raiz
+        //         } else{
+        //             if (atual == pai.getLeftChild()) {
+        //                 pai.setLeftChild(filho);
+        //             } else {
+        //                 pai.setRightChild(filho);
+        //             }
+        //         } 
+        //     }
+        //     // no a ser removido tem dois filhos
+        //     else {
+        //         No<t> sucessor = atual.getRightChild();
+        //         while (sucessor.getLeftChild() != null) {
+        //            sucessor = sucessor.getLeftChild();    
+        //         }
+        //         t valorSucessor = sucessor.getValue();
+        //         remover(sucessor.getValue()); // remove recursivamente o sucessor
+        
+        //         atual.setValue(valorSucessor);
+        //     }
+        // } 
+        return valorRemovido;
+    }
+
+    private void remocaoCaso(int casoRemocao, No<t> node){
+        No<t> pai = node.getFather();
+        switch (casoRemocao) {
+            case 1:
+                if (pai == null) {
+                    root = null; // Remover a raiz
+                } else {
+                    if (node == pai.getLeftChild()) {
+                        pai.setLeftChild(null);
+                    } else {
+                        pai.setRightChild(null);
+                    }
+                }
+                break;
+            case 2:
+                final var filho = (node.getLeftChild() != null) ? node.getLeftChild() : node.getRightChild();
                 if (pai == null) {// pro caso do do pai ser o root
                     root = filho; // O filho se torna a nova raiz
-                } else{
-                    if (atual == pai.getLeftChild()) {
+                } else {
+                    if (node == pai.getLeftChild()) {
                         pai.setLeftChild(filho);
                     } else {
                         pai.setRightChild(filho);
                     }
-                } 
-            }
-            // no a ser removido tem dois filhos
-            else {
-                No<t> sucessor = atual.getRightChild();
-                while (sucessor.getLeftChild()!=null) {
-                   sucessor = sucessor.getLeftChild();    
                 }
-                t valorSucessor = sucessor.getValue();
-                remover(sucessor.getValue()); // remove recursivamente o sucessor
-        
-                atual.setValue(valorSucessor);
-            }
-        } 
-    
-        return valorRemovido;
-    }
+                break; 
+           default:
+               No<t> sucessor = node.getRightChild();
+               while (sucessor.getLeftChild() != null) {
+                  sucessor = sucessor.getLeftChild();
+               }
+               final var valorSucessor = sucessor.getValue();
+               remover(valorSucessor);
+               node.setValue(valorSucessor);
+               break;
+        }   
+   }
     
     
     @Override
     public void setComparator(Comparador<t> c) {
         // TODO Auto-generated method stub
-        this.comp=c;
+        this.comp = c;
     }
 
     @Override
@@ -330,34 +402,4 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         return this.num_elem;
     }
 
-    private void remocaoCaso(int casoRemocao, No<t> node){
-         No<t> pai = node.getFather();
-         switch (casoRemocao) {
-             case 1:
-                 if (pai == null) {
-                     root = null; // Remover a raiz
-                 } else {
-                     if (node == pai.getLeftChild()) {
-                         pai.setLeftChild(null);
-                     } else {
-                         pai.setRightChild(null);
-                     }
-                 }
-                 break;
-             case 2:
-                 No<t> filho = (node.getLeftChild() != null) ? node.getLeftChild() : node.getRightChild();
-                 if (pai == null) {// pro caso do do pai ser o root
-                     root = filho; // O filho se torna a nova raiz
-                 } else {
-                     if (node == pai.getLeftChild()) {
-                         pai.setLeftChild(filho);
-                     } else {
-                         pai.setRightChild(filho);
-                     }
-                 }
-                 break; 
-            default:
-                break;
-         }   
-    }
 }
