@@ -60,9 +60,8 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
 
             if (pai.getFB() == -2) {
                 casoRotacaoEsquerda(pai);
+                break;
             }
-
-
         }
     }
 
@@ -99,6 +98,21 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
     }
 
     private void rotacaoDuplaEsquerda(No<t> node) {
+        final var noRotacao1 = Optional.ofNullable(node.getRightChild())
+        .map(No::getLeftChild).orElse(null);
+        final var raizSub = noRotacao1.getFather();
         
+        raizSub.setLeftChild(null);
+        raizSub.setFather(noRotacao1);
+        noRotacao1.setFather(node);
+        noRotacao1.setRightChild(raizSub);
+        node.setRightChild(noRotacao1);
+        rotacaoSimplesEsquerda(node);
     }
+
+    private void rotacaoSimplesDireita(No<t> node) {
+
+    }
+
+    
 }

@@ -150,38 +150,44 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     @Override
     public void mostrar() {
         // TODO Auto-generated method stub
-        double a = this.altura(root);
+        int a = this.altura(root);
         double b = 2;
-        this.arr = (t[][]) new Object[this.altura(root)+1][(int) Math.pow(b, a)];
-        printTree(root,(int) Math.pow(b, a)/2,arr);
-        for (int i = 0; i <= a; i++) {
-            for (int j = 0; j < (int) Math.pow(b, a); j++) {
+        this.arr = (t[][]) new Object[a+1][(int) Math.pow(b, a + 1)];
+        printTree(root, 0,(int) Math.pow(b, a + 1)/2,arr);
+        for (int i = 0; i < a + 1; i++) {
+            for (int j = 0; j < (int) Math.pow(b, a + 1); j++) {
                 if(arr[i][j]!=null){
-                    System.out.print(" " + arr[i][j]+ " ");
+                    System.out.printf("%3s" ,arr[i][j]);
                 }else{
-                    System.out.print(" ");
+                    System.out.print("  ");
                 }
             }
             System.out.println();
         }
     }
 
-    private void printTree(No<t> node, int col, t[][] arr) {
-        if(node==null||(col<0&&col>(int) Math.pow(2, this.altura(root)))){
+    private void printTree(No<t> node, int linha, int col, t[][] arr) {
+        if(node==null){
             return;
         }
-        if(node.Isinternal()){
-           printTree(node.getLeftChild(), col, arr);
+
+        
+        arr[linha][col] = node.getValue();
+
+        int colSkip = (int) Math.pow(2, arr.length - linha - 2);
+
+
+        if(node.getLeftChild() != null){
+           printTree(node.getLeftChild(), linha + 1, col - colSkip, arr);
         }
 
-        if((int)node.getValue()>col){
-            arr[profundidade(node)][(int)node.getValue()%col] = node.getValue();         
-        }else{
-            arr[profundidade(node)][(int)node.getValue()] = node.getValue();
-        }
+        // if((int)node.getValue()>col){
+        //     arr[profundidade(node)][(int)node.getValue()%col] = node.getValue();         
+        // }else{
+        // }
         
-        if(node.Isinternal()){
-           printTree(node.getRightChild(), col, arr);    
+        if(node.getRightChild() != null){
+           printTree(node.getRightChild(), linha + 1, col + colSkip, arr);    
         }
     }
 
