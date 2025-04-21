@@ -62,6 +62,11 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
                 casoRotacaoEsquerda(pai);
                 break;
             }
+
+            if (pai.getFB() == 2) {
+                casoRotacaoDireita(pai);
+                break;
+            }
         }
     }
 
@@ -76,6 +81,20 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
         }else{
             rotacaoDuplaEsquerda(node);
         }
+    }
+
+    private void casoRotacaoDireita(No<t> node) {
+        final var rightNode = Optional.ofNullable(node.getLeftChild())
+        .map(No::getFB)
+        .orElse(null);
+        final var isRotacaoSimples = rightNode > 0 && node.getFB() > 0;
+
+        if (isRotacaoSimples) {
+            rotacaoSimplesDireita(node);
+        } else {
+            rotacaoDuplaDireita(node);
+        }
+
     }
 
     //TODO: Atualizar os FB's de cada nó mexido
@@ -111,8 +130,24 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
     }
 
     private void rotacaoSimplesDireita(No<t> node) {
+        if (node.getValue() == getRaiz().getValue()) {
+            setRaiz(node.getLeftChild());
+        }
+        final var novoRazSub = node.getLeftChild();
+        node.setLeftChild(null);
+        novoRazSub.setFather(node.getFather());
 
+        if (node.getRightChild() != null) {
+            node.setLeftChild(novoRazSub.getRightChild());
+            novoRazSub.getRightChild().setFather(node);
+        }
+
+        novoRazSub.setRightChild(node);
+        node.setFather(novoRazSub);
     }
 
+    private void rotacaoDuplaDireita(No<t> node) {
+        
+    }
     
 }
