@@ -13,17 +13,64 @@ public class TesteAVL {
     // avl.incluirNo(36);
     // avl.incluirNo(38);
 
+    // final var avl = new ArvoreAVL<Integer>(new No<Integer>(50));
+    // avl.incluirNo(20);
+    // avl.incluirNo(80);
+    // avl.incluirNo(90);
+    // avl.incluirNo(70);
+    // avl.incluirNo(60);
 
-    final var avl = new ArvoreAVL<Integer>(new No<Integer>(50));
-    avl.incluirNo(20);
-    avl.incluirNo(80);
-    avl.incluirNo(70);
-    avl.incluirNo(60);
-    avl.incluirNo(90);
+    // final var avl = new ArvoreAVL<Integer>(new No<Integer>(50));
+    // avl.incluirNo(20);
+    // avl.incluirNo(90);
+    // avl.incluirNo(30);
+    // avl.incluirNo(10);
+    // avl.incluirNo(5);
+
+    // final var avl = new ArvoreAVL<Integer>(new No<Integer>(1));
+    // avl.incluirNo(2);
+    // avl.incluirNo(3);
+    // avl.incluirNo(4);
+    // avl.incluirNo(5);
+    // avl.incluirNo(6);
+    // avl.removerNo(2);
     
-    final var retoPesquisa = avl.pesquisar(avl.getRaiz(), 80);
-    final var refChild = Optional.ofNullable(retoPesquisa.getFather())
-    .map(No::getValue).orElse(null);
+    final var avl = new ArvoreAVL<Integer>(new No<Integer>(50));
+    avl.incluirNo(30);
+    avl.incluirNo(70);
+    avl.incluirNo(10);
+    avl.incluirNo(35);
+    avl.incluirNo(65);
+    avl.incluirNo(80);
+    avl.incluirNo(33);
+    avl.incluirNo(62);
+    avl.incluirNo(67);
+    avl.incluirNo(75);
+    avl.incluirNo(111);
+
+    
+    // avl.incluirNo(9);
+
+    // final var avl = new ArvoreAVL<Integer>(new No<Integer>(50));
+    // avl.incluirNo(20);
+    // avl.incluirNo(90);
+    // avl.incluirNo(10);
+    // avl.incluirNo(40);
+    // avl.incluirNo(30);
+    // avl.incluirNo(15);
+    // avl.incluirNo(19);
+    // avl.incluirNo(35);
+    // avl.incluirNo(38);
+    // avl.removerNo(19); 
+    // avl.removerNo(10);
+    // avl.removerNo(15);
+    // avl.removerNo(30); 
+    // avl.removerNo(20);
+
+    final var retoPesquisa = avl.pesquisar(avl.getRaiz(), 20);
+    final var refChild = Optional.ofNullable(retoPesquisa.getRightChild())
+    .map(No::getValue)
+    .orElse(null);
     System.out.println(refChild);
     avl.mostrar();
     avl.emOrdem(avl.getRaiz());
