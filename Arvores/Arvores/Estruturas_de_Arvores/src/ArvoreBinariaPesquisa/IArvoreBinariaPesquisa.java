@@ -9,7 +9,7 @@ public interface IArvoreBinariaPesquisa<t> {
 
 	No<t> incluir(t key);
 
-	t remover(t key);
+	No<t> remover(t key);
 
 	No<t> getRaiz();
 

@@ -20,12 +20,12 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
 
     public t removerNo(t key) {
         final var pivoRotacao = this.pesquisar(getRaiz(), key);
-        No<t> curNo = pivoRotacao.getFather();
+        No<t> curNo = sucessorRemocao(pivoRotacao);//mudar para pegar o sucessor ao inves do pai caso o no tiver 2 filhos
         final var isLeftChild = curNo != null && curNo.getLeftChild() == pivoRotacao;
         final var Noremovido = this.remover(key);
 
-        atualizarFBRemocao(curNo, isLeftChild);
-        return Noremovido;
+        atualizarFBRemocao(Noremovido, isLeftChild);
+        return Noremovido.getValue();
     }
 
     private void atualizarFBRemocao(No<t> pai, boolean isLeftChild) {
@@ -38,12 +38,14 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
 
             if (pai.getFB() == -2) {
                 casoRotacaoEsquerda(pai);
+                pai = pai.getFather();
             }
 
             if (pai.getFB() == 2) {
                 casoRotacaoDireita(pai);
+                pai = pai.getFather();
             }
-            
+
             if (pai.getFB() != 0) {
                 break;
             }
@@ -51,6 +53,18 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
             final var paiAntigo = pai;
             pai = pai.getFather();
             isLeftChild = pai != null && pai.getLeftChild() == paiAntigo;
+        }
+    }
+
+    private No<t> sucessorRemocao(No<t> node) {
+        if (node.getLeftChild() != null && node.getRightChild() != null) {
+            No<t> curNo = node.getRightChild();
+            while (curNo.getLeftChild() != null) {
+                curNo = curNo.getLeftChild();
+            }
+            return curNo;
+        } else {
+            return node.getFather();
         }
     }
 

@@ -152,7 +152,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         // TODO Auto-generated method stub
         int a = this.altura(root);
         double b = 2;
-        this.arr = (t[][]) new Object[a+1][(int) Math.pow(b, a + 1)];
+        String[][] arr = new String[a+1][(int) Math.pow(b, a + 1)];
         printTree(root, 0,(int) Math.pow(b, a + 1)/2,arr);
         for (int i = 0; i < a + 1; i++) {
             for (int j = 0; j < (int) Math.pow(b, a + 1); j++) {
@@ -166,13 +166,13 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
         }
     }
 
-    private void printTree(No<t> node, int linha, int col, t[][] arr) {
+    private void printTree(No<t> node, int linha, int col, String[][] arr) {
         if(node==null){
             return;
         }
 
         
-        arr[linha][col] = node.getValue();
+        arr[linha][col] = (t) node.getValue() + "[" + node.getFB() + "]";
 
         int colSkip = (int) Math.pow(2, arr.length - linha - 2);
 
@@ -294,20 +294,20 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
     }
 
     @Override
-    public t remover(t key) {
+    public No<t> remover(t key) {
          // TODO Auto-generated method stub
          No<t> pai;
          No<t> atual = pesquisar(root, key);
          pai = atual.getFather();
          t valorRemovido = atual.getValue();
          if (atual.getLeftChild() == null && atual.getRightChild() == null) {
-             remocaoCaso(1,atual);
+            return remocaoCaso(1,atual);
          }
          if(atual.getLeftChild() == null ^ atual.getRightChild() == null){
-             remocaoCaso(2, atual);
+            return remocaoCaso(2, atual);
          }
          if (atual.getLeftChild() != null && atual.getRightChild() != null) {
-             remocaoCaso(0, atual);
+            return remocaoCaso(0, atual);
          }
          /*Nesse escopo inicia a busca pelo sucessor do no */
          // no a ser removido é um no folha
@@ -348,10 +348,10 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
          //         atual.setValue(valorSucessor);
          //     }
          // } 
-         return valorRemovido;
+         return pai;
     }    
 
-    private void remocaoCaso(int casoRemocao, No<t> node){
+    private No<t> remocaoCaso(int casoRemocao, No<t> node){
         No<t> pai = node.getFather();
         switch (casoRemocao) {
             case 1:
@@ -366,7 +366,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
                         // pai.setFB(pai.getFB() + 1);
                     }
                 }
-                break;
+                return pai;
             case 2:
                 final var filho = (node.getLeftChild() != null) ? node.getLeftChild() : node.getRightChild();
                 if (pai == null) {// pro caso do do pai ser o root
@@ -374,15 +374,15 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
                 } else {
                     if (node == pai.getLeftChild()) {
                         pai.setLeftChild(filho);
-                        pai.setFB(pai.getFB() - 1);
+                        // pai.setFB(pai.getFB() - 1);
                     } else {
                         pai.setRightChild(filho);
-                        pai.setFB(pai.getFB() + 1);
+                        // pai.setFB(pai.getFB() + 1);
                     }
                 }
                 filho.setFather(pai);
                 node.setFather(null);
-                break; 
+                return pai;
            default:
                No<t> sucessor = node.getRightChild();
                while (sucessor.getLeftChild() != null) {
@@ -391,7 +391,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t>{
                final var valorSucessor = sucessor.getValue();
                remover(valorSucessor);
                node.setValue(valorSucessor);
-               break;
+               return node;
         }   
    }
     
