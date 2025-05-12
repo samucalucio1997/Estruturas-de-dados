@@ -60,16 +60,17 @@ public class TesteAVL {
     avl.incluirNo(35);
     avl.incluirNo(38);
     avl.removerNo(19); 
-    avl.removerNo(10);
-    avl.removerNo(15);
-    avl.removerNo(30); 
-    avl.removerNo(20);
-
-    final var retoPesquisa = avl.pesquisar(avl.getRaiz(), 2);
-    final var refChild = Optional.ofNullable(retoPesquisa.getRightChild())
-    .map(No::getValue)
-    .orElse(null);
-    System.out.println(refChild);
+    // avl.removerNo(10);
+    // avl.removerNo(15);
+    // avl.removerNo(30); 
+    // avl.removerNo(20);
+    avl.mostrar();
+    System.out.println();
+    final var retoPesquisa = avl.pesquisar(avl.getRaiz(), 19);
+    // final var refChild = Optional.ofNullable(retoPesquisa.getRightChild())
+    // .map(No::getValue)
+    // .orElse(null);
+    System.out.println(retoPesquisa.getValue());
     avl.mostrar();
     // avl.emOrdem(avl.getRaiz());
   }

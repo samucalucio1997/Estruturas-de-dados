@@ -166,6 +166,7 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
     }
 
     private void rotacaoDuplaEsquerda(No<t> node) {
+        // faz primeiro uma rotação simples a direita com a subarvore a direita do no com FB = -2
         rotacaoSimplesDireita(node.getRightChild());
         rotacaoSimplesEsquerda(node);
     }

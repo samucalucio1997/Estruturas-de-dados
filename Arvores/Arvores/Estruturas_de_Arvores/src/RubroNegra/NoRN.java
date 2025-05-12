@@ -2,11 +2,12 @@ package RubroNegra;
 
 import ArvoreBinariaPesquisa.No;
 
-public class NoRN<T extends Object> extends No<T>{
+public class NoRN<T extends Object> extends No<T> {
+  private NoRN<T> father;
   private NoRN<T> leftChild;
   private NoRN<T> rightChild;
   private Cor cor;
-  
+
   public NoRN(T value) {
     super(value);
     this.cor = Cor.RUBRO;
@@ -35,6 +36,12 @@ public class NoRN<T extends Object> extends No<T>{
   public void setCor(Cor cor) {
     this.cor = cor;
   }
-  
-  
+
+  public NoRN<T> getFather() {
+    return father;
+  }
+
+  public void setFather(NoRN<T> father) {
+    this.father = father;
+  }
 }
