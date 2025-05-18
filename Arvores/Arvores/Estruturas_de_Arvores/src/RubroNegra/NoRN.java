@@ -3,9 +3,6 @@ package RubroNegra;
 import ArvoreBinariaPesquisa.No;
 
 public class NoRN<T extends Object> extends No<T> {
-  private NoRN<T> father;
-  private NoRN<T> leftChild;
-  private NoRN<T> rightChild;
   private Cor cor;
 
   public NoRN(T value) {
@@ -13,20 +10,40 @@ public class NoRN<T extends Object> extends No<T> {
     this.cor = Cor.RUBRO;
   }
 
+  @Override
+  public NoRN<T> getFather() {
+    // TODO Auto-generated method stub
+    return (NoRN<T>) super.getFather();
+  }
+
+  @Override
   public NoRN<T> getLeftChild() {
-    return leftChild;
+    // TODO Auto-generated method stub
+    return (NoRN<T>) super.getLeftChild();
   }
 
-  public void setLeftChild(NoRN<T> leftChild) {
-    this.leftChild = leftChild;
-  }
-
+  @Override
   public NoRN<T> getRightChild() {
-    return rightChild;
+    // TODO Auto-generated method stub
+    return (NoRN<T>) super.getRightChild();
   }
 
-  public void setRightChild(NoRN<T> rightChild) {
-    this.rightChild = rightChild;
+  @Override
+  public void setFather(No<T> father) {
+    // TODO Auto-generated method stub
+    super.setFather(father);
+  }
+
+  @Override
+  public void setLeftChild(No<T> leftChild) {
+    // TODO Auto-generated method stub
+    super.setLeftChild(leftChild);
+  }
+
+  @Override
+  public void setRightChild(No<T> rightChild) {
+    // TODO Auto-generated method stub
+    super.setRightChild(rightChild);
   }
 
   public Cor getCor() {
@@ -35,13 +52,5 @@ public class NoRN<T extends Object> extends No<T> {
 
   public void setCor(Cor cor) {
     this.cor = cor;
-  }
-
-  public NoRN<T> getFather() {
-    return father;
-  }
-
-  public void setFather(NoRN<T> father) {
-    this.father = father;
   }
 }

@@ -1,8 +1,8 @@
 package RubroNegra;
 
 public enum Cor {
-    RUBRO("Rubro"),
-    NEGRO("Negro");
+    RUBRO("R"),
+    NEGRO("N");
 
     private String descricao;
 

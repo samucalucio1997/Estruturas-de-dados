@@ -34,35 +34,34 @@ public class TesteAVL {
     // avl.incluirNo(5);
     // avl.incluirNo(6);
     // avl.removerNo(2);
-    
-    // final var avl = new ArvoreAVL<Integer>(new No<Integer>(30));
-    // avl.incluirNo(35);
-    // avl.incluirNo(10);
-    // avl.incluirNo(33);
-    // avl.incluirNo(11);
-    // avl.incluirNo(5);
-    // avl.incluirNo(3);
-    // avl.incluirNo(7);
-    // avl.removerNo(7);
-    // avl.removerNo(11);
 
-    
+    final var avl = new ArvoreAVL<Integer>(new No<Integer>(30));
+    avl.incluirNo(35);
+    avl.incluirNo(10);
+    avl.incluirNo(33);
+    avl.incluirNo(11);
+    avl.incluirNo(5);
+    avl.incluirNo(3);
+    avl.incluirNo(7);
+    avl.removerNo(7);
+    avl.removerNo(11);
+
     // avl.incluirNo(9);
 
-    final var avl = new ArvoreAVL<Integer>(new No<Integer>(50));
-    avl.incluirNo(20);
-    avl.incluirNo(90);
-    avl.incluirNo(10);
-    avl.incluirNo(40);
-    avl.incluirNo(30);
-    avl.incluirNo(15);
-    avl.incluirNo(19);
-    avl.incluirNo(35);
-    avl.incluirNo(38);
-    avl.removerNo(19); 
+    // final var avl = new ArvoreAVL<Integer>(new No<Integer>(50));
+    // avl.incluirNo(20);
+    // avl.incluirNo(90);
+    // avl.incluirNo(10);
+    // avl.incluirNo(40);
+    // avl.incluirNo(30);
+    // avl.incluirNo(15);
+    // avl.incluirNo(19);
+    // avl.incluirNo(35);
+    // avl.incluirNo(38);
+    // avl.removerNo(19);
     // avl.removerNo(10);
     // avl.removerNo(15);
-    // avl.removerNo(30); 
+    // avl.removerNo(30);
     // avl.removerNo(20);
     avl.mostrar();
     System.out.println();
