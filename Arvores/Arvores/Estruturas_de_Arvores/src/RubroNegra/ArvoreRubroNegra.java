@@ -228,12 +228,12 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
              }
 
              if (removido.getCor() == Cor.NEGRO && sucessor.getCor() == Cor.NEGRO) {//situação 3
-                 verificarCasoRemocao(removido);
+                 verificarCasoRemocao(sucessor);
                  return;
              }
 
              if (removido.getCor() == Cor.RUBRO && sucessor.getCor() == Cor.NEGRO) {//situação 4
-
+                 //TODO: implementar a situação 4 apenas
                  return;
              }
          }
@@ -248,16 +248,29 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
              if(ValidatorsUtil.isLeftChild(sucessor.getFather(), sucessor)) {
                     rotacaoSimplesEsquerda(sucessor.getFather());
              }else{
-                    rotacaoDuplaDireita(sucessor.getFather());
+                    rotacaoSimplesDireita(sucessor.getFather());
              }
             pai.setCor(Cor.RUBRO);
             irmao.setCor(Cor.NEGRO);
+            caso2b(pai, ValidatorsUtil.isLeftChild(pai,irmao));
+        }
+
+        if (irmao.getCor() == Cor.NEGRO && pai.getCor() == Cor.NEGRO && sobrinhoInterno.getCor() == Cor.NEGRO){
 
         }
+
     }
 
-    private void caso2b() {
+    private void caso2b(NoRN<T> node, boolean isLeftChild) {
+        NoRN<T> filho;
 
+        if (isLeftChild) {
+            filho = node.getLeftChild();
+        }else{
+            filho = node.getRightChild();
+        }
+        node.setCor(Cor.NEGRO);
+        filho.setCor(Cor.RUBRO);
     }
 
     @Override
