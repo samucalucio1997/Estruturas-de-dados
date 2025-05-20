@@ -12,7 +12,7 @@ public class TesteRN {
         arvRN.inserirRB(new NoRN<Integer>(7));
         arvRN.inserirRB(new NoRN<Integer>(11));
         arvRN.inserirRB(new NoRN<Integer>(13));
-//        arvRN.inserirRB(new NoRN<Integer>(0));
+
 
         arvRN.mostrar();
         final var raiz = (NoRN) arvRN.getRaiz();

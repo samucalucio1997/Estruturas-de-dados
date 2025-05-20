@@ -209,13 +209,17 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
         NoRN<T> atual = pesquisarRN((NoRN<T>) getRaiz(), key);
         pai = atual.getFather();
         if (atual.getLeftChild() == null && atual.getRightChild() == null) {
-            return remocaoCaso(1, atual);
+            final var sucessor = remocaoCaso(1, atual);
+            return sucessor;
         }
         if (atual.getLeftChild() == null ^ atual.getRightChild() == null) {
-            return remocaoCaso(2, atual);
+            final var sucessor = remocaoCaso(2, atual);
+            return sucessor;
         }
         if (atual.getLeftChild() != null && atual.getRightChild() != null) {
-            return remocaoCaso(0, atual);
+            final var sucessor = remocaoCaso(0, atual);
+            verificaSituacaoRemover(atual, sucessor);
+            return sucessor;
         }
 
         return pai;
@@ -248,7 +252,7 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
                 : Optional.ofNullable(pai).map(NoRN::getLeftChild).orElse(MapperNo.instanciaParaNullRB());
         final var sobrinhoInterno = ValidatorsUtil.isLeftChild(irmao.getFather(), irmao) ? irmao.getRightChild()
                 : Optional.ofNullable(irmao).map(NoRN::getLeftChild).orElse(MapperNo.instanciaParaNullRB());
-        // final var sobrinhoExterno =
+        final var sobrinhoExterno = ValidatorsUtil.isLeftChild(irmao, sobrinhoInterno) ? irmao.getRightChild() : irmao.getLeftChild();
 
         if (irmao.getCor() == Cor.RUBRO && pai.getCor() == Cor.NEGRO && sobrinhoInterno.getCor() == Cor.NEGRO) {// caso1
             if (ValidatorsUtil.isLeftChild(sucessor.getFather(), sucessor)) {
@@ -265,7 +269,7 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
         if (irmao.getCor() == Cor.NEGRO && pai.getCor() == Cor.NEGRO && sobrinhoInterno.getCor() == Cor.NEGRO) {// caso2a
             irmao.setCor(Cor.RUBRO);
             if (ValidatorsUtil.isNotEmpty(pai.getFather())) {
-                verificarCaso(pai.getFather());
+                verificarCasoRemocao(pai.getFather());
             }
             return;
         }
@@ -276,8 +280,18 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
             return;
         }
 
-        if (sobrinhoInterno.getCor() == Cor.RUBRO) {// caso3
+        if (sobrinhoInterno.getCor() == Cor.RUBRO && sobrinhoExterno.getCor() == Cor.NEGRO) {// caso3
+              if (ValidatorsUtil.isLeftChild(irmao, sobrinhoInterno)) {
+                rotacaoSimplesDireita(irmao);
+            } else {
+                rotacaoSimplesEsquerda(irmao);
+            } 
+            irmao.setCor(Cor.RUBRO);
+            sobrinhoInterno.setCor(Cor.NEGRO);
+        }
 
+        if (sobrinhoExterno.getCor() == Cor.RUBRO) {//caso4
+            
         }
 
     }
@@ -389,7 +403,7 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
                 final var valorSucessor = sucessor.getValue();
                 remover(valorSucessor);
                 node.setValue(valorSucessor);
-                return node;
+                return sucessor;// a referencia desse nó não é nula
         }
     }
 
