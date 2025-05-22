@@ -191,11 +191,6 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t> {
             printTree(node.getLeftChild(), linha + 1, col - colSkip, arr);
         }
 
-        // if((int)node.getValue()>col){
-        // arr[profundidade(node)][(int)node.getValue()%col] = node.getValue();
-        // }else{
-        // }
-
         if (node.getRightChild() != null) {
             printTree(node.getRightChild(), linha + 1, col + colSkip, arr);
         }

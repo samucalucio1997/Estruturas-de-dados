@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.Optional;
+
 import RubroNegra.NoRN;
 
 public class ValidatorsUtil {
@@ -29,6 +31,6 @@ public class ValidatorsUtil {
     }
 
     public static <T> boolean isLeftChild(NoRN<T> pai, NoRN<T> child) {
-        return pai.getLeftChild() == child;
+        return pai != null && Optional.ofNullable(pai).map(NoRN::getLeftChild).orElse(null) == child;
     }
 }
