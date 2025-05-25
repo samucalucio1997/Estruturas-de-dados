@@ -315,38 +315,45 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
     }
 
     public boolean isRubroNegra(){
-        return false;
-        // if () {
-            
-        // }
+        final var noRaizRN = pesquisarRN((NoRN) getRaiz(), getRaiz().getValue());
+        final var nosPretosPorCaminho = this.pretosCaminho(noRaizRN);
+
+        return contaPretos(noRaizRN, 0, nosPretosPorCaminho) 
+        && noRaizRN.getCor() == Cor.NEGRO 
+        && !isRubroFilhoRubro(noRaizRN);
     }
 
     private int pretosCaminho(NoRN<T> raiz) {//pega um caminho mais fácil
         int sum = 0;
-        while (raiz.getLeftChild() != null) {
-            if (raiz.getLeftChild().getCor() == Cor.NEGRO) {
+        while (raiz != null) {
+            if (raiz.getCor() == Cor.NEGRO) {
                 sum++;
             }
+            raiz = raiz.getLeftChild();
         }
         return sum;
     }
 
-    private boolean contaPretos(NoRN<T> node, int pretos, int numPretosPorRamo) {
-    if (node == null) {
-        // Nó nulo conta como um negro (em árvores rubro-negras, os nulls são negros)
-        return pretos == numPretosPorRamo;
+    private boolean contaPretos(NoRN<T> node, int sumPretos, int numPretosPorRamo) {
+        if (node == null) {
+            return sumPretos == numPretosPorRamo;
+        }
+
+        if (node.getCor() == Cor.NEGRO) {
+            sumPretos++;
+        }
+
+        return contaPretos(node.getLeftChild(), sumPretos, numPretosPorRamo) 
+            && contaPretos(node.getRightChild(), sumPretos, numPretosPorRamo);
     }
 
-    if (node.getCor() == Cor.NEGRO) {
-        pretos++;
+    public boolean isRubroFilhoRubro(NoRN<T> raiNoRN){
+        if (!raiNoRN.Isinternal()) {
+            return raiNoRN.getCor() == Cor.RUBRO && raiNoRN.getFather().getCor() == Cor.RUBRO;
+        }
+
+        return isRubroFilhoRubro(raiNoRN.getLeftChild()) && isRubroFilhoRubro(raiNoRN.getRightChild());
     }
-
-    // Verifica recursivamente os dois lados e ambos precisam ser verdadeiros
-    boolean esquerda = contaPretos(node.getLeftChild(), pretos, numPretosPorRamo);
-    boolean direita = contaPretos(node.getRightChild(), pretos, numPretosPorRamo);
-
-    return esquerda && direita;
-}
 
     private void caso2b(NoRN<T> node, boolean isLeftChild) {
         NoRN<T> filho;

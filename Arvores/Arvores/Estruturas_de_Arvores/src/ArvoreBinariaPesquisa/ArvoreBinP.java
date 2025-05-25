@@ -178,7 +178,7 @@ public class ArvoreBinP<t> implements IArvoreBinariaPesquisa<t> {
         }
     }
 
-    private void printTree(No<t> node, int linha, int col, String[][] arr) {
+    void printTree(No<t> node, int linha, int col, String[][] arr) {
         if (node == null) {
             return;
         }
