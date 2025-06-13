@@ -42,12 +42,18 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
             }
 
         };
-        root.setCor(Cor.NEGRO);
+        if (root != null) {
+            root.setCor(Cor.NEGRO);
+        }
     }
 
     public NoRN<T> inserirRB(NoRN<T> node) {
         NoRN<T> newNo = new NoRN<>(node.getValue());
         No<T> curNo = getRaiz();
+        if (ValidatorsUtil.isEmpty(curNo)) {
+            this.setRaiz(newNo);
+            return newNo;
+        }
         No<T> pai = pesquisar(curNo, node.getValue());
 
         int comp = this.getComparador().compare(newNo, pai);
@@ -318,7 +324,7 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
         final var noRaizRN = pesquisarRN((NoRN) getRaiz(), getRaiz().getValue());
         final var nosPretosPorCaminho = this.pretosCaminho(noRaizRN);
 
-        return contaPretos(noRaizRN, 0, nosPretosPorCaminho) 
+        return contaPretos(noRaizRN) != -1
         && noRaizRN.getCor() == Cor.NEGRO 
         && !isRubroFilhoRubro(noRaizRN);
     }
@@ -334,17 +340,35 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
         return sum;
     }
 
-    private boolean contaPretos(NoRN<T> node, int sumPretos, int numPretosPorRamo) {
+    private int contaPretos(NoRN<T> node) {
         if (node == null) {
-            return sumPretos == numPretosPorRamo;
+            return 0;
         }
 
-        if (node.getCor() == Cor.NEGRO) {
-            sumPretos++;
+        int qtdNegroDireita = contaPretos(node.getRightChild());
+
+        if (qtdNegroDireita == -1) {
+            return -1;            
         }
 
-        return contaPretos(node.getLeftChild(), sumPretos, numPretosPorRamo) 
-            && contaPretos(node.getRightChild(), sumPretos, numPretosPorRamo);
+        int qtdNegrosEsquerda = contaPretos(node.getLeftChild());
+
+        if (qtdNegrosEsquerda == -1) {
+            return -1;
+        }
+
+        if (qtdNegroDireita != qtdNegrosEsquerda) {
+            return -1;
+        }
+
+        final var pai = Optional.ofNullable(node.getFather())
+                .map(NoRN::getCor).orElse(Cor.NEGRO);
+
+        if (node.getCor() == Cor.RUBRO && pai == Cor.RUBRO) {
+            return -1;
+        }
+
+        return qtdNegrosEsquerda + (node.getCor() == Cor.NEGRO ? 1 : 0);
     }
 
     public boolean isRubroFilhoRubro(NoRN<T> raiNoRN){
@@ -459,9 +483,16 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
                     sucessor = sucessor.getLeftChild();
                 }
                 final var valorSucessor = sucessor.getValue();
-                remover(valorSucessor);
+                if (sucessor.getRightChild() != null) {//chama situação 3
+                    sucessor.getRightChild().setCor(Cor.NEGRO);
+                    sucessor = sucessor.getRightChild();
+                    // verificaSituacaoRemover(node, sucessor, false);
+                    // node.setCor(Cor.NEGRO);
+                }
+                else {
+                    remover(valorSucessor);
+                }
                 node.setValue(valorSucessor);
-                sucessor.setValue(null);
                 return sucessor;// a referencia desse nó não é nula
         }
     }

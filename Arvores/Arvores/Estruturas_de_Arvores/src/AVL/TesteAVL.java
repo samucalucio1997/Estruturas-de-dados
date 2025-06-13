@@ -1,8 +1,11 @@
 package AVL;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import ArvoreBinariaPesquisa.No;
+import RubroNegra.ArvoreRubroNegra;
+import RubroNegra.NoRN;
 
 public class TesteAVL {
   public static void main(String[] args) {
@@ -43,8 +46,8 @@ public class TesteAVL {
     avl.incluirNo(5);
     avl.incluirNo(3);
     avl.incluirNo(7);
-    avl.removerNo(7);
-    avl.removerNo(11);
+    // avl.removerNo(7);
+    // avl.removerNo(11);
 
     // avl.incluirNo(9);
 
@@ -63,14 +66,21 @@ public class TesteAVL {
     // avl.removerNo(15);
     // avl.removerNo(30);
     // avl.removerNo(20);
+    final var lista = new ArrayList<Integer>();
+    avl.pegarChavesEmOrdem(avl.getRaiz(), lista);
+    final var avRN = new ArvoreRubroNegra<Integer>(new NoRN<Integer>(lista.get(0)));
+    for (int i = 1; i < lista.size(); i++) {
+       avRN.inserirRB(new NoRN<Integer>(lista.get(i)));
+    }
+
     avl.mostrar();
-    System.out.println();
+    System.out.println("-- Abaixo é a rubro negra --");
+    avRN.mostrar();
     final var retoPesquisa = avl.pesquisar(avl.getRaiz(), 19);
     // final var refChild = Optional.ofNullable(retoPesquisa.getRightChild())
     // .map(No::getValue)
     // .orElse(null);
     System.out.println(retoPesquisa.getValue());
-    avl.mostrar();
     // avl.emOrdem(avl.getRaiz());
   }
 }

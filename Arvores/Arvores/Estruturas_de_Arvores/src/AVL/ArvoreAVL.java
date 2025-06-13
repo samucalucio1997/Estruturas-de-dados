@@ -1,9 +1,14 @@
 package AVL;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import ArvoreBinariaPesquisa.ArvoreBinP;
 import ArvoreBinariaPesquisa.No;
+import RubroNegra.ArvoreRubroNegra;
+import RubroNegra.NoRN;
 import utils.MapperNo;
 
 public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
@@ -215,5 +220,13 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
     private void rotacaoDuplaDireita(No<t> node) {
         rotacaoSimplesEsquerda(node.getLeftChild());
         rotacaoSimplesDireita(node);
+    }
+
+    public void pegarChavesEmOrdem(No<t> nodeRaiz, List<t> lista) {
+        if (nodeRaiz == null) return;
+
+        pegarChavesEmOrdem(nodeRaiz.getLeftChild(), lista);
+        lista.add(nodeRaiz.getValue());
+        pegarChavesEmOrdem(nodeRaiz.getRightChild(), lista);
     }
 }
