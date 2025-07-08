@@ -486,8 +486,8 @@ public class ArvoreRubroNegra<T extends Object> extends ArvoreBinP<T> {
                 if (sucessor.getRightChild() != null) {//chama situação 3
                     sucessor.getRightChild().setCor(Cor.NEGRO);
                     sucessor = sucessor.getRightChild();
-                    // verificaSituacaoRemover(node, sucessor, false);
-                    // node.setCor(Cor.NEGRO);
+                    node.setCor(Cor.NEGRO);
+                    verificaSituacaoRemover(node, sucessor, false);
                 }
                 else {
                     remover(valorSucessor);

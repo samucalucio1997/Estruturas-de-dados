@@ -1,17 +1,22 @@
 package ArvoreB;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Optional;
+
+import utils.ComparatorUtil;
 
 public class ArvoreB<T extends Object> {
     
     private NoB<T> root;
     private int t;
+
+    private final ComparatorUtil<T> comparator;
     
-    public ArvoreB(NoB<T> root, int t) {
-        this.root = root;
+    public ArvoreB(int t) {
         this.t = t;
+        this.root = new NoB<T>(t);
+        this.comparator = new ComparatorUtil<T>();
     }
 
     public NoB<T> inserirNo(NoB<T> node){
@@ -25,53 +30,30 @@ public class ArvoreB<T extends Object> {
         }
 
         final var chavesNo = Optional.ofNullable(node.getChaves()).orElse(null);
-        final var indexSearch = getIndexSearch(chavesNo, Key);
-        final var chaveSearch = chavesNo[indexSearch];
+        var indexSearch = getIndexSearch(chavesNo, Key);
+        final var chaveSearch = indexSearch > 0 ? chavesNo[indexSearch - 1] : null;
 
-        if (chaveSearch == Key) {
+        if (indexSearch < 0) {
+            indexSearch*=-1;
+            indexSearch-=1;
+        }
+        
+        if (chaveSearch !=null && chaveSearch == Key) {
             return node;
         }
-
-        // if (chaveSearch > Key) {//usar o comparator
-        //     return searchNo(node.getChaves(), Key);
-        // }
-
-        return null;
+        final var filho = Arrays.asList(node.getFilhos()).get(indexSearch);
         
+        if (filho != null) {
+            
+        }
+
+        return searchNo(filho, Key);
     }
     
     
     private int getIndexSearch(T[] arr,T key) {
-        return Arrays.binarySearch(arr, t);
+        return Arrays.binarySearch(arr, key);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     public NoB<T> getRoot() {
         return root;
