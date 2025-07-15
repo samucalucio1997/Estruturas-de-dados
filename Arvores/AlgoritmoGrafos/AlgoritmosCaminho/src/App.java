@@ -1,0 +1,57 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
+import melhorcaminho.AlgoritmoEstrela;
+import melhorcaminho.ToolUtil;
+import melhorcaminho.TupleMatriz;
+
+public class App {
+    public static void main(String[] args) throws Exception {
+        
+        int[][] grafo = ToolUtil.lerMatrizDeArquivo("/home/samuca/Downloads/labirinto.dat");
+        AlgoritmoEstrela algoritmo = new AlgoritmoEstrela();
+        algoritmo.setGrafo(grafo);
+        long inicio = System.currentTimeMillis();
+        algoritmo.encontrarCaminho();
+        long fim = System.currentTimeMillis();
+        System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
+
+        System.out.println("Nós visitados: " + algoritmo.getNoNaoVisitados().size());
+
+        for (TupleMatriz is : algoritmo.getNoNaoVisitados()) {
+            System.out.println("Caminho: (" + is.getG() + ", " + is.getF() + ")");
+        }
+        
+        // Imprime o caminho encontrado
+        imprimirCaminho(grafo, algoritmo.getNoNaoVisitados());
+
+    
+    }
+
+    private static void imprimirCaminho(int[][] grafo, List<TupleMatriz> caminho) {
+        char[][] visual = new char[grafo.length][grafo[0].length];
+        for (int i = 0; i < grafo.length; i++) {
+            for (int j = 0; j < grafo[0].length; j++) {
+                switch (grafo[i][j]) {
+                    case 0 -> visual[i][j] = ' ';
+                    case 1 -> visual[i][j] = '#';
+                    case 2 -> visual[i][j] = 'S';
+                    case 3 -> visual[i][j] = 'E';
+                }
+            }
+        }
+
+        for (TupleMatriz p : caminho) {
+            if (grafo[p.getabscissa()][p.getordenada()] == 0) {
+                visual[p.getabscissa()][p.getordenada()] = '*'; // marca o caminho
+            }
+        }
+
+        for (char[] linha : visual) {
+            System.out.println(new String(linha));
+        }
+    }
+}
+// f(n) = g(n) + h(n)
