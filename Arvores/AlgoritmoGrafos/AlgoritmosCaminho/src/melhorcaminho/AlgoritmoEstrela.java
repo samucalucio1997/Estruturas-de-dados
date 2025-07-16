@@ -32,12 +32,10 @@ public class AlgoritmoEstrela {
         saida.setH(ToolUtil.heuristica(saida, chegada));
         saida.calculaF();
 
-        noNaoVisitados = new ArrayList<>();
-        noVisitados = new ArrayList<>();
         noNaoVisitados.add(saida);
 
         while (!noNaoVisitados.isEmpty()) {
-            noNaoVisitados.sort(Comparator.comparingInt(n -> n.getF())); // pega o com menor f
+            noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getF).thenComparingInt(TupleMatriz::getG)); // pega o com menor f
             final var atual = noNaoVisitados.remove(0);
 
             if (atual.getabscissa() == chegada.getabscissa() && atual.getordenada() == chegada.getordenada()) {
