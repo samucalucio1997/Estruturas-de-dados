@@ -41,7 +41,7 @@ public class ToolUtil {
 
     public static List<TupleMatriz> vizinhosValidos(TupleMatriz atual, int[][] grafo) {
         List<TupleMatriz> vizinhos = new ArrayList<>();
-        int[][] direcoes = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } }; // cima, baixo, esquerda, direita
+        int[][] direcoes = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, {-1, -1}, {-1, 1}, {1, -1}, {1, 1} }; // cima, baixo, esquerda, direita
 
         for (int[] d : direcoes) {
             int nx = atual.getabscissa() + d[0];
