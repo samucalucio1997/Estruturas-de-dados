@@ -27,48 +27,61 @@ public class Dijkstra {
 
     // Implementação do Algoritmo de Dijkstra
     public void encontrarCaminho() {
-        // TODO 1: Localizar o nó inicial (valor 2 no grafo)
-        final var inicio = ToolUtil.localizaSaida(grafo, 2);
+       // 1. Localiza o nó inicial (valor 2 no grafo)
+    final var inicio = ToolUtil.localizaSaida(grafo, 2);
+    inicio.setG(0); // Custo inicial é 0
 
-        // TODO 2: Inicializar distâncias com infinito (Integer.MAX_VALUE) e setar 0 no início
-        // distancias[inicio.getordenada()][inicio.getabscissa()] = 0;
-        inicio.setG(0);
+    // 2. Preenche os nós válidos com valor de G infinito
+    noNaoVisitados = ToolUtilMenorCaminho.preencherNonVisitados(grafo);
+    for (TupleMatriz no : noNaoVisitados) {
+        if (!no.equals(inicio)) {
+            no.setG(Integer.MAX_VALUE);
+        }
+    }
 
-        // TODO 3: Inicializar lista de não visitados com todos os nós válidos (por exemplo, != 1)
-        noNaoVisitados = ToolUtilMenorCaminho.preencherNonVisitados(grafo);
-        noNaoVisitados.sort(Comparator.comparingInt(n -> n.getG()));
+    // 3. Ordena a lista para garantir que o menor custo venha primeiro
+    noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getG));
 
-        // TODO 4: Inicializar o mapa de antecessores, se for reconstruir o caminho
+    // 4. Inicia a lista de antecessores
+    antecessores = new HashMap<>();
 
-        while (!noNaoVisitados.isEmpty()) {
-            // TODO 5: Escolher o nó w ∈ noNaoVisitados com menor distâncias[y][x]
-            TupleMatriz atual = noNaoVisitados.remove(0);
+    // 5. Laço principal do Dijkstra
+    while (!noNaoVisitados.isEmpty()) {
+        // 5.1 Pega o nó com menor custo atual
+        TupleMatriz atual = noNaoVisitados.remove(0);
+        visitados.add(atual);
 
-            // TODO 6: Remover o nó atual de noNaoVisitados e adicioná-lo a visitados
-            visitados.add(atual);
+        // 5.2 Para cada vizinho do nó atual
+        for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
+            if (!visitados.contains(vizinho)) {
+                int novaDistancia = atual.getG() + 1; // Ou o peso real da aresta, se houver
 
-            // TODO 7: Para cada vizinho válido de "atual"
-            for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
-            //     Se vizinho ∉ visitados, calcular nova distância via "atual"
-                if (!visitados.contains(vizinho)) {
-                    final var distAtual = vizinho.getG() + 1;
-
-                    if (distAtual < vizinho.getG()) {
-                        vizinho.setG(distAtual);
-                    }
+                if (novaDistancia < vizinho.getG()) {
+                    vizinho.setG(novaDistancia);
+                    antecessores.put(vizinho, atual);
                 }
-            //     Se nova distância < distância atual do vizinho
-            //         Atualizar distâncias
-            //         Atualizar antecessor
             }
         }
 
-        // TODO 8 (opcional): Reconstruir o caminho mínimo usando o mapa de antecessores
+        // 5.3 Reordena os não visitados com base no custo G atualizado
+        noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getG));
+    }
+
+    // 6. Reconstrói o caminho até o destino (valor 3 no grafo)
+    TupleMatriz destino = ToolUtil.localizaSaida(grafo, 3);
+    List<TupleMatriz> caminho = ToolUtilMenorCaminho.reconstruirCaminho(destino, antecessores);
+
+    // 7. Imprime o caminho
+    System.out.println("Caminho mínimo:");
+    for (TupleMatriz passo : caminho) {
+        System.out.println(passo.getG() + ":" + passo.getabscissa() + "," + passo.getordenada());
+    }
     }
     
     public int[][] getGrafo() {
         return grafo;
     }
+
 
     public void setGrafo(int[][] grafo) {
         this.grafo = grafo;
@@ -76,6 +89,10 @@ public class Dijkstra {
 
     public Map<TupleMatriz, TupleMatriz> getAntecessores() {
         return antecessores;
+    }
+
+    public List<TupleMatriz> getVisitados() {
+        return visitados;
     }
 
 }

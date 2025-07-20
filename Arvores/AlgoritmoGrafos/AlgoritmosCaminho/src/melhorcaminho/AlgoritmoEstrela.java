@@ -51,7 +51,7 @@ public class AlgoritmoEstrela {
 
                 int gNovo = atual.getG() + 1;
 
-                boolean melhorCaminho = !noNaoVisitados.contains(vizinho) || gNovo > vizinho.getG();
+                boolean melhorCaminho = !noNaoVisitados.contains(vizinho) || gNovo < vizinho.getG();
 
                 if (melhorCaminho) {
                     vizinho.setPai(atual);

@@ -6,26 +6,43 @@ import java.util.List;
 import melhorcaminho.AlgoritmoEstrela;
 import melhorcaminho.ToolUtil;
 import melhorcaminho.TupleMatriz;
+import menorcaminho.Dijkstra;
 
 public class App {
     public static void main(String[] args) throws Exception {
         
         int[][] grafo = ToolUtil.lerMatrizDeArquivo("/home/samuca/Downloads/labirinto.dat");
-        AlgoritmoEstrela algoritmo = new AlgoritmoEstrela();
-        algoritmo.setGrafo(grafo);
-        long inicio = System.currentTimeMillis();
-        algoritmo.encontrarCaminho();
-        long fim = System.currentTimeMillis();
-        System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
+        /*
+         * A Estrela
+         */
+        // AlgoritmoEstrela algoritmo = new AlgoritmoEstrela();
+        // algoritmo.setGrafo(grafo);
+        // long inicio = System.currentTimeMillis();
+        // algoritmo.encontrarCaminho();
+        // long fim = System.currentTimeMillis();
+        // System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
 
-        System.out.println("Nós visitados: " + algoritmo.getNoNaoVisitados().size());
+        // System.out.println("Nós visitados: " + algoritmo.getNoNaoVisitados().size());
 
-        for (TupleMatriz is : algoritmo.getNoNaoVisitados()) {
-            System.out.println("Caminho: (" + is.getG() + ", " + is.getF() + ")");
-        }
+        // for (TupleMatriz is : algoritmo.getNoNaoVisitados()) {
+        //     System.out.println("Caminho: (" + is.getG() + ", " + is.getF() + ")");
+        // }
         
-        // Imprime o caminho encontrado
-        imprimirCaminho(grafo, algoritmo.getNoNaoVisitados());
+        // // Imprime o caminho encontrado
+        // imprimirCaminho(grafo, algoritmo.getNoVisitados());
+
+        /*
+         * Dijikstra
+         */
+
+        // Dijkstra algoDijkstra = new Dijkstra(grafo);
+        // long inicio = System.currentTimeMillis();
+        // algoDijkstra.encontrarCaminho();
+        // long fim = System.currentTimeMillis();
+        // System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
+
+        // imprimirCaminho(grafo, algoDijkstra.getVisitados());
+
 
     
     }

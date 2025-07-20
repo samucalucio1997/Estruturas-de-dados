@@ -1,7 +1,9 @@
 package menorcaminho;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import melhorcaminho.TupleMatriz;
 
@@ -28,6 +30,19 @@ public class ToolUtilMenorCaminho {
             }
         }
         return distancias;
+    }
+
+    public static List<TupleMatriz> reconstruirCaminho(TupleMatriz destino, Map<TupleMatriz,TupleMatriz> antecessores) {
+        List<TupleMatriz> caminho = new ArrayList<>();
+        TupleMatriz atual = destino;
+
+        while (atual != null) {
+            caminho.add(atual);
+            atual = antecessores.get(atual);
+        }
+
+        Collections.reverse(caminho); // do início ao fim
+        return caminho;
     }
 
 }
