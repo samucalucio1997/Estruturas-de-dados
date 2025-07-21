@@ -27,7 +27,7 @@ public class Dijkstra {
 
     // Implementação do Algoritmo de Dijkstra
     public void encontrarCaminho() {
-        // 1. Localiza o nó inicial (valor 2 no grafo)
+        // Localiza o nó inicial (valor 2 no grafo)
         final var inicio = ToolUtil.localizador(grafo, 2);
         
         inicio.setG(0); // Custo inicial é 0
@@ -63,16 +63,13 @@ public class Dijkstra {
                 }
             }
 
-            // 5.3 Reordena os não visitados com base no custo G atualizado
             noNaoVisitados.sort(Comparator.comparingDouble(TupleMatriz::getG));
         }
 
-        // 6. Reconstrói o caminho até o destino (valor 3 no grafo)
         TupleMatriz destino = ToolUtil.localizador(grafo, 3);
         TupleMatriz destinoReal = ToolUtilMenorCaminho.buscarNoExistente(destino,noNaoVisitados,visitados);
         caminhoFinal = ToolUtilMenorCaminho.reconstruirCaminho(destinoReal, antecessores);
 
-        // 7. Imprime o caminho
         System.out.println("Caminho mínimo:");
         for (TupleMatriz passo : caminhoFinal) {
             System.out.println(passo.getG() + ":" + passo.getabscissa() + "," + passo.getordenada());
