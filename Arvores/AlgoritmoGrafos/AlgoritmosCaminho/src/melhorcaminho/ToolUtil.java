@@ -18,7 +18,7 @@ public class ToolUtil {
        return (int) Math.sqrt(Math.pow(destino.getabscissa() - atual.getabscissa(), 2) + Math.pow(destino.getordenada() - atual.getordenada(), 2));
     }
 
-    public static TupleMatriz localizaSaida(int[][] matriz, int valor) {
+    public static TupleMatriz localizador(int[][] matriz, int valor) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
                 if (matriz[i][j] == valor) {

@@ -2,6 +2,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import melhorcaminho.AlgoritmoEstrela;
 import melhorcaminho.ToolUtil;
@@ -12,9 +14,9 @@ public class App {
     public static void main(String[] args) throws Exception {
         
         int[][] grafo = ToolUtil.lerMatrizDeArquivo("/home/samuca/Downloads/labirinto.dat");
-        /*
-         * A Estrela
-         */
+        // /*
+        //  * A Estrela
+        //  */
         // AlgoritmoEstrela algoritmo = new AlgoritmoEstrela();
         // algoritmo.setGrafo(grafo);
         // long inicio = System.currentTimeMillis();
@@ -24,27 +26,30 @@ public class App {
 
         // System.out.println("Nós visitados: " + algoritmo.getNoNaoVisitados().size());
 
-        // for (TupleMatriz is : algoritmo.getNoNaoVisitados()) {
+        // for (TupleMatriz is : algoritmo.getCaminhoFinal()) {
         //     System.out.println("Caminho: (" + is.getG() + ", " + is.getF() + ")");
         // }
         
         // // Imprime o caminho encontrado
-        // imprimirCaminho(grafo, algoritmo.getNoVisitados());
+        // imprimirCaminho(grafo, algoritmo.getCaminhoFinal());
 
         /*
          * Dijikstra
          */
 
-        // Dijkstra algoDijkstra = new Dijkstra(grafo);
-        // long inicio = System.currentTimeMillis();
-        // algoDijkstra.encontrarCaminho();
-        // long fim = System.currentTimeMillis();
-        // System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
+        
+        Dijkstra algoDijkstra = new Dijkstra(grafo);
+        long inicio = System.currentTimeMillis();
+        algoDijkstra.encontrarCaminho();
+        long fim = System.currentTimeMillis();
+        System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
+        for (TupleMatriz is : algoDijkstra.getAntecessores().values()) {
+            System.out.println(is.getabscissa()+":"+is.getordenada());
+        } 
 
-        // imprimirCaminho(grafo, algoDijkstra.getVisitados());
+        final var caminhos = algoDijkstra.getCaminhoFinal();
 
-
-    
+        imprimirCaminho(grafo, caminhos);    
     }
 
     private static void imprimirCaminho(int[][] grafo, List<TupleMatriz> caminho) {

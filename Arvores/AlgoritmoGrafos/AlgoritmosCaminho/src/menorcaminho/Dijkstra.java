@@ -16,6 +16,7 @@ public class Dijkstra {
     private List<TupleMatriz> visitados; // Nós visitados nuvem
     private List<TupleMatriz> noNaoVisitados; 
     private Map<TupleMatriz,TupleMatriz> antecessores;
+    private List<TupleMatriz> caminhoFinal;
 
     public Dijkstra(int[][] grafo) {
         this.grafo = grafo;
@@ -27,55 +28,55 @@ public class Dijkstra {
 
     // Implementação do Algoritmo de Dijkstra
     public void encontrarCaminho() {
-       // 1. Localiza o nó inicial (valor 2 no grafo)
-    final var inicio = ToolUtil.localizaSaida(grafo, 2);
-    inicio.setG(0); // Custo inicial é 0
+        // 1. Localiza o nó inicial (valor 2 no grafo)
+        final var inicio = ToolUtil.localizador(grafo, 2);
+        inicio.setG(0); // Custo inicial é 0
 
-    // 2. Preenche os nós válidos com valor de G infinito
-    noNaoVisitados = ToolUtilMenorCaminho.preencherNonVisitados(grafo);
-    for (TupleMatriz no : noNaoVisitados) {
-        if (!no.equals(inicio)) {
-            no.setG(Integer.MAX_VALUE);
-        }
-    }
-
-    // 3. Ordena a lista para garantir que o menor custo venha primeiro
-    noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getG));
-
-    // 4. Inicia a lista de antecessores
-    antecessores = new HashMap<>();
-
-    // 5. Laço principal do Dijkstra
-    while (!noNaoVisitados.isEmpty()) {
-        // 5.1 Pega o nó com menor custo atual
-        TupleMatriz atual = noNaoVisitados.remove(0);
-        visitados.add(atual);
-
-        // 5.2 Para cada vizinho do nó atual
-        for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
-            if (!visitados.contains(vizinho)) {
-                int novaDistancia = atual.getG() + 1; // Ou o peso real da aresta, se houver
-
-                if (novaDistancia < vizinho.getG()) {
-                    vizinho.setG(novaDistancia);
-                    antecessores.put(vizinho, atual);
-                }
+        // 2. Preenche os nós válidos com valor de G infinito
+        noNaoVisitados = ToolUtilMenorCaminho.preencherNonVisitados(grafo);
+        for (TupleMatriz no : noNaoVisitados) {
+            if (!no.equals(inicio)) {
+                no.setG(Integer.MAX_VALUE);
             }
         }
 
-        // 5.3 Reordena os não visitados com base no custo G atualizado
+        // 3. Ordena a lista para garantir que o menor custo venha primeiro
         noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getG));
-    }
 
-    // 6. Reconstrói o caminho até o destino (valor 3 no grafo)
-    TupleMatriz destino = ToolUtil.localizaSaida(grafo, 3);
-    List<TupleMatriz> caminho = ToolUtilMenorCaminho.reconstruirCaminho(destino, antecessores);
+        // 5. Laço principal do Dijkstra
+        while (!noNaoVisitados.isEmpty()) {
+            // 5.1 Pega o nó com menor custo atual
+            TupleMatriz atual = noNaoVisitados.remove(0);
+            visitados.add(atual);
 
-    // 7. Imprime o caminho
-    System.out.println("Caminho mínimo:");
-    for (TupleMatriz passo : caminho) {
-        System.out.println(passo.getG() + ":" + passo.getabscissa() + "," + passo.getordenada());
-    }
+            // 5.2 Para cada vizinho do nó atual
+            for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
+                TupleMatriz vizinhoOriginal = ToolUtilMenorCaminho.buscarNoExistente(vizinho, noNaoVisitados, visitados);
+
+                if (!visitados.contains(vizinho)) {
+                    int novaDistancia = atual.getG() + 1; // Ou o peso real da aresta, se houver
+
+                    if (novaDistancia < vizinho.getG()) {
+                        vizinhoOriginal.setG(novaDistancia);
+                        antecessores.put(vizinhoOriginal, atual);
+                    }
+                }
+            }
+
+            // 5.3 Reordena os não visitados com base no custo G atualizado
+            noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getG));
+        }
+
+        // 6. Reconstrói o caminho até o destino (valor 3 no grafo)
+        TupleMatriz destino = ToolUtil.localizador(grafo, 3);
+        TupleMatriz destinoReal = ToolUtilMenorCaminho.buscarNoExistente(destino,noNaoVisitados,visitados);
+        caminhoFinal = ToolUtilMenorCaminho.reconstruirCaminho(destinoReal, antecessores);
+
+        // 7. Imprime o caminho
+        System.out.println("Caminho mínimo:");
+        for (TupleMatriz passo : caminhoFinal) {
+            System.out.println(passo.getG() + ":" + passo.getabscissa() + "," + passo.getordenada());
+        }
     }
     
     public int[][] getGrafo() {
@@ -93,6 +94,10 @@ public class Dijkstra {
 
     public List<TupleMatriz> getVisitados() {
         return visitados;
+    }
+
+    public List<TupleMatriz> getCaminhoFinal() {
+        return caminhoFinal;
     }
 
 }

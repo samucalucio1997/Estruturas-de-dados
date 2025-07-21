@@ -32,17 +32,26 @@ public class ToolUtilMenorCaminho {
         return distancias;
     }
 
-    public static List<TupleMatriz> reconstruirCaminho(TupleMatriz destino, Map<TupleMatriz,TupleMatriz> antecessores) {
+    public static List<TupleMatriz> reconstruirCaminho(TupleMatriz destino,
+            Map<TupleMatriz, TupleMatriz> antecessores) {
         List<TupleMatriz> caminho = new ArrayList<>();
         TupleMatriz atual = destino;
-
         while (atual != null) {
-            caminho.add(atual);
+            caminho.add(0, atual);
             atual = antecessores.get(atual);
         }
-
-        Collections.reverse(caminho); // do início ao fim
         return caminho;
+    }
+
+
+    public static TupleMatriz buscarNoExistente(TupleMatriz no, List<TupleMatriz> noNaoVisitados, List<TupleMatriz> visitados) {
+        for (TupleMatriz existente : noNaoVisitados) {
+            if (existente.equals(no)) return existente;
+        }
+        for (TupleMatriz existente : visitados) {
+            if (existente.equals(no)) return existente;
+        }
+        return null;
     }
 
 }

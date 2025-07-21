@@ -11,12 +11,14 @@ public class AlgoritmoEstrela {
     private int[][] grafo; // Representação do grafo
     private List<TupleMatriz> noNaoVisitados; // Lista para armazenar o caminho encontrado
     private List<TupleMatriz> noVisitados; // Lista para armazenar os nós visitados
+    private List<TupleMatriz> caminhoFinal;
 
     
 
     public AlgoritmoEstrela() {
         this.noNaoVisitados = new ArrayList<>();
         this.noVisitados = new ArrayList<>();
+        caminhoFinal =  new ArrayList<>();
     }
 
     // Implementação do Algoritmo A* (A Estrela)
@@ -25,8 +27,8 @@ public class AlgoritmoEstrela {
     // g(n) é o custo do caminho do nó inicial até o nó n
     // h(n) é a estimativa do custo do caminho do nó n até o nó objetivo
     public void encontrarCaminho() {
-        final var saida = ToolUtil.localizaSaida(grafo, 2);
-        final var chegada = ToolUtil.localizaSaida(grafo, 3);
+        final var saida = ToolUtil.localizador(grafo, 2);
+        final var chegada = ToolUtil.localizador(grafo, 3);
 
         saida.setG(0);
         saida.setH(ToolUtil.heuristica(saida, chegada));
@@ -39,7 +41,7 @@ public class AlgoritmoEstrela {
             final var atual = noNaoVisitados.remove(0);
 
             if (atual.getabscissa() == chegada.getabscissa() && atual.getordenada() == chegada.getordenada()) {
-                ToolUtil.reconstruirCaminho(atual, noNaoVisitados); // essa lista é o caminho final
+                ToolUtil.reconstruirCaminho(atual, caminhoFinal); // essa lista é o caminho final
                 return;
             }
 
@@ -83,6 +85,10 @@ public class AlgoritmoEstrela {
 
     public void setGrafo(int[][] grafo) {
         this.grafo = grafo;
+    }
+
+    public List<TupleMatriz> getCaminhoFinal() {
+        return caminhoFinal;
     }
 
 
