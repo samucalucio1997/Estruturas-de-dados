@@ -5,23 +5,40 @@ import java.util.Objects;
 public class TupleMatriz {
     private int abscissa;
     private int ordenada;
-    private int f; // Função f(n) = g(n) + h(n)
-    private int g; // Custo do caminho do nó inicial até o nó n
-    private int h; // Estimativa do custo do caminho do nó n até o nó objetivo 
+    private double f; // Função f(n) = g(n) + h(n)
+    private double g; // Custo do caminho do nó inicial até o nó n
+    private double h; // Estimativa do custo do caminho do nó n até o nó objetivo 
     private TupleMatriz pai; // Referência ao nó pai para reconstrução do caminho
+    private boolean isDiagonal;
    
     public TupleMatriz(int abscissa, int ordenada) {
         this.abscissa = abscissa;
         this.ordenada = ordenada;
     }
 
+    public double getF() {
+        return f;
+    }
+
     public TupleMatriz() {
         this.abscissa = 0;
         this.ordenada = 0;
     }
-   
-    public int getF() {
-        return f;
+
+    public double getG() {
+        return g;
+    }
+
+    public void setG(double g) {
+        this.g = g;
+    }
+
+    public double getH() {
+        return h;
+    }
+
+    public void setH(double h) {
+        this.h = h;
     }
 
     public int getabscissa() {
@@ -37,22 +54,6 @@ public class TupleMatriz {
         this.ordenada = ordenada;
     }
 
-     public int getG() {
-        return g;
-    }
-
-    public void setG(int g) {
-        this.g = g;
-    }
-
-    public int getH() {
-        return h;
-    }
-
-    public void setH(int h) {
-        this.h = h;
-    }
-
     public TupleMatriz getPai() {
         return pai;
     }
@@ -65,18 +66,25 @@ public class TupleMatriz {
         this.f = getG() + getH();
     }
 
-    @Override
+     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        TupleMatriz that = (TupleMatriz) obj;
-        return this.abscissa == that.abscissa && this.ordenada == that.ordenada;
+        if (this == obj) return true;
+        if (!(obj instanceof TupleMatriz)) return false;
+        TupleMatriz other = (TupleMatriz) obj;
+        return this.abscissa == other.abscissa && this.ordenada == other.ordenada;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(abscissa, ordenada);
+    }
+
+
+    public boolean isDiagonal() {
+        return isDiagonal;
+    }
+
+    public void setDiagonal(boolean isDiagonal) {
+        this.isDiagonal = isDiagonal;
     }
 }

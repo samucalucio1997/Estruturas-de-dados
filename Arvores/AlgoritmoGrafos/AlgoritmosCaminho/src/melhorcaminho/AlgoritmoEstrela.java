@@ -12,10 +12,12 @@ public class AlgoritmoEstrela {
     private List<TupleMatriz> noNaoVisitados; // Lista para armazenar o caminho encontrado
     private List<TupleMatriz> noVisitados; // Lista para armazenar os nós visitados
     private List<TupleMatriz> caminhoFinal;
+    private List<TupleMatriz> todos;
 
     
 
     public AlgoritmoEstrela() {
+        this.todos = new ArrayList<>();
         this.noNaoVisitados = new ArrayList<>();
         this.noVisitados = new ArrayList<>();
         caminhoFinal =  new ArrayList<>();
@@ -37,7 +39,7 @@ public class AlgoritmoEstrela {
         noNaoVisitados.add(saida);
 
         while (!noNaoVisitados.isEmpty()) {
-            noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getF).thenComparingInt(TupleMatriz::getG)); // pega o com menor f
+            noNaoVisitados.sort(Comparator.comparingDouble(TupleMatriz::getF).thenComparingDouble(TupleMatriz::getG)); // pega o com menor f
             final var atual = noNaoVisitados.remove(0);
 
             if (atual.getabscissa() == chegada.getabscissa() && atual.getordenada() == chegada.getordenada()) {
@@ -47,11 +49,11 @@ public class AlgoritmoEstrela {
 
             noVisitados.add(atual);
 
-            for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
+            for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo, getTodosOsNos())) {
                 if (noVisitados.contains(vizinho))
                     continue;
 
-                int gNovo = atual.getG() + 1;
+                final var gNovo = atual.getG() + 1;
 
                 boolean melhorCaminho = !noNaoVisitados.contains(vizinho) || gNovo < vizinho.getG();
 
@@ -89,6 +91,13 @@ public class AlgoritmoEstrela {
 
     public List<TupleMatriz> getCaminhoFinal() {
         return caminhoFinal;
+    }
+
+    private List<TupleMatriz> getTodosOsNos() {
+        List<TupleMatriz> todos = new ArrayList<>();
+        todos.addAll(noNaoVisitados);
+        todos.addAll(noVisitados);
+        return todos;
     }
 
 

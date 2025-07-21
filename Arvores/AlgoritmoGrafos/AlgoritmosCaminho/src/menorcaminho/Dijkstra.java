@@ -20,7 +20,6 @@ public class Dijkstra {
 
     public Dijkstra(int[][] grafo) {
         this.grafo = grafo;
-        this.distancias = new int[grafo.length][];
         this.visitados = new ArrayList<>();        
         this.noNaoVisitados = new ArrayList<>();
         antecessores = new HashMap<>();
@@ -30,6 +29,7 @@ public class Dijkstra {
     public void encontrarCaminho() {
         // 1. Localiza o nó inicial (valor 2 no grafo)
         final var inicio = ToolUtil.localizador(grafo, 2);
+        
         inicio.setG(0); // Custo inicial é 0
 
         // 2. Preenche os nós válidos com valor de G infinito
@@ -41,7 +41,7 @@ public class Dijkstra {
         }
 
         // 3. Ordena a lista para garantir que o menor custo venha primeiro
-        noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getG));
+        noNaoVisitados.sort(Comparator.comparingDouble(TupleMatriz::getG));
 
         // 5. Laço principal do Dijkstra
         while (!noNaoVisitados.isEmpty()) {
@@ -50,11 +50,11 @@ public class Dijkstra {
             visitados.add(atual);
 
             // 5.2 Para cada vizinho do nó atual
-            for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
+            for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo, getTodosOsNos())) {
                 TupleMatriz vizinhoOriginal = ToolUtilMenorCaminho.buscarNoExistente(vizinho, noNaoVisitados, visitados);
 
                 if (!visitados.contains(vizinho)) {
-                    int novaDistancia = atual.getG() + 1; // Ou o peso real da aresta, se houver
+                    final var novaDistancia = atual.getG() + (atual.isDiagonal() ? 1.4 : 1); // Ou o peso real da aresta, se houver
 
                     if (novaDistancia < vizinho.getG()) {
                         vizinhoOriginal.setG(novaDistancia);
@@ -64,7 +64,7 @@ public class Dijkstra {
             }
 
             // 5.3 Reordena os não visitados com base no custo G atualizado
-            noNaoVisitados.sort(Comparator.comparingInt(TupleMatriz::getG));
+            noNaoVisitados.sort(Comparator.comparingDouble(TupleMatriz::getG));
         }
 
         // 6. Reconstrói o caminho até o destino (valor 3 no grafo)
@@ -98,6 +98,13 @@ public class Dijkstra {
 
     public List<TupleMatriz> getCaminhoFinal() {
         return caminhoFinal;
+    }
+
+    private List<TupleMatriz> getTodosOsNos() {
+        List<TupleMatriz> todos = new ArrayList<>();
+        todos.addAll(noNaoVisitados);
+        todos.addAll(visitados);
+        return todos;
     }
 
 }

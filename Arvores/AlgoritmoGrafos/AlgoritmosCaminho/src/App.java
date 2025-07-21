@@ -17,39 +17,39 @@ public class App {
         // /*
         //  * A Estrela
         //  */
-        // AlgoritmoEstrela algoritmo = new AlgoritmoEstrela();
-        // algoritmo.setGrafo(grafo);
-        // long inicio = System.currentTimeMillis();
-        // algoritmo.encontrarCaminho();
-        // long fim = System.currentTimeMillis();
-        // System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
+        AlgoritmoEstrela algoritmo = new AlgoritmoEstrela();
+        algoritmo.setGrafo(grafo);
+        long inicio = System.currentTimeMillis();
+        algoritmo.encontrarCaminho();
+        long fim = System.currentTimeMillis();
+        System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
 
-        // System.out.println("Nós visitados: " + algoritmo.getNoNaoVisitados().size());
+        System.out.println("Nós visitados: " + algoritmo.getCaminhoFinal().size());
 
-        // for (TupleMatriz is : algoritmo.getCaminhoFinal()) {
-        //     System.out.println("Caminho: (" + is.getG() + ", " + is.getF() + ")");
-        // }
+        for (TupleMatriz is : algoritmo.getCaminhoFinal()) {
+            System.out.println("Caminho: (" + is.getG() + ", " + is.getF() + ")");
+        }
         
-        // // Imprime o caminho encontrado
-        // imprimirCaminho(grafo, algoritmo.getCaminhoFinal());
+        // Imprime o caminho encontrado
+        imprimirCaminho(grafo, algoritmo.getCaminhoFinal());
 
         /*
          * Dijikstra
          */
 
         
-        Dijkstra algoDijkstra = new Dijkstra(grafo);
-        long inicio = System.currentTimeMillis();
-        algoDijkstra.encontrarCaminho();
-        long fim = System.currentTimeMillis();
-        System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
-        for (TupleMatriz is : algoDijkstra.getAntecessores().values()) {
-            System.out.println(is.getabscissa()+":"+is.getordenada());
-        } 
+        // Dijkstra algoDijkstra = new Dijkstra(grafo);
+        // long inicio = System.currentTimeMillis();
+        // algoDijkstra.encontrarCaminho();
+        // long fim = System.currentTimeMillis();
+        // System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
+        // for (TupleMatriz is : algoDijkstra.getAntecessores().values()) {
+        //     System.out.println(is.getabscissa()+":"+is.getordenada());
+        // } 
 
-        final var caminhos = algoDijkstra.getCaminhoFinal();
+        // final var caminhos = algoDijkstra.getCaminhoFinal();
 
-        imprimirCaminho(grafo, caminhos);    
+        // imprimirCaminho(grafo, caminhos);    
     }
 
     private static void imprimirCaminho(int[][] grafo, List<TupleMatriz> caminho) {
@@ -76,4 +76,3 @@ public class App {
         }
     }
 }
-// f(n) = g(n) + h(n)

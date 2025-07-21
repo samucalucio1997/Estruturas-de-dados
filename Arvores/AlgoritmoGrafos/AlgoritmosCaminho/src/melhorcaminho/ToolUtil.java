@@ -39,16 +39,25 @@ public class ToolUtil {
         noVisitados.addAll(caminho);
     }
 
-    public static List<TupleMatriz> vizinhosValidos(TupleMatriz atual, int[][] grafo) {
+    public static List<TupleMatriz> vizinhosValidos(TupleMatriz atual, int[][] grafo, List<TupleMatriz> todosOsNos) {
         List<TupleMatriz> vizinhos = new ArrayList<>();
-        int[][] direcoes = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, {-1, -1}, {-1, 1}, {1, -1}, {1, 1} }; // cima, baixo, esquerda, direita
+        int[][] direcoes = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
 
         for (int[] d : direcoes) {
             int nx = atual.getabscissa() + d[0];
             int ny = atual.getordenada() + d[1];
 
+            atual.setDiagonal(Math.abs(d[0]) == 1 && Math.abs(d[1]) == 1);      
+
             if (nx >= 0 && nx < grafo.length && ny >= 0 && ny < grafo[0].length && grafo[nx][ny] != 1) {
-                vizinhos.add(new TupleMatriz(nx, ny));
+                TupleMatriz candidato = new TupleMatriz(nx, ny);
+                // Procurar a instância já existente em todosOsNos
+                for (TupleMatriz existente : todosOsNos) {
+                    if (existente.equals(candidato)) {
+                        vizinhos.add(existente);
+                        break;
+                    }
+                }
             }
         }
 
