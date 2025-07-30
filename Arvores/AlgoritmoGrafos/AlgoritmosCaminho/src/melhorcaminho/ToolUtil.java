@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ToolUtil {
 
@@ -39,7 +40,8 @@ public class ToolUtil {
         noVisitados.addAll(caminho);
     }
 
-    public static List<TupleMatriz> vizinhosValidos(TupleMatriz atual, int[][] grafo, List<TupleMatriz> todosOsNos) {
+    public static List<TupleMatriz> vizinhosValidos(TupleMatriz atual, int[][] grafo,
+            Map<TupleMatriz, TupleMatriz> mapaNos) {
         List<TupleMatriz> vizinhos = new ArrayList<>();
         int[][] direcoes = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
 
@@ -47,17 +49,31 @@ public class ToolUtil {
             int nx = atual.getabscissa() + d[0];
             int ny = atual.getordenada() + d[1];
 
-            atual.setDiagonal(Math.abs(d[0]) == 1 && Math.abs(d[1]) == 1);      
+            boolean diagonal = Math.abs(d[0]) == 1 && Math.abs(d[1]) == 1;
 
             if (nx >= 0 && nx < grafo.length && ny >= 0 && ny < grafo[0].length && grafo[nx][ny] != 1) {
                 TupleMatriz candidato = new TupleMatriz(nx, ny);
-                // Procurar a instância já existente em todosOsNos
-                for (TupleMatriz existente : todosOsNos) {
-                    if (existente.equals(candidato)) {
-                        vizinhos.add(existente);
-                        break;
-                    }
+                TupleMatriz vizinho = mapaNos.get(candidato);
+                if (vizinho != null) {
+                    vizinho.setDiagonal(diagonal);
+                    vizinhos.add(vizinho);
                 }
+            }
+        }
+
+        return vizinhos;
+    }
+
+    public static List<TupleMatriz> vizinhosValidos(TupleMatriz atual, int[][] grafo) {
+        List<TupleMatriz> vizinhos = new ArrayList<>();
+        int[][] direcoes = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } }; // cima, baixo, esquerda, direita
+
+        for (int[] d : direcoes) {
+            int nx = atual.getabscissa() + d[0];
+            int ny = atual.getordenada() + d[1];
+
+            if (nx >= 0 && nx < grafo.length && ny >= 0 && ny < grafo[0].length && grafo[nx][ny] != 1) {
+                vizinhos.add(new TupleMatriz(nx, ny));
             }
         }
 
@@ -80,5 +96,16 @@ public class ToolUtil {
             e.printStackTrace();
             throw new IOException("Erro ao ler o arquivo: " + caminhoArquivo, e);
         }
+    }
+
+
+    private List<TupleMatriz> transformaToList(int[][] grafo) {
+        final var lista = new ArrayList<TupleMatriz>();
+        for (int i = 0; i < grafo.length; i++) {
+            for (int j = 0; j < grafo[i].length; j++) {
+                lista.add(new TupleMatriz(i, j));
+            }
+        }
+        return lista;
     }
 }

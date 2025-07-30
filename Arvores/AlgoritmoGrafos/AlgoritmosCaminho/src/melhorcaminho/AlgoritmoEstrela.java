@@ -12,12 +12,10 @@ public class AlgoritmoEstrela {
     private List<TupleMatriz> noNaoVisitados; // Lista para armazenar o caminho encontrado
     private List<TupleMatriz> noVisitados; // Lista para armazenar os nós visitados
     private List<TupleMatriz> caminhoFinal;
-    private List<TupleMatriz> todos;
 
     
 
     public AlgoritmoEstrela() {
-        this.todos = new ArrayList<>();
         this.noNaoVisitados = new ArrayList<>();
         this.noVisitados = new ArrayList<>();
         caminhoFinal =  new ArrayList<>();
@@ -49,7 +47,7 @@ public class AlgoritmoEstrela {
 
             noVisitados.add(atual);
 
-            for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo, getTodosOsNos())) {
+            for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
                 if (noVisitados.contains(vizinho))
                     continue;
 
@@ -91,13 +89,6 @@ public class AlgoritmoEstrela {
 
     public List<TupleMatriz> getCaminhoFinal() {
         return caminhoFinal;
-    }
-
-    private List<TupleMatriz> getTodosOsNos() {
-        List<TupleMatriz> todos = new ArrayList<>();
-        todos.addAll(noNaoVisitados);
-        todos.addAll(noVisitados);
-        return todos;
     }
 
 
