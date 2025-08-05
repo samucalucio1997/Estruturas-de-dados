@@ -2,22 +2,20 @@ package melhorcaminho;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class AlgoritmoEstrela {
 
     private int[][] grafo; // Representação do grafo
-    private List<TupleMatriz> noNaoVisitados; // Lista para armazenar o caminho encontrado
-    private List<TupleMatriz> noVisitados; // Lista para armazenar os nós visitados
+    private List<TupleMatriz> naoProcessados;
+    private List<TupleMatriz> processados; // Lista para armazenar os nós visitados
     private List<TupleMatriz> caminhoFinal;
 
     
 
     public AlgoritmoEstrela() {
-        this.noNaoVisitados = new ArrayList<>();
-        this.noVisitados = new ArrayList<>();
+        this.naoProcessados = new ArrayList<>();
+        this.processados = new ArrayList<>();
         caminhoFinal =  new ArrayList<>();
     }
 
@@ -34,26 +32,26 @@ public class AlgoritmoEstrela {
         saida.setH(ToolUtil.heuristica(saida, chegada));
         saida.calculaF();
 
-        noNaoVisitados.add(saida);
+        naoProcessados.add(saida);
 
-        while (!noNaoVisitados.isEmpty()) {
-            noNaoVisitados.sort(Comparator.comparingDouble(TupleMatriz::getF).thenComparingDouble(TupleMatriz::getG)); // pega o com menor f
-            final var atual = noNaoVisitados.remove(0);
+        while (!naoProcessados.isEmpty()) {
+            naoProcessados.sort(Comparator.comparingDouble(TupleMatriz::getF).thenComparingDouble(TupleMatriz::getG)); // pega o com menor f
+            final var atual = naoProcessados.remove(0);
 
             if (atual.getabscissa() == chegada.getabscissa() && atual.getordenada() == chegada.getordenada()) {
                 ToolUtil.reconstruirCaminho(atual, caminhoFinal); // essa lista é o caminho final
                 return;
             }
 
-            noVisitados.add(atual);
+            processados.add(atual);
 
             for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
-                if (noVisitados.contains(vizinho))
+                if (processados.contains(vizinho))
                     continue;
 
                 final var gNovo = atual.getG() + 1;
 
-                boolean melhorCaminho = !noNaoVisitados.contains(vizinho) || gNovo < vizinho.getG();
+                boolean melhorCaminho = !naoProcessados.contains(vizinho) || gNovo < vizinho.getF();
 
                 if (melhorCaminho) {
                     vizinho.setPai(atual);
@@ -61,8 +59,8 @@ public class AlgoritmoEstrela {
                     vizinho.setH(ToolUtil.heuristica(vizinho, chegada));
                     vizinho.calculaF();
 
-                    if (!noNaoVisitados.contains(vizinho)) {
-                        noNaoVisitados.add(vizinho);
+                    if (!naoProcessados.contains(vizinho)) {
+                        naoProcessados.add(vizinho);
                     }
                 }
             }
@@ -71,12 +69,12 @@ public class AlgoritmoEstrela {
         System.out.println("Caminho não encontrado.");
     }
 
-    public List<TupleMatriz> getNoNaoVisitados() {
-        return noNaoVisitados;
+    public List<TupleMatriz> getnaoProcessados() {
+        return naoProcessados;
     }
 
-    public List<TupleMatriz> getNoVisitados() {
-        return noVisitados;
+    public List<TupleMatriz> getprocessados() {
+        return processados;
     }
 
     public int[][] getGrafo() {
@@ -89,7 +87,5 @@ public class AlgoritmoEstrela {
 
     public List<TupleMatriz> getCaminhoFinal() {
         return caminhoFinal;
-    }
-
-
+    }    
 }

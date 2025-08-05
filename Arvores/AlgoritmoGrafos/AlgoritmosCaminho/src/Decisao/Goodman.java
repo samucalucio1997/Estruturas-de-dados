@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import melhorcaminho.TupleMatriz;
 
@@ -12,17 +13,32 @@ public class Goodman {
 
     public boolean isConexo(List<Vertice> listaVertices) {
         int seq=0;
-        final var grafoResutalte = new HashMap<String, Vertice>();
+        final var grafoResutalte = new HashMap<String, List<Vertice>>();
         alimentarGrafo(listaVertices, grafoResutalte);
         while (!listaVertices.isEmpty()) {
             final var verticeInterado = listaVertices.remove(0);
             for (Vertice vertice : listaVertices) {
                 if (isAdjacente(verticeInterado, vertice)) {
-                   
+                    aglutinarVerticeConexo(verticeInterado, vertice, grafoResutalte);
                 }
             }
         }
         return false;
+    }
+    
+    private void aglutinarVerticeConexo(Vertice verticePrincipal, Vertice verticeAglutinato, HashMap<String, List<Vertice>> grafo){
+        final var verticeAserAglutinado = grafo.get(String.valueOf(verticeAglutinato.getId()));
+        final var verticeGlutinado = grafo.get(String.valueOf(verticeAglutinato.getId()));
+
+        grafo.remove(String.valueOf(verticeAglutinato.getId()));
+
+        final var chaves = grafo.entrySet();
+
+        var chave = chaves.stream().filter(n -> n.getKey().equals(verticeAglutinato.getId())).findFirst().orElse(null);
+
+        verticeAserAglutinado.get(0).setArestas(null);
+        verticeGlutinado.add(verticeAserAglutinado.get(0));
+        // chave =  
     }
 
     private int[][] preencherMatriz(List<TupleMatriz> listaVertices) {
@@ -38,17 +54,15 @@ public class Goodman {
     }
 
 
-    public void alimentarGrafo(List<Vertice> vertices, Map<String,Vertice> map){
+    public void alimentarGrafo(List<Vertice> vertices, Map<String,List<Vertice>> map){
         int index = 1;
         for (Vertice vertice : vertices) {
             final var indexStr = Integer.toString(index);
-            map.put(indexStr, vertice);
+            vertice.setId(index);
+            map.put(indexStr, List.of(vertice));
             index++;
         }
     }
-
-
-
 
 
     public boolean outroMetodo(List<TupleMatriz> listaVertices) {
@@ -93,6 +107,7 @@ public class Goodman {
     }
 
     public class Vertice {
+        private int id;
         private int x;
         private int y;
         private List<Aresta> arestas;
@@ -115,6 +130,12 @@ public class Goodman {
         }
         public void setArestas(List<Aresta> arestas) {
             this.arestas = arestas;
+        }
+        public int getId() {
+            return id;
+        }
+        public void setId(int id) {
+            this.id = id;
         }        
     }
 }

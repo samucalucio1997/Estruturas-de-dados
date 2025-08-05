@@ -2,11 +2,23 @@ package Grafos;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+public class Aresta<T extends Object> {
+    private List<Vertice<T>> vertices;
+    private T value;
 
-@Data
-@AllArgsConstructor
-public class Aresta {
-    private List<Vertice> vertices;
+    public List<Vertice<T>> getVertices() {
+        return vertices;
+    }
+
+    public void setVertices(List<Vertice<T>> vertices) {
+        this.vertices = vertices;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
 }
