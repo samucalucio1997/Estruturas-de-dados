@@ -15,34 +15,34 @@ import menorcaminho.Dijkstra;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        final var verify = new Goodman();
+        // final var verify = new Goodman();
 
         
 
-        List<Vertice> listaConexa = List.of();
+        // List<Vertice> listaConexa = List.of();
 
         // System.out.println(verify.isConexo(listaConexa));
 
         
-        // int[][] grafo = ToolUtil.lerMatrizDeArquivo("/home/samuca/Downloads/labirinto.dat");
-        // // /*
-        // //  * A Estrela
-        // //  */
-        // AlgoritmoEstrela algoritmo = new AlgoritmoEstrela();
-        // algoritmo.setGrafo(grafo);
-        // long inicio = System.currentTimeMillis();
-        // algoritmo.encontrarCaminho();
-        // long fim = System.currentTimeMillis();
-        // System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
+        int[][] grafo = ToolUtil.lerMatrizDeArquivo("/home/samuca/Downloads/labirinto.dat");
+        // /*
+        //  * A Estrela
+        //  */
+        AlgoritmoEstrela algoritmo = new AlgoritmoEstrela();
+        algoritmo.setGrafo(grafo);
+        long inicio = System.currentTimeMillis();
+        algoritmo.encontrarCaminho();
+        long fim = System.currentTimeMillis();
+        System.out.println("Tempo de execução: " + (fim - inicio) + " ms");
 
-        // System.out.println("Nós visitados: " + algoritmo.getCaminhoFinal().size());
+        System.out.println("Nós visitados: " + algoritmo.getCaminhoFinal().size());
 
-        // for (TupleMatriz is : algoritmo.getCaminhoFinal()) {
-        //     System.out.println("Caminho: (" + is.getG() + ", " + is.getF() + ")");
-        // }
+        for (TupleMatriz is : algoritmo.getCaminhoFinal()) {
+            System.out.println("Caminho: (" + is.getG() + ", " + is.getF() + ")");
+        }
         
         // Imprime o caminho encontrado
-        // imprimirCaminho(grafo, algoritmo.getCaminhoFinal());
+        imprimirCaminho(grafo, algoritmo.getCaminhoFinal());
 
         /*
          * Dijikstra
