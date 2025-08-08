@@ -35,8 +35,8 @@ public class AlgoritmoEstrela {
         naoProcessados.add(saida);
 
         while (!naoProcessados.isEmpty()) {
-            naoProcessados.sort(Comparator.comparingDouble(TupleMatriz::getF).thenComparingDouble(TupleMatriz::getG)); // pega o com menor f
-            final var atual = naoProcessados.remove(0);
+            naoProcessados.sort(Comparator.comparingDouble(TupleMatriz::getF).thenComparingDouble(TupleMatriz::getG)); // ordena pelo f
+            final var atual = naoProcessados.remove(0);// pega a celula com menor f 
 
             if (atual.getabscissa() == chegada.getabscissa() && atual.getordenada() == chegada.getordenada()) {
                 ToolUtil.reconstruirCaminho(atual, caminhoFinal); // essa lista é o caminho final
@@ -46,12 +46,12 @@ public class AlgoritmoEstrela {
             processados.add(atual);
 
             for (TupleMatriz vizinho : ToolUtil.vizinhosValidos(atual, grafo)) {
-                if (processados.contains(vizinho))
+                if (processados.contains(vizinho))// considera somente vizinhos não processados
                     continue;
 
-                final var gNovo = atual.getG() + 1;
+                final var gNovo = atual.getG() + 1;//itera uma unidade ao custo da celula atual
 
-                boolean melhorCaminho = !naoProcessados.contains(vizinho) || gNovo < vizinho.getG();
+                boolean melhorCaminho = !naoProcessados.contains(vizinho) || gNovo < vizinho.getG();//garantir que o vizinho não seja um no viditado anteriormente
 
                 if (melhorCaminho) {
                     vizinho.setPai(atual);
