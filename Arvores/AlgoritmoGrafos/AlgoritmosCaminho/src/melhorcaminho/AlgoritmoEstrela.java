@@ -51,17 +51,14 @@ public class AlgoritmoEstrela {
 
                 final var gNovo = atual.getG() + 1;
 
-                boolean melhorCaminho = !naoProcessados.contains(vizinho) || gNovo < vizinho.getF();
+                boolean melhorCaminho = !naoProcessados.contains(vizinho) || gNovo < vizinho.getG();
 
                 if (melhorCaminho) {
                     vizinho.setPai(atual);
                     vizinho.setG(gNovo);
                     vizinho.setH(ToolUtil.heuristica(vizinho, chegada));
                     vizinho.calculaF();
-
-                    if (!naoProcessados.contains(vizinho)) {
-                        naoProcessados.add(vizinho);
-                    }
+                    naoProcessados.add(vizinho);
                 }
             }
         }
