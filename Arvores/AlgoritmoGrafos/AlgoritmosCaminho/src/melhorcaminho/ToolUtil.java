@@ -15,8 +15,8 @@ public class ToolUtil {
     }
 
     // Método utilitário para estimar o custo do caminho (h(n))
-    public static int heuristica(TupleMatriz atual, TupleMatriz destino) {// heuristica da distância de Euclidines(Cemrota usa ele)
-       return (int) Math.sqrt(Math.pow(destino.getabscissa() - atual.getabscissa(), 2) + Math.pow(destino.getordenada() - atual.getordenada(), 2));
+    public static int heuristica(TupleMatriz atual, TupleMatriz destino) {// heuristica da distância de Mahathan
+          return Math.abs(destino.getabscissa() - atual.getabscissa()) + Math.abs(destino.getordenada() - atual.getordenada()); 
     }
 
     public static TupleMatriz localizador(int[][] matriz, int valor) {
@@ -73,7 +73,7 @@ public class ToolUtil {
             int ny = atual.getordenada() + d[1];
 
             if (nx >= 0 && nx < grafo.length && ny >= 0 && ny < grafo[0].length && grafo[nx][ny] != 1) {
-                vizinhos.add(new TupleMatriz(nx, ny));
+                vizinhos.add(new TupleMatriz(nx, ny));           
             }
         }
 
