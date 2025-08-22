@@ -81,11 +81,11 @@ public class ArvoreAVL<t extends Object> extends ArvoreBinP<t> {
         if (pai == null) {
             return;
         }
-        final var valorAtualizado = pai.getFB() + balanceadorInsert;
+        final var valorAtualizado = pai.getFB() + balanceadorInsert;//codigo desnecessário
         pai.setFB(valorAtualizado);
 
         while (pai.getFather() != null) {
-            final var paiAntigo = pai;
+            final var paiAntigo = pai;//renomear variaveis
             pai = pai.getFather();
 
             final var filhoEsquerdo = Optional.ofNullable(pai.getLeftChild())
